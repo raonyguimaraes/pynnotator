@@ -2,7 +2,7 @@ from unittest import TestCase
 
 import pynnotator
 
-class TestDbnfsp(TestCase):
+class TestPynnotator(TestCase):
     def test_is_string(self):
-        s = pynnotator.dbnfsp()
+        s = pynnotator.pynnotator()
         self.assertTrue(isinstance(s, basestring))
