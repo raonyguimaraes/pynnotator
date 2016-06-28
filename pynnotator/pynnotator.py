@@ -1,5 +1,6 @@
-
 from .install import Installer
+
+from .helpers.validator import Validator 
 
 class Pynnotator(object):
     """A class to annotate VCFs
@@ -20,6 +21,13 @@ class Pynnotator(object):
         installer = Installer()
         # installer.build_datasets()
 
+    def annotate(self, vcf_file):
+        print("Annotating VCF... %s" % (vcf_file))
+
+
+    def validate(self, vcf_file):
+
+        print("Validating VCF... %s" % (vcf_file))
 
     # def withdraw(self, amount):
     #     """Return the balance remaining after withdrawing *amount*

@@ -31,7 +31,7 @@ class Installer(object):
         """Install Ubuntu Requirements"""
         print('Install Ubuntu requirements')
         if platform.dist()[0] in ['Ubuntu', 'LinuxMint']:
-            command = 'sudo apt-get install python3-dev python3-pip python3-setuptools vcftools samtools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip'  # lamp-server^
+            command = 'sudo apt-get install python3-dev python3-pip python3-setuptools vcftools samtools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget gunzip'  # lamp-server^
             sts = call(command, shell=True)
 
             try:
@@ -161,7 +161,8 @@ class Installer(object):
         self.download_vep_data()
         self.download_1000genomes()
         self.download_dbsnp()
-        # self.download_esp()
+        self.download_esp()
+        self.download_dbnsfp()
         
 
     def download_snpeff_data(self):
@@ -205,15 +206,13 @@ class Installer(object):
         if not os.path.isfile(settings.genomes1k_file):
             command = 'wget -c %s' % (settings.genomes1k_source)
             call(command, shell=True)
-            #why do you need to extract ? God only knows ... :P (explain later)
-            command = 'gunzip -c %s > %s' % (settings.genomes1k_file, genomes1k_vcf)
-            call(command, shell=True)
+            #why do you need to extract ? God only knows ... :P (snpsift merge ?)
+            # command = 'gunzip -c %s > %s' % (settings.genomes1k_file, settings.genomes1k_vcf)
+            # call(command, shell=True)
         
         if not os.path.isfile("%s.tbi" % (settings.genomes1k_file)):
             command = 'tabix -p vcf %s' % (settings.genomes1k_file)
             call(command, shell=True)
-
-
 
     def download_dbsnp(self):
 
@@ -227,14 +226,9 @@ class Installer(object):
         if not os.path.isfile(settings.dbsnp_file):
             command = 'wget -c %s' % (settings.dbsnp_source)
             call(command, shell=True)
-            #extract and zip with bgzip
-            command = 'gunzip -d %s' % (settings.dbsnp_file)
-            call(command, shell=True)
-            command = 'bgzip %s' % (settings.dbsnp_file)
-            call(command, shell=True)
 
         if not os.path.isfile("%s.tbi" % (settings.dbsnp_file)):
-            command = 'tabix -p vcf %s' % (settings.dbsnp_file)
+            command = 'wget -c %s.tbi' % (settings.dbsnp_source)
             call(command, shell=True)
 
         if not os.path.isfile(settings.clinvar_file):
@@ -242,7 +236,7 @@ class Installer(object):
             call(command, shell=True)
 
         if not os.path.isfile("%s.tbi" % (settings.clinvar_file)):
-            command = 'tabix -p vcf %s' % (settings.clinvar_file)
+            command = 'wget -c %s.tbi' % (settings.clinvar_source)
             call(command, shell=True)
 
     def download_esp(self):
@@ -254,13 +248,13 @@ class Installer(object):
 
         os.chdir('esp6500')
 
-        if not os.path.isfile(settings.esp_file):
+        if not os.path.isfile(settings.esp_final_file):
             command = 'wget -c %s' % (settings.esp_source)
             call(command, shell=True)
 
         chroms = list(range(1,23))+['X', 'Y']
         #run prepare_data.sh
-        if not os.path.isfile('esp6500si.vcf.gz'):
+        if not os.path.isfile(settings.esp_final_file):
             command = 'tar -zxvf %s' % (settings.esp_file)
             call(command, shell=True)
             vcfs = []
@@ -286,49 +280,50 @@ class Installer(object):
             os.makedirs('dbnsfp')
         os.chdir('dbnsfp')
 
-        if not os.path.isfile(dbnsfp):
+        if True:#not os.path.isfile(settings.dbnsfp_file):
 
             # --user=Anonymous --password=raonyguimaraes@gmail.com
-            command = "wget -c %s -O dbNSFPv%s.zip" % (dbnsfp_link, dbnsfp_version)
-            os.system(command)
+            command = "wget -c %s -O dbNSFPv%s.zip" % (settings.dbnsfp_link, settings.dbnsfp_version)
+            call(command, shell=True)
+
+            die()
 
             # Uncompress
-            os.system('unzip dbNSFPv%s.zip' % (dbnsfp_version))
+            command = 'unzip dbNSFPv%s.zip' % (settings.dbnsfp_version)
+            call(command, shell=True)
 
             # Create a single file version
-            os.system('(head -n 1 dbNSFP%s_variant.chr1 ;\
+            command = """(head -n 1 dbNSFP%s_variant.chr1 ;\
             cat dbNSFP%s_variant.chr* | grep -v "^#" ) > dbNSFP%s.txt \
-            ' % (dbnsfp_version, dbnsfp_version, dbnsfp_version))
+            """ % (settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version)
+            call(command, shell=True)
 
+            die()
 
-            os.system('head -n 1 dbNSFP%s_variant.chr1 > dbNSFP%s.txt' % (dbnsfp_version, dbnsfp_version))
-            os.system('tail -n +2 dbNSFP%s_variant.chr* >> dbNSFP%s.txt' % (dbnsfp_version, dbnsfp_version))
-            awk '{if(NR>1)print}'
-            head -n 1 dbNSFP3.2a_variant.chr1 > dbNSFP3.2a.txt
-
+            os.system('head -n 1 dbNSFP%s_variant.chr1 > dbNSFP%s.txt' % (settings.dbnsfp_version, settings.dbnsfp_version))
+            os.system('tail -n +2 dbNSFP%s_variant.chr* >> dbNSFP%s.txt' % (settings.dbnsfp_version, settings.dbnsfp_version))
+            # awk '{if(NR>1)print}'
+            # head -n 1 dbNSFP3.2a_variant.chr1 > dbNSFP3.2a.txt
 
             # Compress using block-gzip algorithm
             
             os.system('bgzip dbNSFP%s.txt' % (dbnsfp_version))
 
             # Create tabix index
-            http://genome.sph.umich.edu/wiki/RareMETALS
-            NOTE: Tabix 1.X does not seem to support the indexing for generic tab-delimited files. To index the file, please use tabix 0.2.5 or earlier versions.
-
+            # http://genome.sph.umich.edu/wiki/RareMETALS
+            # NOTE: Tabix 1.X does not seem to support the indexing for generic tab-delimited files. To index the file, please use tabix 0.2.5 or earlier versions.
 
             os.system('tabix -f -s 1 -b 2 -e 2 dbNSFP%s.txt.gz' % (dbnsfp_version))
 
 
-            for f in dbNSFP3.2a_variant.chr*; do
-              cat $f | awk '{if(NR>1)print}' >> dbNSFP3.2a.txt
-            done
-            root@4f5e8725433d:~/annotator/data/dbnsfp# bgzip -c dbNSFP3.2a.txt > dbNSFP3.2a.txt.gz
-            root@4f5e8725433d:~/annotator/data/dbnsfp# tabix -f -s 1 -b 2 -e 2 dbNSFP3.2a.txt.gz
-
-
+            # for f in dbNSFP3.2a_variant.chr*; do
+            #   cat $f | awk '{if(NR>1)print}' >> dbNSFP3.2a.txt
+            # done
+            # root@4f5e8725433d:~/annotator/data/dbnsfp# bgzip -c dbNSFP3.2a.txt > dbNSFP3.2a.txt.gz
+            # root@4f5e8725433d:~/annotator/data/dbnsfp# tabix -f -s 1 -b 2 -e 2 dbNSFP3.2a.txt.gz
             
-            command = 'cd ..'
-            os.system(command)
+            # command = 'cd ..'
+            # os.system(command)
 
         if not os.path.isfile(dbscsnv):
             command = 'wget ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbscSNV1.1.zip'
@@ -342,38 +337,3 @@ class Installer(object):
             command = 'tabix -s 1 -b 2 -e 2 -c c dbscSNV1.1.txt.gz'
             os.system(command)
 
-
-def install():
-
-    #install dependencies
-    requirements()
-
-    # create folders
-    if not os.path.isdir('libs'):
-        os.system('mkdir libs')
-    if not os.path.isdir('data'):
-        os.system('mkdir data')
-
-    os.chdir('libs')
-
-    # install_java()
-    # install_tabix()
-
-    # install_vcftools()
-    # install_snpeff()
-    # install_vep()
-    # os.chdir(base_dir)
-
-    # #download data
-    os.chdir('data')
-
-    # download_1000genomes()
-    # download_dbsnp()
-    # download_esp()
-    # download_dbnsfp()
-
-
-
-
-
-# install()

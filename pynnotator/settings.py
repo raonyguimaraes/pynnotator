@@ -11,11 +11,16 @@ data_dir = os.path.join(BASE_DIR, 'data')
 htslib_version = 'htslib-1.3.1'
 htslib_file = '%s.tar.bz2' % (htslib_version)
 htslib_source = 'https://github.com/samtools/htslib/releases/download/1.3.1/%s' % (htslib_file)
+htslib_dir = '%s/htslib/htslib-1.3.1' % (libs_dir)
 
 #vcftools
 vcftools_version = '0.1.14'
 vcftools_file = 'vcftools-%s.tar.gz' % (vcftools_version)
 vcftools_source = 'https://github.com/vcftools/vcftools/releases/download/v%s/vcftools-%s.tar.gz' % (vcftools_version, vcftools_version)
+#validation
+vcftools_dir = "%s/vcftools/vcftools-%s/src/cpp" % (libs_dir, vcftools_version)
+vcftools_dir_perl = "%s/vcftools/vcftools-%s/src/perl" % (libs_dir, vcftools_version)
+
 
 #snpeff
 snpeff_database = 'GRCh37.75' # this is the last build from GRCh37
@@ -38,8 +43,8 @@ genomes1k_file = '%s.gz' % (genomes1k_vcf)
 genomes1k_source = 'ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/%s' % (genomes1k_file)
 
 #dbsnp
-dbsnp_file = 'All_20160408.vcf'
-dbsnp_source = 'ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b147_GRCh37p13/VCF/%s.gz' % (dbsnp_file)
+dbsnp_file = '00-All.vcf.gz'
+dbsnp_source = 'ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b147_GRCh37p13/VCF/%s' % (dbsnp_file)
 
 clinvar_file = 'clinvar.vcf.gz'
 clinvar_source = 'ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/%s' % (clinvar_file)
@@ -48,8 +53,11 @@ clinvar_source = 'ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/%s' % (clinv
 esp_basename = 'ESP6500SI-V2-SSA137.GRCh38-liftover'
 esp_file = '%s.snps_indels.vcf.tar.gz' % (esp_basename)
 esp_source = 'http://evs.gs.washington.edu/evs_bulk_data/%s' % (esp_file)
+esp_final_file = 'esp6500si.vcf.gz'
 
 #dbnsfp
 dbnsfp_version = '3.2a'
 dbnsfp_file = 'dbNSFP%s.txt.gz' % (dbnsfp_version)
 dbnsfp_link = 'ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFPv%s.zip' % (dbnsfp_version)
+
+#paths
