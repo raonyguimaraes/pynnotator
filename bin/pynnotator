@@ -1,4 +1,16 @@
 #!/usr/bin/env python
 
 import pynnotator
-print pynnotator.pynnotator()
+
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('install', help='install requirements',nargs='?') #nargs='?', , action='store_true', default=False
+# parser.add_argument('update', help='update libraries', required=False)
+args = parser.parse_args()
+
+
+if args.install != None:
+	pynnotator = pynnotator.Pynnotator()
+	pynnotator.install()
+

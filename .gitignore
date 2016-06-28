@@ -8,3 +8,7 @@
 docs/_build/
 /*.egg-info
 /*.egg
+*.egg-info
+.idea
+
+devlog.txt

@@ -1,28 +1,36 @@
-class Customer(object):
-    """A customer of ABC Bank with a checking account. Customers have the
-    following properties:
+
+from .install import Installer
+
+class Pynnotator(object):
+    """A class to annotate VCFs
 
     Attributes:
-        name: A string representing the customer's name.
-        balance: A float tracking the current balance of the customer's account.
+        vcf_file: a VCF file to be annotated
     """
 
-    def __init__(self, name, balance=0.0):
-        """Return a Customer object whose name is *name* and starting
-        balance is *balance*."""
-        self.name = name
-        self.balance = balance
+    def __init__(self, vcf_file=False):
+        """Return a Pynnotator object with a defined VCF file to be annotated."""
+        self.vcf_file= vcf_file
 
-    def withdraw(self, amount):
-        """Return the balance remaining after withdrawing *amount*
-        dollars."""
-        if amount > self.balance:
-            raise RuntimeError('Amount greater than available balance.')
-        self.balance -= amount
-        return self.balance
+    def install(self):
+        print('Starting Installation...')
+        installer = Installer()
 
-    def deposit(self, amount):
-        """Return the balance remaining after depositing *amount*
-        dollars."""
-        self.balance += amount
-        return self.balance
+    def build_datasets(self):
+        installer = Installer()
+        # installer.build_datasets()
+
+
+    # def withdraw(self, amount):
+    #     """Return the balance remaining after withdrawing *amount*
+    #     dollars."""
+    #     if amount > self.balance:
+    #         raise RuntimeError('Amount greater than available balance.')
+    #     self.balance -= amount
+    #     return self.balance
+    #
+    # def deposit(self, amount):
+    #     """Return the balance remaining after depositing *amount*
+    #     dollars."""
+    #     self.balance += amount
+    #     return self.balance

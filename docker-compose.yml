@@ -1,0 +1,9 @@
+annotator:
+  # image: ubuntu
+  # image: ubuntu:16.04
+  build: .
+  # volumes:
+  #   - ./root_home:/root
+  # working_dir: /root/annotator
+  # entrypoint:
+  command: ["/bin/bash"]#, "install.sh"
