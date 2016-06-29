@@ -38,5 +38,5 @@ Databases
 - 1000Genomes (Phase 3) - ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf 
 - dbSNP (including clinvar) - (human_9606_b147_GRCh37p13) 
 - Exome Sequencing Project - ESP6500SI-V2-SSA137.GRCh38-liftover
-- dbNFSP (including dbscSNV) - 3.2a
-
+- dbNFSP 3.2a (including dbscSNV 1.1) - 
+- Ensembl 84 (phenotype and clinically associated)

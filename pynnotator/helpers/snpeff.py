@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from settings import *
-
 import argparse
 from datetime import datetime
 import os, shutil
 import shlex, subprocess
 import csv
 
-from settings import *
+from pynnotator import settings
 
 parser = argparse.ArgumentParser(description='Annotate a VCF File with Snpeff.')
 
@@ -33,13 +31,13 @@ class Snpeff(object):
     
     def run(self):
         tstart = datetime.now()
-        print tstart, 'Starting snpEff annotation: ', self.vcffile
+        print(tstart, 'Starting snpEff annotation: ', self.vcffile)
         
         self.annotate()
 
         tend = datetime.now()
         annotation_time =  tend - tstart
-        print tend, 'Finished snpEff annotation, it took: ', annotation_time        
+        print(tend, 'Finished snpEff annotation, it took: ', annotation_time)        
 
     #convert and annotate the vcf file to snpeff
     def annotate(self):
@@ -48,19 +46,20 @@ class Snpeff(object):
         BASE_DIR = os.getcwd()
         #print BASE_DIR
         #-canon to report only canonical transcript, -o gatk to report only one #GRCh37.64
-       #true
+        #true
         #snpeff 4.0
-        command = "java -Xmx%s -jar %s/snpEff.jar eff \
+        command = """java -Xmx%s -jar %s/snpEff.jar eff \
         -c %s/snpEff.config \
         -no-downstream \
         -no-intergenic \
         -no intragenic \
+        -onlyProtein \
         -no-intron \
         -no-upstream \
         -noNextProt \
         -no-utr -canon \
         -classic -i vcf -t  %s %s \
-        >snpeff/snpeff.output.vcf" % (snpEff_memory, snpeff_dir, snpeff_dir, snpeff_database, self.vcffile)
+        >snpeff/snpeff.output.vcf""" % (settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database, self.vcffile)
 
 
         #snpeff 2.0.5d
@@ -71,7 +70,7 @@ class Snpeff(object):
         # -i vcf -o vcf %s %s \
         # >snpeff/snpeff.output.vcf" % (java_path, snpEff_memory, snpeff_dir, snpeff_dir, snpeff_database, self.vcffile)
 
-        print command
+        print(command)
         
         # -i vcf 
         # args = shlex.split(command)
@@ -79,9 +78,9 @@ class Snpeff(object):
             cwd=os.getcwd(), 
             shell=True)
         if p == 0:
-            print 'This vcf was annotated by snpEff with Success'
+            print('This vcf was annotated by snpEff with Success')
         else:
-            print 'Sorry this vcf could not be anotated by snpeff'
+            print('Sorry this vcf could not be anotated by snpeff')
 
 
         # command = "java -Xmx40G -jar %s/GenomeAnalysisTK.jar \

@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from settings import *
-
 import argparse
 from datetime import datetime
 import os, shutil
 import shlex, subprocess
 import csv
+from subprocess import call
 
-from settings import *
-
+from pynnotator import settings
 
 """
 - Search and Remove genotypes with [0/0, ./.]
@@ -29,16 +27,14 @@ args = parser.parse_args()
 toolname = 'sanity_check'
 
 #enable perl5_lib
-os.environ["PERL5LIB"] = "%s/lib/perl5/site_perl/" % (vcf_tools_path)
 env = os.environ.copy()
-env['PERL5LIB'] = "%s/lib/perl5/site_perl/" % (vcf_tools_path)
+env['PERL5LIB'] = settings.vcftools_dir_perl
 
 
 class Sanity_check(object):
     def __init__(self, vcffile=None):
         
         self.vcffile = vcffile
-
         self.filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
         
         #create folder sanity_check if it doesn't exists
@@ -51,13 +47,13 @@ class Sanity_check(object):
     def run(self):
 
         tstart = datetime.now()
-        print tstart, 'Starting sanity_check: ', self.vcffile
+        print(tstart, 'Starting sanity_check: ', self.vcffile)
         
         self.check()
 
         tend = datetime.now()
         annotation_time =  tend - tstart
-        print tend, 'Finished sanity_check, it took: ', annotation_time        
+        print(tend, 'Finished sanity_check, it took: ', annotation_time)        
 
     #sanity vcf file with Vcftools
     def check(self):
@@ -109,22 +105,32 @@ class Sanity_check(object):
         #sort VCF
         #logging.info('Starting Sort VCF')
         #get header
-        os.system("grep '^#' sanity_check/onlyvariants.vcf > sanity_check/checked.vcf")
+
+        command = "grep '^#' sanity_check/onlyvariants.vcf > sanity_check/checked.vcf"
+        call(command, shell=True)
+
         #only chromossome numbers first
-        os.system("grep -E -v '^X|^Y|^M|^#|^GL' sanity_check/onlyvariants.vcf | sort -n -k1 -k2 >> sanity_check/checked.vcf")
-        #only X
-        os.system("grep -E '^X' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf")
-        #only Y
-        os.system("grep -E '^Y' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf")
-        #only MT
-        os.system("grep -E '^M' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf")
         
+        command = "grep -E -v '^X|^Y|^M|^#|^GL' sanity_check/onlyvariants.vcf | sort -n -k1 -k2 >> sanity_check/checked.vcf"
+        call(command, shell=True)
+
+        #only X
+        command = "grep -E '^X' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf"
+        call(command, shell=True)
+
+        #only Y
+        command = "grep -E '^Y' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf"
+        call(command, shell=True)
+
+        #only MT
+        command = "grep -E '^M' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf"
+        call(command, shell=True)
 
         # p = subprocess.call(command, 
         #     cwd=os.getcwd(), 
         #     env=env, 
         #     shell=True)
-        print 'This vcf was checked with sanity_check'
+        print('This vcf was sucessfully checked with sanity_check')
 
         # if p == 0:
         #     print 'This vcf was validated by vcf-sanity_check'

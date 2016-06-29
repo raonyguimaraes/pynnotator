@@ -1,6 +1,6 @@
 from .install import Installer
 
-from .helpers.validator import Validator 
+# from .helpers.validator import Validator 
 
 class Pynnotator(object):
     """A class to annotate VCFs

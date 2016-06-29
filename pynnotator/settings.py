@@ -37,6 +37,17 @@ vep_dir = '%s/vep/ensembl-tools-release-%s/scripts/variant_effect_predictor' % (
 
 ###Datasets
 
+#hi_score
+hi_score_file = "hi_index.bed.gz"
+hi_score_source = "https://googledrive.com/host/0B-sE2Or_3wlvTVJubTROQ2dYenc"
+
+#ensembl #HGMD PUBLIC
+ensembl_phenotype_file = 'Homo_sapiens_phenotype_associated.vcf.gz'
+ensembl_phenotype_source = 'ftp://ftp.ensembl.org/pub/grch37/release-84/variation/vcf/homo_sapiens/%s' % (ensembl_phenotype_file)
+
+ensembl_clinically_file = 'Homo_sapiens_clinically_associated.vcf.gz'
+ensembl_clinically_source = 'ftp://ftp.ensembl.org/pub/grch37/release-84/variation/vcf/homo_sapiens/%s' % (ensembl_clinically_file)
+
 #1000genomes
 genomes1k_vcf = 'ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf'
 genomes1k_file = '%s.gz' % (genomes1k_vcf)
@@ -60,4 +71,15 @@ dbnsfp_version = '3.2a'
 dbnsfp_file = 'dbNSFP%s.txt.gz' % (dbnsfp_version)
 dbnsfp_link = 'ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFPv%s.zip' % (dbnsfp_version)
 
-#paths
+#snpeff configs
+snpEff_memory = "4G"
+#vep configs
+vep_cores = 4
+
+#dbscsnv
+
+dbscsnv_version = '1.1'
+dbscsnv_file = 'dbscSNV%s.txt.gz' % (dbscsnv_version)
+dbscsnv_source = 'ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbscSNV%s.zip' % (dbscsnv_version)
+dbscsnv = '%s/dbnsfp/dbscSNV%s.txt.gz' % (data_dir,dbscsnv_version)
+

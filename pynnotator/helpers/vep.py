@@ -1,15 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from settings import *
-
 import argparse
 from datetime import datetime
 import os, shutil
 import shlex, subprocess
-import csv
 
-from settings import *
+from pynnotator import settings
+from subprocess import call
 
 parser = argparse.ArgumentParser(description='Annotate a VCF File with VEP.')
 parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')
@@ -34,54 +32,71 @@ class Vep(object):
     
     def run(self):
         tstart = datetime.now()
-        print tstart, 'Starting vep annotation: ', self.vcffile
+        print(tstart, 'Starting vep annotation: ', self.vcffile)
         
         self.annotate()
 
         tend = datetime.now()
         annotation_time =  tend - tstart
-        print tend, 'Finished vep annotation, it took: ', annotation_time        
+        print(tend, 'Finished vep annotation, it took: ', annotation_time)
 
     #convert and annotate the vcf file to vep
     def annotate(self):
 
-        command = 'perl %s/variant_effect_predictor.pl \
+        command = '''perl %s/variant_effect_predictor.pl \
         -i %s \
         --dir %s \
         -sift b -polyphen b \
-        -plugin %s \
-        --plugin %s \
         -o vep/vep.output.vcf --vcf --cache --force_overwrite \
         --no_progress \
+        --no_intergenic \
+        --numbers \
+        --biotype \
+        --total_length \
+        --coding_only \
         -pick \
         --offline \
         --symbol \
         1>vep/vep.log \
         --fork %s \
-        ' % (vep_dir, self.vcffile, vep_cache_dir, condel_plugin, dbscsnv_plugin, vep_cores)
+        ''' % (settings.vep_dir, self.vcffile, settings.vep_cache_dir, settings.vep_cores)
         # 1> vepreport.log \
         ##--pick \
+        # condel_plugin, dbscsnv_plugin, 
+        # -plugin %s \
+        # --plugin %s \
         
-        print command
+        print(command)
 
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
             shell=True)
 
         if p == 0:
-            print 'This vcf was annotated by %s' % (toolname)
+            print('This vcf was annotated by %s' % (toolname))
         else:
-            print 'Sorry this vcf could not be annotated by %s' % (toolname)
+            print('Sorry this vcf could not be annotated by %s' % (toolname))
 
         # command = '(grep ^# output.vep.vcf; grep -v ^# output.vep.vcf|sort -k1,1N -k2,2n) > output.vep.sorted.vcf'
         #Sort VCF file 
-        os.system("grep '^#' vep/vep.output.vcf > vep/vep.output.sorted.vcf")
-        os.system("grep -E -v '^X|^Y|^M|^#|^GL' vep/vep.output.vcf | sort -n -k1 -k2 >> vep/vep.output.sorted.vcf")
-        os.system("grep -E '^X' vep/vep.output.vcf | sort -k1,1d -k2,2n >> vep/vep.output.sorted.vcf")
-        os.system("grep -E '^Y' vep/vep.output.vcf | sort -k1,1d -k2,2n >> vep/vep.output.sorted.vcf")
-        os.system("grep -E '^M' vep/vep.output.vcf | sort -k1,1d -k2,2n >> vep/vep.output.sorted.vcf")
+        
 
-        print 'Finished sorting VCF'
+        command = '''grep '^#' vep/vep.output.vcf > vep/vep.output.sorted.vcf'''
+        call(command, shell=True)
+        
+        command = '''grep -E -v '^X|^Y|^M|^#|^GL' vep/vep.output.vcf | sort -n -k1 -k2 >> vep/vep.output.sorted.vcf'''
+        call(command, shell=True)
+
+        command = '''grep -E '^X' vep/vep.output.vcf | sort -k1,1d -k2,2n >> vep/vep.output.sorted.vcf'''
+        call(command, shell=True)
+
+        command = '''grep -E '^Y' vep/vep.output.vcf | sort -k1,1d -k2,2n >> vep/vep.output.sorted.vcf'''
+        call(command, shell=True)
+
+        command = '''grep -E '^M' vep/vep.output.vcf | sort -k1,1d -k2,2n >> vep/vep.output.sorted.vcf'''
+        call(command, shell=True)
+
+        print('Finished sorting VCF')
 
 if  __name__ == '__main__' :
     vep = Vep(args.vcffile)

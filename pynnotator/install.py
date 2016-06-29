@@ -25,6 +25,8 @@ class Installer(object):
         self.install_libs()
         self.build_datasets()
         # self.download_data()
+
+        print("Installation Finished with success! \n Now try testing with the command: pynnotator test")
         
 
     def install_requirements(self):
@@ -159,6 +161,9 @@ class Installer(object):
 
         self.download_snpeff_data()
         self.download_vep_data()
+
+        self.download_hi_score()
+        self.download_ensembl()        
         self.download_1000genomes()
         self.download_dbsnp()
         self.download_esp()
@@ -194,7 +199,36 @@ class Installer(object):
         # condel_config = "condel.dir=\\'%s/Plugins/config/Condel\\'" % (vep_cache_dir)
         # os.system('echo %s >> condel_SP.conf' % (condel_config))
 
-        
+    def download_hi_score(self):
+        os.chdir(data_dir)
+        # download hi_score
+        if not os.path.exists('hi_score'):
+            os.makedirs('hi_score')
+        os.chdir('hi_score')
+        if not os.path.isfile(settings.hi_score_file):
+            command = 'wget -c %s -O %s' % (settings.hi_score_source, settings.hi_score_file)
+            call(command, shell=True)
+            command = 'tabix -p vcf %s' % (settings.hi_score_file)
+            call(command, shell=True)
+
+    def download_ensembl(self):
+        os.chdir(data_dir)
+        # download hi_score
+        if not os.path.exists('ensembl'):
+            os.makedirs('ensembl')
+        os.chdir('ensembl')
+        if not os.path.isfile(settings.ensembl_phenotype_file):
+            command = 'wget -c %s -O %s' % (settings.ensembl_phenotype_source, settings.ensembl_phenotype_file)
+            call(command, shell=True)
+            command = 'tabix -p vcf %s' % (settings.ensembl_phenotype_file)
+            call(command, shell=True)
+
+        if not os.path.isfile(settings.ensembl_clinically_file):
+            command = 'wget -c %s -O %s' % (settings.ensembl_clinically_source, settings.ensembl_clinically_file)
+            call(command, shell=True)
+            command = 'tabix -p vcf %s' % (settings.ensembl_clinically_file)
+            call(command, shell=True)
+
     def download_1000genomes(self):
 
         os.chdir(data_dir)
@@ -274,66 +308,68 @@ class Installer(object):
 
     def download_dbnsfp(self):
         os.chdir(data_dir)
-        #download esp6500
+        #download dbnsfp
 
         if not os.path.exists('dbnsfp'):
             os.makedirs('dbnsfp')
         os.chdir('dbnsfp')
 
-        if True:#not os.path.isfile(settings.dbnsfp_file):
+        if not os.path.isfile(settings.dbnsfp_file):
 
             # --user=Anonymous --password=raonyguimaraes@gmail.com
             command = "wget -c %s -O dbNSFPv%s.zip" % (settings.dbnsfp_link, settings.dbnsfp_version)
-            call(command, shell=True)
+            # call(command, shell=True)
 
-            die()
 
             # Uncompress
             command = 'unzip dbNSFPv%s.zip' % (settings.dbnsfp_version)
             call(command, shell=True)
 
-            # Create a single file version
-            command = """(head -n 1 dbNSFP%s_variant.chr1 ;\
-            cat dbNSFP%s_variant.chr* | grep -v "^#" ) > dbNSFP%s.txt \
-            """ % (settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version)
+            #deal with header
+            command = """head -n 1 dbNSFP%s_variant.chr1 > header.txt """ % (settings.dbnsfp_version)
             call(command, shell=True)
 
-            die()
+            command = """cat dbNSFP%s_variant.chr* | grep -v "^#" > dbNSFP%s.unordered.txt""" % (settings.dbnsfp_version, settings.dbnsfp_version)
+            call(command, shell=True)
 
-            os.system('head -n 1 dbNSFP%s_variant.chr1 > dbNSFP%s.txt' % (settings.dbnsfp_version, settings.dbnsfp_version))
-            os.system('tail -n +2 dbNSFP%s_variant.chr* >> dbNSFP%s.txt' % (settings.dbnsfp_version, settings.dbnsfp_version))
-            # awk '{if(NR>1)print}'
-            # head -n 1 dbNSFP3.2a_variant.chr1 > dbNSFP3.2a.txt
+            command = """
+            sort -k1,1V -k2,2n dbNSFP%s.unordered.txt > dbNSFP%s.ordered.txt
+            cat header.txt > dbNSFP%s.txt
+            cat dbNSFP%s.ordered.txt >> dbNSFP%s.txt
+            """ % (settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version)
 
+            call(command, shell=True)
+            
             # Compress using block-gzip algorithm
             
-            os.system('bgzip dbNSFP%s.txt' % (dbnsfp_version))
-
+            command = 'bgzip dbNSFP%s.txt' % (settings.dbnsfp_version)
+            call(command, shell=True)
+            
             # Create tabix index
             # http://genome.sph.umich.edu/wiki/RareMETALS
             # NOTE: Tabix 1.X does not seem to support the indexing for generic tab-delimited files. To index the file, please use tabix 0.2.5 or earlier versions.
 
-            os.system('tabix -f -s 1 -b 2 -e 2 dbNSFP%s.txt.gz' % (dbnsfp_version))
+            command = 'tabix -f -s 1 -b 2 -e 2 dbNSFP%s.txt.gz' % (settings.dbnsfp_version)
+            call(command, shell=True)
 
+            #clean files
+            command = "rm dbNSFP*_variant* dbNSFP*_gene* *ordered.txt *.class *.in header.txt LICENSE.txt try.vcf search_dbNSFP32a.java search_dbNSFP32a.readme.pdf "
+            call(command, shell=True)
 
-            # for f in dbNSFP3.2a_variant.chr*; do
-            #   cat $f | awk '{if(NR>1)print}' >> dbNSFP3.2a.txt
-            # done
-            # root@4f5e8725433d:~/annotator/data/dbnsfp# bgzip -c dbNSFP3.2a.txt > dbNSFP3.2a.txt.gz
-            # root@4f5e8725433d:~/annotator/data/dbnsfp# tabix -f -s 1 -b 2 -e 2 dbNSFP3.2a.txt.gz
-            
-            # command = 'cd ..'
-            # os.system(command)
+            #keep original file dbNSFPv3.2a.zip
+            # call(command, shell=True)
 
-        if not os.path.isfile(dbscsnv):
-            command = 'wget ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbscSNV1.1.zip'
-            os.system(command)
-            command = 'unzip dbscSNV1.1.zip'
-            os.system(command)
-            command = 'head -n1 dbscSNV1.1.chr1 > h'
-            os.system(command)
-            command = 'cat dbscSNV1.1.chr* | grep -v ^chr | cat h - | bgzip -c > dbscSNV1.1.txt.gz'
-            os.system(command)
-            command = 'tabix -s 1 -b 2 -e 2 -c c dbscSNV1.1.txt.gz'
-            os.system(command)
+        if not os.path.isfile(settings.dbscsnv_file):
+            command = 'wget %s' % (settings.dbscsnv_source)
+            call(command, shell=True)
+            command = 'unzip dbscSNV%s.zip' % (settings.dbscsnv_version)
+            call(command, shell=True)
+            command = 'head -n1 dbscSNV%s.chr1 > h' % (settings.dbscsnv_version)
+            call(command, shell=True)
+            command = 'cat dbscSNV%s.chr* | grep -v ^chr | cat h - | bgzip -c > dbscSNV%s.txt.gz' % (settings.dbscsnv_version, settings.dbscsnv_version)
+            call(command, shell=True)
+            command = 'tabix -s 1 -b 2 -e 2 -c c dbscSNV%s.txt.gz' % (settings.dbscsnv_version)
+            call(command, shell=True)
 
+            command = "rm dbscSNV1.1.zip h *chr*"
+            call(command, shell=True)
