@@ -9,11 +9,6 @@ import shlex, subprocess
 from pynnotator import settings
 from subprocess import call
 
-parser = argparse.ArgumentParser(description='Annotate a VCF File with VEP.')
-parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')
-
-args = parser.parse_args()
-
 toolname = 'vep'
 
 class Vep(object):
@@ -66,7 +61,7 @@ class Vep(object):
         # -plugin %s \
         # --plugin %s \
         
-        print(command)
+        # print(command)
 
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
@@ -99,5 +94,10 @@ class Vep(object):
         print('Finished sorting VCF')
 
 if  __name__ == '__main__' :
+    parser = argparse.ArgumentParser(description='Annotate a VCF File with VEP.')
+    parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')
+
+    args = parser.parse_args()
+
     vep = Vep(args.vcffile)
     vep.run()

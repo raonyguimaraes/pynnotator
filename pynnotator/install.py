@@ -23,10 +23,10 @@ class Installer(object):
 
         # self.install_requirements()
         self.install_libs()
-        self.build_datasets()
-        # self.download_data()
-
-        print("Installation Finished with success! \n Now try testing with the command: pynnotator test")
+        self.download_data()
+        # self.build_datasets()
+        
+        print("Installation Finished with success!! \nNow try testing with the command: pynnotator test")
         
 
     def install_requirements(self):
@@ -150,6 +150,19 @@ class Installer(object):
             call(command, shell=True)
 
         os.chdir(libs_dir)
+
+    def download_data(self):
+        print("Downloading Data")
+
+        os.chdir(settings.BASE_DIR)
+
+        if not os.path.exists(settings.data_file):
+            command = "wget %s -O %s" %(settings.data_source, settings.data_file)
+            call(command, shell=True)
+
+            print("Extracting Data...")
+            command = "tar -zxvf %s" % (settings.data_file)
+            call(command, shell=True)
 
 
     def build_datasets(self):

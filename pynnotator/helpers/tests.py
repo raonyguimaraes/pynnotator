@@ -85,11 +85,11 @@ class TestAnnotator(unittest.TestCase):
     def test_008_vcf_annotator(self):
 
         # command = 'python %s/vcf_annotator.py -i %s' % (self.scripts_dir, self.sample)
-        command = 'python %s/vcf_annotator_parallel.py \
+        command = '''python %s/vcf_annotator_parallel.py \
         -i %s \
         -n %s \
         -r 1000genomes dbsnp clinvar esp6500 \
-        -a %s %s %s %s' % (self.scripts_dir, self.sample, pynnotator_cores, genomes1k, dbsnp, clinvar, esp)
+        -a %s %s %s %s''' % (self.scripts_dir, self.sample, pynnotator_cores, genomes1k, dbsnp, clinvar, esp)
 
         os.system(command)
         #now check if it worked!
@@ -98,9 +98,9 @@ class TestAnnotator(unittest.TestCase):
 
     def test_009_cadd_vest(self):
 
-        command = 'python %s/cadd_vest_parallel.py \
+        command = '''python %s/cadd_vest_parallel.py \
         -i %s \
-        -n %s' % (self.scripts_dir, self.sample, cadd_vest_cores)
+        -n %s''' % (self.scripts_dir, self.sample, cadd_vest_cores)
 
         os.system(command)
         #now check if it worked!

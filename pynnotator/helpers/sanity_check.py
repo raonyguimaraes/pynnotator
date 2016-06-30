@@ -5,7 +5,6 @@ import argparse
 from datetime import datetime
 import os, shutil
 import shlex, subprocess
-import csv
 from subprocess import call
 
 from pynnotator import settings
@@ -18,12 +17,6 @@ from pynnotator import settings
 - Remove annotation sumGLbyD from VCF that causes imcompatibility with snpeff
 """
 
-parser = argparse.ArgumentParser(description='Sanity Check a VCf File')
-
-parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')
-
-args = parser.parse_args()
-
 toolname = 'sanity_check'
 
 #enable perl5_lib
@@ -32,10 +25,10 @@ env['PERL5LIB'] = settings.vcftools_dir_perl
 
 
 class Sanity_check(object):
-    def __init__(self, vcffile=None):
+    def __init__(self, vcf_file=None):
         
-        self.vcffile = vcffile
-        self.filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
+        self.vcf_file = vcf_file
+        self.filename = os.path.splitext(os.path.basename(str(vcf_file)))[0]
         
         #create folder sanity_check if it doesn't exists
         if not os.path.exists('sanity_check'):
@@ -47,7 +40,7 @@ class Sanity_check(object):
     def run(self):
 
         tstart = datetime.now()
-        print(tstart, 'Starting sanity_check: ', self.vcffile)
+        print(tstart, 'Starting sanity_check: ', self.vcf_file)
         
         self.check()
 
@@ -58,7 +51,7 @@ class Sanity_check(object):
     #sanity vcf file with Vcftools
     def check(self):
 
-        file_vcf = open("%s" % (self.vcffile), 'r')
+        file_vcf = open("%s" % (self.vcf_file), 'r')
         out_vcf = open('sanity_check/onlyvariants.vcf', 'w')
         for line in file_vcf:
             if line.startswith('#'):
@@ -140,5 +133,11 @@ class Sanity_check(object):
         
 
 if  __name__ == '__main__' :
-    sanity_check = Sanity_check(args.vcffile)
+    parser = argparse.ArgumentParser(description='Sanity Check a VCf File')
+
+    parser.add_argument('-i', dest='vcf_file', required=True, metavar='example.vcf', help='a VCF file to be annotated')
+
+    args = parser.parse_args()
+
+    sanity_check = Sanity_check(args.vcf_file)
     sanity_check.run()

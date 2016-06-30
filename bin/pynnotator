@@ -1,20 +1,30 @@
 #!/usr/bin/env python
 
 import pynnotator
-
 import argparse
+import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument('install', help='install requirements',nargs='?') #nargs='?', , action='store_true', default=False
+parser.add_argument('options', help='install test',nargs='?') #nargs='?', , action='store_true', default=False
 # parser.add_argument('update', help='update libraries', required=False)
 
 parser.add_argument('-i', dest='vcf_file', required=False, metavar='example.vcf', help='a VCF file to be annotated')
-args = parser.parse_args()
 
-if args.install != None:
+args = parser.parse_args()
+print(args)
+if args.options == 'install':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.install()
 elif args.vcf_file != None:
     pynnotator = pynnotator.Pynnotator()
     pynnotator.annotate(args.vcf_file)
+if args.options == 'test':
+    pynnotator = pynnotator.Pynnotator()
+    vcf_file = ''
+
+    path = os.path.dirname(__file__)
+
+    print(path)
+    print(os.getcwd())
+    # pynnotator.annotate()
     

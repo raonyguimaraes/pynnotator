@@ -5,15 +5,8 @@ import argparse
 from datetime import datetime
 import os, shutil
 import shlex, subprocess
-import csv
 
 from pynnotator import settings
-
-parser = argparse.ArgumentParser(description='Annotate a VCF File with Snpeff.')
-
-parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')
-
-args = parser.parse_args()
 
 class Snpeff(object):
     def __init__(self, vcffile=None):
@@ -70,7 +63,7 @@ class Snpeff(object):
         # -i vcf -o vcf %s %s \
         # >snpeff/snpeff.output.vcf" % (java_path, snpEff_memory, snpeff_dir, snpeff_dir, snpeff_database, self.vcffile)
 
-        print(command)
+        # print(command)
         
         # -i vcf 
         # args = shlex.split(command)
@@ -82,7 +75,7 @@ class Snpeff(object):
         else:
             print('Sorry this vcf could not be anotated by snpeff')
 
-
+        return p
         # command = "java -Xmx40G -jar %s/GenomeAnalysisTK.jar \
         # -T VariantAnnotator \
         # -R %s \
@@ -109,5 +102,11 @@ class Snpeff(object):
 # 
 
 if  __name__ == '__main__' :
+    parser = argparse.ArgumentParser(description='Annotate a VCF File with Snpeff.')
+
+    parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')
+
+    args = parser.parse_args()
+
     snpeff = Snpeff(args.vcffile)
     snpeff.run()

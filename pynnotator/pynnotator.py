@@ -1,6 +1,5 @@
 from .install import Installer
-
-# from .helpers.validator import Validator 
+from .annotator import Annotator
 
 class Pynnotator(object):
     """A class to annotate VCFs
@@ -17,28 +16,7 @@ class Pynnotator(object):
         print('Starting Installation...')
         installer = Installer()
 
-    def build_datasets(self):
-        installer = Installer()
-        # installer.build_datasets()
-
     def annotate(self, vcf_file):
         print("Annotating VCF... %s" % (vcf_file))
-
-
-    def validate(self, vcf_file):
-
-        print("Validating VCF... %s" % (vcf_file))
-
-    # def withdraw(self, amount):
-    #     """Return the balance remaining after withdrawing *amount*
-    #     dollars."""
-    #     if amount > self.balance:
-    #         raise RuntimeError('Amount greater than available balance.')
-    #     self.balance -= amount
-    #     return self.balance
-    #
-    # def deposit(self, amount):
-    #     """Return the balance remaining after depositing *amount*
-    #     dollars."""
-    #     self.balance += amount
-    #     return self.balance
+        pynnotator = Annotator(vcf_file)
+        pynnotator.run()
