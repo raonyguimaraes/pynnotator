@@ -2,13 +2,20 @@ import os
 
 ###MAIN SETTINGS
 
-#snpeff configs
-snpEff_memory = "40G"
-snpsift_merge_memory ="40G"
-#vep configs
+snpEff_memory = "4G"
+snpsift_merge_memory ="4G"
 vep_cores = 4
-vcf_annotator_cores = 8
-cadd_dann_cores = 8
+vcf_annotator_cores = 4
+cadd_dann_cores = 4
+
+#server settings
+# #snpeff configs
+# snpEff_memory = "40G"
+# snpsift_merge_memory ="40G"
+# #vep configs
+# vep_cores = 4
+# vcf_annotator_cores = 8
+# cadd_dann_cores = 8
 
 #LIBS SETTINGS
 BASE_DIR = os.path.dirname(__file__)

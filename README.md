@@ -38,8 +38,9 @@ Installation
 
 1º Method::
     
+    mkvirtualenv -p /usr/bin/python3 pynnotator
+    pip install cython #(yes, you need to install cython first with a single command!)
     pip install pynnotator
-
     pynnotator install
 
 2º Method::

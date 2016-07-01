@@ -101,7 +101,7 @@ class Annotator(object):
             # #wait till finish to continue
             merge.join()
             
-            print("Annotation Completed!.")
+            print("Annotation Completed!")
             tend = datetime.now()
             execution_time = tend -  tstart
             # logging.info('Finished Annotation, it took %s' % (execution_time))
@@ -266,7 +266,7 @@ class Annotator(object):
         #compress annotation file to save space
         # command = '%s/bgzip merge/annotation.final.vcf' % (tabix_path)
         # os.system(command)
-        print('before merge', os.getcwd())
+        # print('before merge', os.getcwd())
         #move final file one up and delete folder!
         command = 'mv annotation.final.vcf ../'
         os.system(command)

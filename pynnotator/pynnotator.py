@@ -33,22 +33,28 @@ class Pynnotator(object):
         os.chdir(path)
         pynnotator = Annotator(vcf_file)
         pynnotator.run()
+
         os.chdir(path)
-        #compare result with reference
+
+        command = 'grep -v "^#" ann_sample.1000/annotation.final.vcf > result.vcf'
+        call(command, shell=True)
+
+        # compare result with reference
         try:
-            command = "zdiff annotation.final.vcf.gz ann_sample.1000/annotation.final.vcf"
+            command = "zdiff annotation.vcf.gz result.vcf"
             diff_1 = check_output(command, shell=True)
         except subprocess.CalledProcessError as e:
             diff_1 = '1'
         try:    
-            command = "zdiff annotation.final.v2.vcf.gz ann_sample.1000/annotation.final.vcf"
+            command = "zdiff annotation.v2.vcf.gz result.vcf"
             diff_2 = check_output(command, shell=True)
         except subprocess.CalledProcessError as e:
             diff_2 = '1'     
 
         # print(diff_1, diff_2)
         if diff_1 == b'' or diff_2 == b'':
-            print('Congratulations, The Python Annotation Framework is working as expected, Happy Annotation!!!') 
+            print('Congratulations, The Python Annotation Framework is working as expected, Happy Annotation!!!')
+ 
 
-        command = 'rm -rf ann_sample.1000'
+        command = 'rm -rf ann_sample.1000 result.vcf'
         call(command, shell=True)
