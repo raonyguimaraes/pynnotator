@@ -36,18 +36,19 @@ class Pynnotator(object):
         os.chdir(path)
         #compare result with reference
         try:
-            command = "diff annotation.final.vcf ann_sample.1000/annotation.final.vcf"
+            command = "zdiff annotation.final.vcf.gz ann_sample.1000/annotation.final.vcf"
             diff_1 = check_output(command, shell=True)
         except subprocess.CalledProcessError as e:
             diff_1 = '1'
         try:    
-            command = "diff annotation.final.v2.vcf ann_sample.1000/annotation.final.vcf"
+            command = "zdiff annotation.final.v2.vcf.gz ann_sample.1000/annotation.final.vcf"
             diff_2 = check_output(command, shell=True)
         except subprocess.CalledProcessError as e:
-            diff_2 = '1'            
+            diff_2 = '1'     
+
         # print(diff_1, diff_2)
         if diff_1 == b'' or diff_2 == b'':
-            print('Congratulations, The Annotation Framework is working as expected, Happy Annotation!!!') 
-        # print(std)
+            print('Congratulations, The Python Annotation Framework is working as expected, Happy Annotation!!!') 
+
         command = 'rm -rf ann_sample.1000'
         call(command, shell=True)

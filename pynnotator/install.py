@@ -21,7 +21,7 @@ class Installer(object):
     def __init__(self):
         """Return a Pynnotator Installer object """
 
-        # self.install_requirements()
+        self.install_requirements()
         self.install_libs()
         self.download_data()
         # self.build_datasets()
@@ -33,7 +33,7 @@ class Installer(object):
         """Install Ubuntu Requirements"""
         print('Install Ubuntu requirements')
         if platform.dist()[0] in ['Ubuntu', 'LinuxMint']:
-            command = 'sudo apt-get install python3-dev python3-pip python3-setuptools vcftools samtools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget gunzip'  # lamp-server^
+            command = 'sudo apt-get install python3-dev python3-pip python3-setuptools vcftools samtools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget'  # lamp-server^
             sts = call(command, shell=True)
 
             try:
@@ -149,6 +149,12 @@ class Installer(object):
             """ % (settings.vep_source, settings.vep_release, settings.vep_release)
             call(command, shell=True)
 
+            os.chdir(settings.vep_dir)
+            # download vep cache
+            command = """perl INSTALL.pl -a a"""
+            call(command, shell=True)
+
+
         os.chdir(libs_dir)
 
     def download_data(self):
@@ -156,7 +162,7 @@ class Installer(object):
 
         os.chdir(settings.BASE_DIR)
 
-        if not os.path.exists(settings.data_file):
+        if not os.path.exists(settings.data_dir):
             command = "wget %s -O %s" %(settings.data_source, settings.data_file)
             call(command, shell=True)
 
