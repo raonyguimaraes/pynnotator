@@ -43,13 +43,13 @@ class Merge(object):
         #merge 5 vcfs: snpeff, vep, snpsift, hi_index and hgmd 
         
         #snpeff
-        command = "java -Xmx40G -jar \
+        command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
         annotate -info EFF -noId \
         ../snpeff/snpeff.output.vcf \
         ../sanity_check/checked.vcf \
         > snpeff.vcf \
-        "% (settings.snpeff_dir)
+        "% (settings.snpsift_merge_memory, settings.snpeff_dir)
 
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
@@ -57,26 +57,26 @@ class Merge(object):
         # print 'snpeff'
 
         #vep
-        command = "java -Xmx40G -jar \
+        command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
         annotate -info CSQ -noId \
         ../vep/vep.output.sorted.vcf \
         snpeff.vcf \
         > snpeff.vep.vcf \
-        "% (settings.snpeff_dir)
+        "% (settings.snpsift_merge_memory, settings.snpeff_dir)
 
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
             shell=True)
         
         #snpsift
-        command = "java -Xmx40G -jar \
+        command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
         annotate -info VARTYPE,SNP,MNP,INS,DEL,MIXED,HOM,HET -noId \
         ../snpsift/snpsift.final.vcf \
         snpeff.vep.vcf \
         > snpsift.snpeff.vep.vcf \
-        "% (settings.snpeff_dir)
+        "% (settings.snpsift_merge_memory, settings.snpeff_dir)
 
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
@@ -84,13 +84,13 @@ class Merge(object):
 
         
         #hi_index
-        command = "java -Xmx40G -jar \
+        command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
         annotate -info HI_INDEX -noId \
         ../hi_index/hi_index.vcf \
         snpsift.snpeff.vep.vcf \
         > hi_index.snpsift.snpeff.vep.vcf \
-        "% (settings.snpeff_dir)
+        "% (settings.snpsift_merge_memory, settings.snpeff_dir)
 
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
@@ -112,13 +112,13 @@ class Merge(object):
         
 
         #pynnotator - 1000genomes, dbsnp, clinvar, esp6500, ensembl
-        command = "java -Xmx40G -jar \
+        command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
         annotate -noId \
         ../pynnotator/pynnotator.vcf \
         hi_index.snpsift.snpeff.vep.vcf \
         > 1kgenomes.dbsnp.clinvar.esp.hi_index.snpsift.snpeff.vep.vcf  \
-        " % (settings.snpeff_dir)
+        " % (settings.snpsift_merge_memory, settings.snpeff_dir)
 
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
@@ -128,13 +128,13 @@ class Merge(object):
         
 
         #cadd_vest
-        command = "java -Xmx40G -jar \
+        command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
         annotate -noId -info dbNSFP_DANN_score,dbNSFP_DANN_rankscore,dbNSFP_CADD_raw,dbNSFP_CADD_raw_rankscore,dbNSFP_CADD_phred \
         ../cadd_dann/cadd_dann.vcf \
         1kgenomes.dbsnp.clinvar.esp.hi_index.snpsift.snpeff.vep.vcf \
         > cadd_dann.1kgenomes.dbsnp.clinvar.esp.hi_index.snpsift.snpeff.vep.vcf  \
-        "% (settings.snpeff_dir)
+        "% (settings.snpsift_merge_memory, settings.snpeff_dir)
 
 
         p = subprocess.call(command, 
@@ -142,13 +142,13 @@ class Merge(object):
             shell=True)
 
         #dbsnp
-        command = "java -Xmx40G -jar \
+        command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
         annotate -id \
         %s \
         cadd_dann.1kgenomes.dbsnp.clinvar.esp.hi_index.snpsift.snpeff.vep.vcf \
         > annotation.final.vcf  \
-        "% (settings.snpeff_dir,settings.dbsnp)
+        "% (settings.snpsift_merge_memory, settings.snpeff_dir,settings.dbsnp)
 
 
         p = subprocess.call(command, 

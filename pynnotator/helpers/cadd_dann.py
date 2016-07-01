@@ -45,7 +45,7 @@ class CADD_DANN_Annotator(object):
 
         tstart = datetime.now()
 
-        print(tstart, 'Starting vcf annotator: ', self.vcf_file)
+        print(tstart, 'Starting cadd dann annotator: ', self.vcf_file)
         
         # std = self.annotator()
 

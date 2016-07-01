@@ -168,14 +168,14 @@ class VCF_Annotator(object):
                             for k in info:
 
                                 #treat k for snpsift
-                                k = k.replace('=)',')')
-                                k = k.replace('http://www.ncbi.nlm.nih.gov/pubmed?term=','PMID')
+                                # k = k.replace('=)',')')
+                                # k = k.replace('http://www.ncbi.nlm.nih.gov/pubmed?term=','PMID')
                                 #remove equal signs (for snpsift)
                                 # = for %3D
-                                if k.count('=') > 1:
-                                    string = k.split('=', 1)
-                                    string[1] = string[1].replace('=', '%3D')
-                                    k = '%s=%s' % (string[0], string[1])
+                                # if k.count('=') > 1:
+                                #     string = k.split('=', 1)
+                                #     string[1] = string[1].replace('=', '%3D')
+                                #     k = '%s=%s' % (string[0], string[1])
 
                                 new_ann.append('%s.%s' % (self.resources[key], k))
                             variant[7] = '%s;%s' % (variant[7], ";".join(new_ann))
