@@ -7,7 +7,7 @@ snpEff_memory = "40G"
 snpsift_merge_memory ="40G"
 #vep configs
 vep_cores = 4
-vcf_annotator_cores = 12
+vcf_annotator_cores = 8
 cadd_dann_cores = 8
 
 #LIBS SETTINGS

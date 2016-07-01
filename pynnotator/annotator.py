@@ -298,16 +298,17 @@ class Annotator(object):
         # command = 'python %s/vcf_annotator_parallel.py -n %s -i sanity_check/checked.vcf -r 1000genomes dbsnp clinvar esp6500 -a %s %s %s %s 2>log/pynnotator.log' % (scripts_dir, pynnotator_cores, genomes1k, dbsnp, clinvar, esp)
         # self.shell(command)
 
-        resources = "genomes1k dbsnp clinvar ensembl_phen ensembl_clin"# esp6500   
+        resources = "genomes1k dbsnp clinvar esp6500 ensembl_phen ensembl_clin"#    
         resources = resources.split(' ')
         annfiles = [
         "%s/1000genomes/%s" % (settings.data_dir, settings.genomes1k_file),
         "%s/dbsnp/%s" % (settings.data_dir, settings.dbsnp_file),
         "%s/dbsnp/%s" % (settings.data_dir, settings.clinvar_file),
+        "%s/esp6500/%s" % (settings.data_dir, settings.esp_final_file),
         "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_phenotype_file),
         "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_clinically_file),
         ]
-        #        "%s/esp6500/%s" % (settings.data_dir, settings.esp_final_file),
+        #        
  
 
 

@@ -1,9 +1,16 @@
-annotator:
-  # image: ubuntu
-  # image: ubuntu:16.04
-  build: .
-  volumes:
-    - ./compose_home:/root
-  # working_dir: /root/annotator
-  # entrypoint:
-  # command: ["/bin/bash"], "install.sh"
+
+version: '2'
+services:
+  pynnotator:
+    build: .
+
+
+# annotator:
+#   # image: ubuntu
+#   # image: ubuntu:16.04
+#   build: .
+#   volumes:
+#     - ./compose_home:/root
+#   # working_dir: /root/annotator
+#   # entrypoint:
+#   # command: ["/bin/bash"], "install.sh"

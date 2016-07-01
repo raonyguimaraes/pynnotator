@@ -55,6 +55,8 @@ class VCF_Annotator(object):
 
         pool = mp.Pool()
         pool.map(self.annotate, range(1,self.cores+1))
+        # pool.close()
+        # pool.join()
 
         prefix = 'pynnotator'
         # # Define your jobs
@@ -105,6 +107,7 @@ class VCF_Annotator(object):
             part_writer = open('%s/part.%s.vcf' % (prefix, part), 'w')
             for line in group:
                 part_writer.writelines(line)
+            part_writer.close()
 
     #convert and annotate the vcf file to snpeff
     def annotate(self, out_prefix):
@@ -172,12 +175,15 @@ class VCF_Annotator(object):
                                 # k = k.replace('http://www.ncbi.nlm.nih.gov/pubmed?term=','PMID')
                                 #remove equal signs (for snpsift)
                                 # = for %3D
-                                # if k.count('=') > 1:
-                                #     string = k.split('=', 1)
-                                #     string[1] = string[1].replace('=', '%3D')
-                                #     k = '%s=%s' % (string[0], string[1])
+                                if k.count('=') > 1:
+                                    new_string = k.split('=', 1)
+                                    # print(new_string)
+                                    new_string[1] = new_string[1].replace('=', '')
+                                    k = '%s=%s' % (new_string[0], new_string[1])
+                                    # print(k)
 
                                 new_ann.append('%s.%s' % (self.resources[key], k))
+
                             variant[7] = '%s;%s' % (variant[7], ";".join(new_ann))
                         #add rs_ID
                         if self.resources[key] == 'dbsnp':

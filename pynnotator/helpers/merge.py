@@ -41,7 +41,7 @@ class Merge(object):
         BASE_DIR = os.getcwd()
 
         #merge 5 vcfs: snpeff, vep, snpsift, hi_index and hgmd 
-        
+        # print('merge snpeff')
         #snpeff
         command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
@@ -55,7 +55,7 @@ class Merge(object):
             cwd=os.getcwd(), 
             shell=True)
         # print 'snpeff'
-
+        # print('merge vep')
         #vep
         command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
@@ -68,7 +68,7 @@ class Merge(object):
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
             shell=True)
-        
+        # print('merge snpsift')
         #snpsift
         command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
@@ -82,7 +82,7 @@ class Merge(object):
             cwd=os.getcwd(), 
             shell=True)
 
-        
+        # print('merge hi_index')
         #hi_index
         command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
@@ -110,7 +110,7 @@ class Merge(object):
         #     cwd=os.getcwd(), 
         #     shell=True)
         
-
+        # print('merge pynnotator')
         #pynnotator - 1000genomes, dbsnp, clinvar, esp6500, ensembl
         command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
@@ -126,8 +126,8 @@ class Merge(object):
 
         # print   'cadd vest'
         
-
-        #cadd_vest
+        # print('merge cadd_dann')
+        #cadd_dann
         command = "java -Xmx%s -jar \
         %s/SnpSift.jar \
         annotate -noId -info dbNSFP_DANN_score,dbNSFP_DANN_rankscore,dbNSFP_CADD_raw,dbNSFP_CADD_raw_rankscore,dbNSFP_CADD_phred \
@@ -141,6 +141,7 @@ class Merge(object):
             cwd=os.getcwd(), 
             shell=True)
 
+        # print('merge dbsnp')
         #dbsnp
         command = "java -Xmx%s -jar \
         %s/SnpSift.jar \

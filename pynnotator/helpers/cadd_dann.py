@@ -53,6 +53,8 @@ class CADD_DANN_Annotator(object):
 
         pool = mp.Pool()
         pool.map(self.annotate, range(1,self.cores+1))
+        # pool.close()
+        # pool.join()
 
         prefix = 'cadd_dann'
         # # Define your jobs
@@ -104,6 +106,7 @@ class CADD_DANN_Annotator(object):
             part_writer = open('%s/part.%s.vcf' % (prefix, part), 'w')
             for line in group:
                 part_writer.writelines(line)
+            part_writer.close()
 
     #convert and annotate the vcf file to snpeff
     def annotate(self, out_prefix):
