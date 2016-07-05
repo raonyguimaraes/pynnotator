@@ -15,10 +15,18 @@ args = parser.parse_args()
 if args.options == 'install':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.install()
+elif args.options == 'install_libs':
+    pynnotator = pynnotator.Pynnotator()
+    pynnotator.install_libs()
+elif args.options == 'install_requirements':
+    pynnotator = pynnotator.Pynnotator()
+    pynnotator.install_requirements()
+elif args.options == 'build':
+    pynnotator = pynnotator.Pynnotator()
+    pynnotator.build()
 elif args.vcf_file != None:
     pynnotator = pynnotator.Pynnotator()
     pynnotator.annotate(args.vcf_file)
-if args.options == 'test':
+elif args.options == 'test':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.test()
-    

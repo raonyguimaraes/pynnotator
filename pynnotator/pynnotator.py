@@ -20,7 +20,22 @@ class Pynnotator(object):
     def install(self):
         print('Starting Installation...')
         installer = Installer()
-
+        installer.install()
+        
+        print("Installation Finished with success!! \nNow try testing with the command: pynnotator test")
+        
+    def install_libs(self):
+        print('Installing Libs...')
+        installer = Installer()
+        installer.install_libs()
+    def install_requirements(self):
+        print('Installing Libs...')
+        installer = Installer()
+        installer.install_requirements()
+    def build(self):
+        print('Building Databasets...')
+        installer = Installer()
+        installer.build_datasets()
     def annotate(self, vcf_file):
         print("Annotating VCF... %s" % (vcf_file))
         pynnotator = Annotator(vcf_file)
@@ -33,7 +48,6 @@ class Pynnotator(object):
         os.chdir(path)
         pynnotator = Annotator(vcf_file)
         pynnotator.run()
-
         os.chdir(path)
 
         command = 'grep -v "^#" ann_sample.1000/annotation.final.vcf > result.vcf'
@@ -47,7 +61,7 @@ class Pynnotator(object):
             diff_1 = '1'
         try:    
             command = "zdiff annotation.v2.vcf.gz result.vcf"
-            diff_2 = check_output(command, shell=True)
+            diff_2 = check_output(command, shell=True)#check_output
         except subprocess.CalledProcessError as e:
             diff_2 = '1'     
 

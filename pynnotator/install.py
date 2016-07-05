@@ -20,13 +20,13 @@ class Installer(object):
 
     def __init__(self):
         """Return a Pynnotator Installer object """
+        
 
+    def install(self):
         self.install_requirements()
         self.install_libs()
         self.download_data()
         # self.build_datasets()
-        
-        print("Installation Finished with success!! \nNow try testing with the command: pynnotator test")
         
 
     def install_requirements(self):
@@ -41,9 +41,10 @@ class Installer(object):
             except:
 
                 command = """sudo apt install software-properties-common
-                       sudo add-apt-repository ppa:webupd8team/java
+                       sudo add-apt-repository -y ppa:webupd8team/java
                        sudo apt-get update
-                       sudo apt-get install oracle-java8-installer"""
+                       echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
+                       sudo apt-get -y install oracle-java8-installer"""
 
                 sts = call(command, shell=True)
 
@@ -63,6 +64,19 @@ class Installer(object):
         self.install_vcftools()
         self.install_snpeff()
         self.install_vep()
+
+    def download_data(self):
+        print("Downloading Data")
+
+        os.chdir(settings.BASE_DIR)
+
+        if not os.path.exists(settings.data_dir):
+            command = "wget %s -O %s" %(settings.data_source, settings.data_file)
+            call(command, shell=True)
+
+            print("Extracting Data...")
+            command = "tar -zxvf %s" % (settings.data_file)
+            call(command, shell=True)
 
 
     def install_java(self):
@@ -149,27 +163,15 @@ class Installer(object):
             """ % (settings.vep_source, settings.vep_release, settings.vep_release)
             call(command, shell=True)
 
-            os.chdir(settings.vep_dir)
-            # download vep cache
-            command = """perl INSTALL.pl -a a"""
-            call(command, shell=True)
+        os.chdir(settings.vep_dir)
+        # download vep cache
+        command = """perl INSTALL.pl -a a"""
+        call(command, shell=True)
 
 
         os.chdir(libs_dir)
 
-    def download_data(self):
-        print("Downloading Data")
-
-        os.chdir(settings.BASE_DIR)
-
-        if not os.path.exists(settings.data_dir):
-            command = "wget %s -O %s" %(settings.data_source, settings.data_file)
-            call(command, shell=True)
-
-            print("Extracting Data...")
-            command = "tar -zxvf %s" % (settings.data_file)
-            call(command, shell=True)
-
+    
 
     def build_datasets(self):
         print("Building Datasets")
