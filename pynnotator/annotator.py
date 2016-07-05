@@ -339,7 +339,7 @@ class Annotator(object):
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished annovar, it took %s' % (execution_time))
-        print('Finished CADD VEST, it took %s' % (execution_time))
+        print('Finished CADD DANN, it took %s' % (execution_time))
 
 
 

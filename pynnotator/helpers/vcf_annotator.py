@@ -37,6 +37,9 @@ class VCF_Annotator(object):
                 if line.startswith('#'):
                     if line.startswith('##INFO'):
                         row = line.split('=')
+                        #this treats HGMD-PUBLIC_20152
+                        row[2] = row[2].replace('HGMD-', 'HGMD_')
+
                         row[2] = '%s.%s' % (self.resources[key], row[2])
                         info = "=".join(row)
                         self.annheader[key].append(info)
@@ -181,7 +184,7 @@ class VCF_Annotator(object):
                                     new_string[1] = new_string[1].replace('=', '')
                                     k = '%s=%s' % (new_string[0], new_string[1])
                                     # print(k)
-
+                                k = k.replace('HGMD-', 'HGMD_')
                                 new_ann.append('%s.%s' % (self.resources[key], k))
 
                             variant[7] = '%s;%s' % (variant[7], ";".join(new_ann))
