@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 #test vcf annotation in parallel on python 3
 
 import pysam
@@ -123,7 +125,7 @@ class VCF_Annotator(object):
             annfiles[n] = {}
             annfiles[n]['resource'] = self.resources[n]
             annfiles[n]['file'] = value
-            annfiles[n]['reader'] = pysam.Tabixfile(annfiles[n]['file'])
+            annfiles[n]['reader'] = pysam.Tabixfile(annfiles[n]['file'],encoding="utf-8")
 
          
         vcf_file = 'pynnotator/part.%s.vcf' % (out_prefix)
@@ -147,9 +149,9 @@ class VCF_Annotator(object):
                     # vcf_reader = vcf.Reader(filename=annfile['file'])
                     try:
                         records = annfiles[key]['reader'].fetch(variant[0], int(variant[1])-1, int(variant[1]))
-
                     except:
                         records = []
+                        
                     for record in records:
 
                         row = record.split('\t')

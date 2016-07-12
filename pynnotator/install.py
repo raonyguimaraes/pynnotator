@@ -23,7 +23,7 @@ class Installer(object):
         
 
     def install(self):
-        self.install_requirements()
+        # self.install_requirements()
         self.install_libs()
         self.download_data()
         # self.build_datasets()
@@ -49,7 +49,7 @@ class Installer(object):
                 sts = call(command, shell=True)
 
             # Perl Requirements
-            command = "sudo cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta"
+            command = "sudo cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI"
             sts = call(command, shell=True)
 
 
@@ -60,10 +60,29 @@ class Installer(object):
         os.chdir(libs_dir)
         
         # self.install_java()
+
         self.install_htslib()
         self.install_vcftools()
         self.install_snpeff()
         self.install_vep()
+
+
+    def build_datasets(self):
+        print("Building Datasets")
+
+        if not os.path.exists(data_dir):
+            os.makedirs(data_dir)
+        os.chdir(data_dir)
+
+        self.download_snpeff_data()
+        self.download_vep_data()
+
+        self.download_hi_score()
+        self.download_ensembl()        
+        self.download_1000genomes()
+        self.download_dbsnp()
+        self.download_esp()
+        self.download_dbnsfp()
 
     def download_data(self):
         print("Downloading Data")
@@ -170,25 +189,6 @@ class Installer(object):
 
 
         os.chdir(libs_dir)
-
-    
-
-    def build_datasets(self):
-        print("Building Datasets")
-
-        if not os.path.exists(data_dir):
-            os.makedirs(data_dir)
-        os.chdir(data_dir)
-
-        self.download_snpeff_data()
-        self.download_vep_data()
-
-        self.download_hi_score()
-        self.download_ensembl()        
-        self.download_1000genomes()
-        self.download_dbsnp()
-        self.download_esp()
-        self.download_dbnsfp()
         
 
     def download_snpeff_data(self):

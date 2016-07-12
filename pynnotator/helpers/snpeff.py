@@ -53,6 +53,8 @@ class Snpeff(object):
         -no-utr -canon \
         -classic -i vcf -t  %s %s \
         >snpeff/snpeff.output.vcf""" % (settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database, self.vcffile)
+        # print(command)
+        
 
 
         #snpeff 2.0.5d

@@ -16,7 +16,7 @@ from threading import Thread
 
 from pynnotator import settings
 
-from .helpers import validator, sanity_check, snpeff, vep, hi_index, snpsift, vcf_annotator, cadd_dann, merge
+from .helpers import validator, sanity_check, snpeff, vep, hi_index, snpsift, vcf_annotator, func_pred, merge
 
 class Annotator(object):
 
@@ -85,8 +85,8 @@ class Annotator(object):
             vcf_annotator = Thread(target=self.vcf_annotator)
             threads.append(vcf_annotator)
 
-            cadd_dann = Thread(target=self.cadd_dann) #took 0:17:40.699580
-            threads.append(cadd_dann)
+            func_pred = Thread(target=self.func_pred) #took 0:17:40.699580
+            threads.append(func_pred)
 
             #execute all tasks in parallel
             for thread in threads:
@@ -324,8 +324,8 @@ class Annotator(object):
         execution_time = tend -  tstart
         #logging.info('Finished annovar, it took %s' % (execution_time))
         print('Finished vcf_annotator, it took %s' % (execution_time))
-    def cadd_dann(self):
-        """CADD DANN"""
+    def func_pred(self):
+        """func_pred"""
         
         tstart = datetime.now()
 
@@ -333,13 +333,13 @@ class Annotator(object):
 
         # command = 'python %s/cadd_dann.py -n %s -i sanity_check/checked.vcf 2>log/cadd_dann.log' % (scripts_dir, cadd_vest_cores)
         # self.shell(command)
-        cd = cadd_dann.CADD_DANN_Annotator(self.vcf_file, settings.cadd_dann_cores)
-        cd.run()
+        fp = func_pred.FUNC_PRED_Annotator(self.vcf_file, settings.func_pred_cores)
+        fp.run()
         
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished annovar, it took %s' % (execution_time))
-        print('Finished CADD DANN, it took %s' % (execution_time))
+        print('Finished Func Pred, it took %s' % (execution_time))
 
 
 
