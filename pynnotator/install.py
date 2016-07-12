@@ -23,10 +23,10 @@ class Installer(object):
         
 
     def install(self):
-        # self.install_requirements()
+        self.install_requirements()
         self.install_libs()
         self.download_data()
-        # self.build_datasets()
+        self.build_datasets()
         
 
     def install_requirements(self):

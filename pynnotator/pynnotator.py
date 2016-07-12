@@ -59,11 +59,12 @@ class Pynnotator(object):
             diff_1 = check_output(command, shell=True)
         except subprocess.CalledProcessError as e:
             diff_1 = '1'
+
         try:    
             command = "zdiff annotation.v2.vcf.gz result.vcf"
             diff_2 = check_output(command, shell=True)#check_output
         except subprocess.CalledProcessError as e:
-            diff_2 = '1'     
+            diff_2 = '1'
 
         # print(diff_1, diff_2)
         if diff_1 == b'' or diff_2 == b'':

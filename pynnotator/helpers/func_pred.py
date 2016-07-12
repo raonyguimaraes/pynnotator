@@ -257,10 +257,11 @@ class FUNC_PRED_Annotator(object):
                             idx = k+func_pred_start
                             if ann[idx] != '.':
                                 new_ann.append('dbNSFP_%s=%s' % (item, ann[idx].replace(';', '|')))
+
                         for k, item in enumerate(header[clinvar_start:clinvar_end]):
                             idx = k+clinvar_start
                             if ann[idx] != '.':
-                                new_ann.append('dbNSFP_%s=%s' % (item, ann[idx].replace(';', '|')))
+                                new_ann.append('dbNSFP_%s=%s' % (item, ann[idx].replace(';', '|').replace(' ', '_')))
 
                         variant[7] = '%s;%s' % (variant[7], ";".join(new_ann))
                 vcf_writer.writelines("\t".join(variant))
