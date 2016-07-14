@@ -49,7 +49,7 @@ class Vep(object):
         --biotype \
         --total_length \
         --coding_only \
-        -pick \
+        --pick \
         --offline \
         --symbol \
         1>vep/vep.log \
@@ -61,8 +61,6 @@ class Vep(object):
         # -plugin %s \
         # --plugin %s \
         
-        # print(command)
-
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
             shell=True)
