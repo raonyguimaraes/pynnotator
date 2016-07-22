@@ -154,7 +154,7 @@ class FUNC_PRED_Annotator(object):
 
         tend = datetime.now()
         annotation_time =  tend - tstart
-        print(tend, 'Finished vcf annotator, it took: ', annotation_time)
+        print(tend, 'Finished func pred, it took: ', annotation_time)
 
 
     def partition(self, lst, n):

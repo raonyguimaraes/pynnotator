@@ -10,12 +10,12 @@ func_pred_cores = 2
 
 #server settings
 #snpeff configs
-# snpEff_memory = "40G"
-# snpsift_merge_memory ="40G"
-# #vep configs
-# vep_cores = 4
-# vcf_annotator_cores = 8
-# func_pred_cores = 8
+snpEff_memory = "40G"
+snpsift_merge_memory ="40G"
+#vep configs
+vep_cores = 4
+vcf_annotator_cores = 8
+func_pred_cores = 8
 
 #LIBS SETTINGS
 BASE_DIR = os.path.dirname(__file__)

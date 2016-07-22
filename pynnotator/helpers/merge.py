@@ -34,28 +34,28 @@ class Merge(object):
 
         self.annotation_files['snpeff'] = {
             'info':'EFF', 
-            'file':pysam.Tabixfile('../snpeff/snpeff.output.vcf.gz', 'r')
+            'file':pysam.Tabixfile('../snpeff/snpeff.output.vcf.gz', 'r' ,encoding="utf-8")
             }
 
         pysam.tabix_index('../vep/vep.output.sorted.vcf', preset='vcf')
 
         self.annotation_files['vep'] = {
             'info':'CSQ', 
-            'file':pysam.Tabixfile('../vep/vep.output.sorted.vcf.gz', 'r')
+            'file':pysam.Tabixfile('../vep/vep.output.sorted.vcf.gz', 'r', encoding="utf-8")
             }
 
         pysam.tabix_index('../snpsift/snpsift.final.vcf', preset='vcf')
 
         self.annotation_files['vartype'] = {
             'info':'VARTYPE,SNP,MNP,INS,DEL,MIXED,HOM,HET', 
-            'file':pysam.Tabixfile('../snpsift/snpsift.final.vcf.gz', 'r')
+            'file':pysam.Tabixfile('../snpsift/snpsift.final.vcf.gz', 'r', encoding="utf-8")
             }
 
         pysam.tabix_index('../hi_index/hi_index.vcf', preset='vcf')
 
         self.annotation_files['hi_index'] = {
             'info':'HI_INDEX', 
-            'file':pysam.Tabixfile('../hi_index/hi_index.vcf.gz', 'r')
+            'file':pysam.Tabixfile('../hi_index/hi_index.vcf.gz', 'r', encoding="utf-8")
             }
 
         pysam.tabix_index('../pynnotator/pynnotator.vcf', preset='vcf')
@@ -65,17 +65,17 @@ class Merge(object):
 
         self.annotation_files['pynnotator'] = {
             'info':'ALL', 
-            'file':pysam.Tabixfile('../pynnotator/pynnotator.vcf.gz', 'r')
+            'file':pysam.Tabixfile('../pynnotator/pynnotator.vcf.gz', 'r', encoding="utf-8")
             }
 
         pysam.tabix_index('../func_pred/func_pred.vcf', preset='vcf')
 
         self.annotation_files['dbnfsp'] = {
             'info':'dbNSFP_SIFT_score,dbNSFP_SIFT_converted_rankscore,dbNSFP_SIFT_pred,dbNSFP_Uniprot_acc_Polyphen2,dbNSFP_Uniprot_id_Polyphen2,dbNSFP_Uniprot_aapos_Polyphen2,dbNSFP_Polyphen2_HDIV_score,dbNSFP_Polyphen2_HDIV_rankscore,dbNSFP_Polyphen2_HDIV_pred,dbNSFP_Polyphen2_HVAR_score,dbNSFP_Polyphen2_HVAR_rankscore,dbNSFP_Polyphen2_HVAR_pred,dbNSFP_LRT_score,dbNSFP_LRT_converted_rankscore,dbNSFP_LRT_pred,dbNSFP_LRT_Omega,dbNSFP_MutationTaster_score,dbNSFP_MutationTaster_converted_rankscore,dbNSFP_MutationTaster_pred,dbNSFP_MutationTaster_model,dbNSFP_MutationTaster_AAE,dbNSFP_MutationAssessor_UniprotID,dbNSFP_MutationAssessor_variant,dbNSFP_MutationAssessor_score,dbNSFP_MutationAssessor_rankscore,dbNSFP_MutationAssessor_pred,dbNSFP_FATHMM_score,dbNSFP_FATHMM_converted_rankscore,dbNSFP_FATHMM_pred,dbNSFP_PROVEAN_score,dbNSFP_PROVEAN_converted_rankscore,dbNSFP_PROVEAN_pred,dbNSFP_Transcript_id_VEST3,dbNSFP_Transcript_var_VEST3,dbNSFP_VEST3_score,dbNSFP_VEST3_rankscore,dbNSFP_MetaSVM_score,dbNSFP_MetaSVM_rankscore,dbNSFP_MetaSVM_pred,dbNSFP_MetaLR_score,dbNSFP_MetaLR_rankscore,dbNSFP_MetaLR_pred,dbNSFP_Reliability_index,dbNSFP_CADD_raw,dbNSFP_CADD_raw_rankscore,dbNSFP_CADD_phred,dbNSFP_DANN_score,dbNSFP_DANN_rankscore,dbNSFP_fathmm-MKL_coding_score,dbNSFP_fathmm-MKL_coding_rankscore,dbNSFP_fathmm-MKL_coding_pred,dbNSFP_fathmm-MKL_coding_group,dbNSFP_Eigen-raw,dbNSFP_Eigen-phred,dbNSFP_Eigen-raw_rankscore,dbNSFP_Eigen-PC-raw,dbNSFP_Eigen-PC-raw_rankscore,dbNSFP_GenoCanyon_score,dbNSFP_GenoCanyon_score_rankscore,dbNSFP_integrated_fitCons_score,dbNSFP_integrated_fitCons_rankscore,dbNSFP_integrated_confidence_value,dbNSFP_GM12878_fitCons_score,dbNSFP_GM12878_fitCons_rankscore,dbNSFP_GM12878_confidence_value,dbNSFP_H1-hESC_fitCons_score,dbNSFP_H1-hESC_fitCons_rankscore,dbNSFP_H1-hESC_confidence_value,dbNSFP_HUVEC_fitCons_score,dbNSFP_HUVEC_fitCons_rankscore,dbNSFP_HUVEC_confidence_value,dbNSFP_GERP++_NR,dbNSFP_GERP++_RS,dbNSFP_GERP++_RS_rankscore,dbNSFP_phyloP100way_vertebrate,dbNSFP_phyloP100way_vertebrate_rankscore,dbNSFP_phyloP20way_mammalian,dbNSFP_phyloP20way_mammalian_rankscore,dbNSFP_phastCons100way_vertebrate,dbNSFP_phastCons100way_vertebrate_rankscore,dbNSFP_phastCons20way_mammalian,dbNSFP_phastCons20way_mammalian_rankscore,dbNSFP_SiPhy_29way_pi,dbNSFP_SiPhy_29way_logOdds,dbNSFP_SiPhy_29way_logOdds_rankscore,dbNSFP_clinvar_rs,dbNSFP_clinvar_clnsig,dbNSFP_clinvar_trait,dbNSFP_clinvar_golden_stars', 
-            'file':pysam.Tabixfile('../func_pred/func_pred.vcf.gz', 'r')
+            'file':pysam.Tabixfile('../func_pred/func_pred.vcf.gz', 'r', encoding="utf-8")
             }
 
-        self.dbsnp = pysam.Tabixfile(settings.dbsnp, 'r')
+        self.dbsnp = pysam.Tabixfile(settings.dbsnp, 'r', encoding="utf-8")
     
     def run(self):
         tstart = datetime.now()
