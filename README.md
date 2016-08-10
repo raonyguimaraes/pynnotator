@@ -43,9 +43,6 @@ Installation
     pip install pynnotator
     pynnotator install
 
-2º Method::
-    
-    docker-compose up
 
 Test
 ====
