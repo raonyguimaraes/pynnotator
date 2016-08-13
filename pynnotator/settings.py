@@ -10,12 +10,12 @@ func_pred_cores = 2
 
 #server settings
 #snpeff configs
-snpEff_memory = "40G"
-snpsift_merge_memory ="40G"
-#vep configs
-vep_cores = 4
-vcf_annotator_cores = 8
-func_pred_cores = 8
+# snpEff_memory = "40G"
+# snpsift_merge_memory ="40G"
+# #vep configs
+# vep_cores = 4
+# vcf_annotator_cores = 8
+# func_pred_cores = 8
 
 #LIBS SETTINGS
 BASE_DIR = os.path.dirname(__file__)
@@ -47,7 +47,7 @@ snpeff_dir = os.path.join(libs_dir, 'snpeff', 'snpEff')
 snpeff_data_dir = os.path.join(data_dir, 'snpeff_data')
 
 #vep
-vep_release = '84'
+vep_release = '85'
 vep_source = 'https://github.com/Ensembl/ensembl-tools/archive/release/%s.zip' % (vep_release)
 vep_cache_dir = os.path.join(data_dir, 'vep_cache')
 vep_dir = '%s/vep/ensembl-tools-release-%s/scripts/variant_effect_predictor' % (libs_dir, vep_release)

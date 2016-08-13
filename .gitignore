@@ -12,3 +12,5 @@ docs/_build/
 .idea
 
 devlog.txt
+pynnotator/data
+pynnotator/libs
