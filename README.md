@@ -45,6 +45,10 @@ Installation
     pip install pynnotator
     pynnotator install
 
+Options
+=======
+
+You can change settings of memory usage and number of cores in settings.py
 
 Test
 ====
