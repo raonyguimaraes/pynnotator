@@ -38,7 +38,9 @@ Installation
 
 1º Method::
     
-    mkvirtualenv -p /usr/bin/python3 pynnotator
+    sudo apt-get install gcc git python3-dev zlib1g-dev virtualenvwrapper
+    source /etc/bash_completion.d/virtualenvwrapper
+    mkvirtualenv -p /usr/bin/python3 mendelmd
     pip install cython 
     pip install pynnotator
     pynnotator install
