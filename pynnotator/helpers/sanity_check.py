@@ -57,7 +57,8 @@ class Sanity_check(object):
             if line.startswith('#'):
                 if not line.startswith('##INFO=<ID=EFF'):
                     if not line.startswith('##INFO=<ID=sumGLbyD'):
-                        out_vcf.writelines(line)
+                        if not line.startswith('##INFO=<ID=CSQ'):
+                            out_vcf.writelines(line)
             else:
                 row = line.split('\t')
 
@@ -70,6 +71,8 @@ class Sanity_check(object):
                             pass
                         #ugly hack to remove this field, because of some bugs in GATK/snpeff that require tyou to have a description about all fields
                         elif "sumGLbyD=" in info:
+                            pass
+                        elif "CSQ=" in info:
                             pass
                         else:
                             NEWINFO.append(info)
