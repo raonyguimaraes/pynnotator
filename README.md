@@ -38,7 +38,7 @@ Installation
 
 1º Method::
     
-    sudo apt-get install gcc git python3-dev zlib1g-dev virtualenvwrapper make
+    sudo apt-get install gcc git python3-dev zlib1g-dev virtualenvwrapper make zip
     source /etc/bash_completion.d/virtualenvwrapper
     mkvirtualenv -p /usr/bin/python3 mendelmd
     pip install cython 
