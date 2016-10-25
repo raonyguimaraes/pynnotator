@@ -99,5 +99,4 @@ dbscsnv_source = 'ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbscSNV%s.zip' % (
 dbscsnv = '%s/dbnsfp/dbscSNV%s.txt.gz' % (data_dir,dbscsnv_version)
 
 data_file = "data.tar.gz"
-data_source = "https://googledrive.com/host/0B7DL0nO0PEiZbjBaTGtrb0hvcDA"
-data_source = "http://mendel.medicina.ufmg.br/static/data.tar.gz"
+data_source = "https://s3.amazonaws.com/mendelmd/data.tar.gz"

@@ -308,7 +308,7 @@ class Annotator(object):
         "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_phenotype_file),
         "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_clinically_file),
         ]
-        #        
+        #
  
 
 
