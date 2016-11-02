@@ -42,6 +42,7 @@ vcftools_dir_perl = "%s/vcftools/vcftools-%s/src/perl" % (libs_dir, vcftools_ver
 #snpeff
 snpeff_database = 'GRCh37.75' # this is the last build from GRCh37
 snpeff_version = 'snpEff_latest_core'
+snpeff_version = 'snpEff_v4_2_core'#need to test version 4.3
 snpeff_source = 'http://sourceforge.net/projects/snpeff/files/%s.zip' % (snpeff_version)
 snpeff_dir = os.path.join(libs_dir, 'snpeff', 'snpEff')
 snpeff_data_dir = os.path.join(data_dir, 'snpeff_data')
