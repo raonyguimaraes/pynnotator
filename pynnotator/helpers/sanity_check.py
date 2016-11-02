@@ -85,8 +85,10 @@ class Sanity_check(object):
                 row[0] = row[0].replace('chr', '')
                 #remove genotypes with 0/0
                 forbidden = ['0/0', './.']
+                allowed_chr ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 'X', 'Y', 'M', 'MT']
                 if genotype not in forbidden:
-                    out_vcf.writelines('\t'.join(row))
+                    if row[0] in allowed_chr: 
+                        out_vcf.writelines('\t'.join(row))
 
         out_vcf.close()    
         file_vcf.close()
