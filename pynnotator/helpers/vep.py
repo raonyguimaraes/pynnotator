@@ -40,6 +40,7 @@ class Vep(object):
 
         command = '''perl %s/variant_effect_predictor.pl \
         -i %s \
+        --format vcf \
         --dir %s \
         -sift b -polyphen b \
         -o vep/vep.output.vcf --vcf --cache --force_overwrite \
