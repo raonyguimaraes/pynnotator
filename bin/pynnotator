@@ -24,7 +24,7 @@ elif args.options == 'install_requirements':
 elif args.options == 'build':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.build()
-elif args.vcf_file != None:
+elif args.vcf_file:
     pynnotator = pynnotator.Pynnotator()
     pynnotator.annotate(args.vcf_file)
 elif args.options == 'test':

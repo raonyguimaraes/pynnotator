@@ -121,13 +121,13 @@ class Dbnsfp(object):
     
     def run(self):
         tstart = datetime.now()
-        print tstart, 'Starting dbnfsp annotation: ', self.vcffile
+        print(tstart, 'Starting dbnfsp annotation: ', self.vcffile)
         
         self.annotate()
 
         tend = datetime.now()
         annotation_time =  tend - tstart
-        print tend, 'Finished dbnfsp annotation, it took: ', annotation_time        
+        print(tend, 'Finished dbnfsp annotation, it took: ', annotation_time)
 
     def check_ref_alt(self, variant, ann):
         #compare REF

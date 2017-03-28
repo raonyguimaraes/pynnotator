@@ -34,7 +34,7 @@ class TestAnnotator(unittest.TestCase):
     def test_001_validator(self):
 
         command = 'python %s/validator.py -i %s' % (self.scripts_dir, self.sample)
-        print 'command running', command
+        print('command running', command)
         os.system(command)
         # now check if it worked!
 

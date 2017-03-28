@@ -64,6 +64,7 @@ class Installer(object):
         self.install_htslib()
         self.install_vcftools()
         self.install_snpeff()
+		self.install_gemini()
         self.install_vep()
 
 
@@ -166,6 +167,26 @@ class Installer(object):
             command = """
             sed -i 's/\.\/data\//\.\.\/\.\.\/\.\.\/data\/snpeff_data/g' snpEff/snpEff.config"""
             call(command, shell=True)
+
+        os.chdir(libs_dir)
+    
+    def install_gemini(self):
+        if not os.path.isdir('gemini'):
+            call('mkdir gemini', shell=True)
+        os.chdir('gemini')
+        #check if file exists
+        # if not os.path.isfile('%s.zip' % (settings.snpeff_version)):
+        #     command = """
+        #     wget -c %s
+        #     unzip %s.zip
+        #     """ % (settings.snpeff_source, settings.snpeff_version)
+        #     call(command, shell=True)
+
+        #     #change data_dir
+        #     #from ./data/ to data.dir = ../../../data/snpeff_data
+        #     command = """
+        #     sed -i 's/\.\/data\//\.\.\/\.\.\/\.\.\/data\/snpeff_data/g' snpEff/snpEff.config"""
+        #     call(command, shell=True)
 
         os.chdir(libs_dir)
 
