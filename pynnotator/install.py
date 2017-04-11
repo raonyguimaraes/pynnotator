@@ -205,7 +205,7 @@ class Installer(object):
 
             os.chdir(settings.vep_dir)
             # download vep cache
-            command = """perl INSTALL.pl -a a --NO_HTSLIB"""
+            command = """perl INSTALL.pl -a a"""
             call(command, shell=True)
 
 
