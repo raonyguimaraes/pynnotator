@@ -63,5 +63,4 @@ How to run
 ::
     pynnotator -i sample.vcf
     # this will annotate using all tools and databases available
-    pynnotator mendelian -i sample.vcf
-    pynnotator cancel -i sample.vcf
+
