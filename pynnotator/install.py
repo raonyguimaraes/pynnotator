@@ -64,7 +64,7 @@ class Installer(object):
         self.install_htslib()
         self.install_vcftools()
         self.install_snpeff()
-		self.install_gemini()
+        self.install_gemini()
         self.install_vep()
 
 
