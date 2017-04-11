@@ -1,15 +1,18 @@
 # Pynnotator
 
-A Python Annotation Framework for VCF files (Exome or Genome) from Humans using multiple tools and databases.
+A Python Annotation Framework for VCF files (Exomes or Genomes) from Humans.
 
+This is a tool capable of annotating VCF files using state-of-the-art tools and databases.
 
-Libraries
-=========
+Currently, it can only annotate grch37.
+
+Tools
+=====
 
 - htslib (1.3.1)
 - vcftools (0.1.14)
 - snpeff (SnpEff 4.3)
-- vep (version 84)
+- vep (version 85)
 
 Databases
 =========
@@ -18,7 +21,7 @@ Databases
 - dbSNP (including clinvar) - (human_9606_b147_GRCh37p13) 
 - Exome Sequencing Project - ESP6500SI-V2-SSA137.GRCh38-liftover
 - dbNFSP 3.2a (including dbscSNV 1.1) - 
-- Ensembl 84 (phenotype and clinically associated variants)
+- Ensembl 85 (phenotype and clinically associated variants)
 
 
 Features
@@ -29,8 +32,8 @@ Features
 Requirements
 ============
 
-- Ubuntu 16.04 (probably also works on 14.04)
-- Python 3.4+
+- Ubuntu 16.04 LTS
+- Python 3
 - At least 40GB
 
 Installation 
@@ -54,3 +57,11 @@ Test
 ====
 
     pynnotator test
+
+How to run
+==========
+::
+    pynnotator -i sample.vcf
+    # this will annotate using all tools and databases available
+    pynnotator mendelian -i sample.vcf
+    pynnotator cancel -i sample.vcf
