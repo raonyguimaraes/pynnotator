@@ -203,10 +203,10 @@ class Installer(object):
             """ % (settings.vep_source, settings.vep_release, settings.vep_release)
             call(command, shell=True)
 
-        os.chdir(settings.vep_dir)
-        # download vep cache
-        command = """perl INSTALL.pl -a a"""
-        call(command, shell=True)
+            os.chdir(settings.vep_dir)
+            # download vep cache
+            command = """perl INSTALL.pl -a a"""
+            call(command, shell=True)
 
 
         os.chdir(libs_dir)
