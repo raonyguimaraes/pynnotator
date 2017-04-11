@@ -14,7 +14,7 @@ import shlex, subprocess
 
 from threading import Thread
 
-from pynnotator import settings
+from . import settings
 
 from .helpers import validator, sanity_check, snpeff, vep, hi_index, snpsift, vcf_annotator, func_pred, merge
 
