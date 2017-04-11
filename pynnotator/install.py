@@ -125,7 +125,7 @@ class Installer(object):
             command = """
             wget -c %s 
             tar -jxvf %s
-            cd %s; ./configure; make
+            cd htslib-%s; ./configure; make
             """ % (settings.htslib_source, settings.htslib_file, settings.htslib_version)
 
             call(command, shell=True)
