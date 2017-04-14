@@ -78,7 +78,7 @@ class Installer(object):
         self.download_snpeff_data()
         self.download_vep_data()
 
-        self.download_hi_score()
+        self.download_decipher()
         self.download_ensembl()        
         self.download_1000genomes()
         self.download_dbsnp()
@@ -98,6 +98,10 @@ class Installer(object):
             command = "tar -zxvf %s" % (settings.data_file)
             call(command, shell=True)
 
+            print("Deleting Compressed File...")
+            command = "rm %s" % (settings.data_file)
+            # call(command, shell=True)
+
 
     def install_java(self):
         if not os.path.isdir('java'):
@@ -113,7 +117,6 @@ class Installer(object):
             call(command, shell=True)
 
         os.chdir(libs_dir)
-
 
     def install_htslib(self):
         if not os.path.isdir('htslib'):
@@ -175,18 +178,9 @@ class Installer(object):
             call('mkdir gemini', shell=True)
         os.chdir('gemini')
         #check if file exists
-        # if not os.path.isfile('%s.zip' % (settings.snpeff_version)):
-        #     command = """
-        #     wget -c %s
-        #     unzip %s.zip
-        #     """ % (settings.snpeff_source, settings.snpeff_version)
-        #     call(command, shell=True)
-
-        #     #change data_dir
-        #     #from ./data/ to data.dir = ../../../data/snpeff_data
-        #     command = """
-        #     sed -i 's/\.\/data\//\.\.\/\.\.\/\.\.\/data\/snpeff_data/g' snpEff/snpEff.config"""
-        #     call(command, shell=True)
+        if not os.path.isfile(settings.gemini_file):
+            command = 'wget -c %s -O %s' % (settings.gemini_source, settings.gemini_file)
+            call(command, shell=True)
 
         os.chdir(libs_dir)
 
@@ -241,16 +235,46 @@ class Installer(object):
         # condel_config = "condel.dir=\\'%s/Plugins/config/Condel\\'" % (vep_cache_dir)
         # os.system('echo %s >> condel_SP.conf' % (condel_config))
 
-    def download_hi_score(self):
+    def download_decipher(self):
         os.chdir(data_dir)
-        # download hi_score
-        if not os.path.exists('hi_score'):
-            os.makedirs('hi_score')
-        os.chdir('hi_score')
-        if not os.path.isfile(settings.hi_score_file):
-            command = 'wget -c %s -O %s' % (settings.hi_score_source, settings.hi_score_file)
+        if not os.path.exists('decipher'):
+            os.makedirs('decipher')
+        os.chdir('decipher')
+
+        if not os.path.isfile(settings.hi_predictions_file):
+            command = 'wget -c %s -O %s' % (settings.hi_predictions_source, settings.hi_predictions_file)
             call(command, shell=True)
-            command = 'tabix -p vcf %s' % (settings.hi_score_file)
+            #extract
+            command = 'gunzip -d %s' % (settings.hi_predictions_file)
+            call(command, shell=True)
+
+            file_without_extension = settings.hi_predictions_file.replace('.gz','')
+            #remove first line
+            command = 'tail -n +2 "%s" > hi_predictions.unsorted.bed' % (file_without_extension)
+            call(command, shell=True)
+
+            command = 'sort -k 1,1 -k2,2n hi_predictions.unsorted.bed > hi_predictions.bed'
+            call(command, shell=True)
+
+            #compress
+            command = 'bgzip hi_predictions.bed'
+            call(command, shell=True)
+            #rename
+            command = 'mv hi_predictions.bed.gz %s' % (settings.hi_predictions_file)
+            call(command, shell=True)
+
+            command = 'tabix -p vcf %s' % (settings.hi_predictions_file)
+            call(command, shell=True)
+
+            command = 'rm hi_predictions.unsorted.bed %s' % (file_without_extension)
+            call(command, shell=True)
+
+        if not os.path.isfile(settings.population_cnv_file):
+            command = 'wget -c %s -O %s' % (settings.population_cnv_source, settings.population_cnv_file)
+            call(command, shell=True)
+
+        if not os.path.isfile(settings.ddg2p_file):
+            command = 'wget -c %s -O %s' % (settings.ddg2p_source, settings.ddg2p_file)
             call(command, shell=True)
 
     def download_ensembl(self):
@@ -360,7 +384,7 @@ class Installer(object):
 
             # --user=Anonymous --password=raonyguimaraes@gmail.com
             command = "wget -c %s -O dbNSFPv%s.zip" % (settings.dbnsfp_link, settings.dbnsfp_version)
-            # call(command, shell=True)
+            call(command, shell=True)
 
 
             # Uncompress
@@ -368,17 +392,19 @@ class Installer(object):
             call(command, shell=True)
 
             #deal with header
-            command = """head -n 1 dbNSFP%s_variant.chr1 > header.txt """ % (settings.dbnsfp_version)
+            command = """head -n 1 dbNSFP*_variant.chr1 > header.txt """
             call(command, shell=True)
 
-            command = """cat dbNSFP%s_variant.chr* | grep -v "^#" > dbNSFP%s.unordered.txt""" % (settings.dbnsfp_version, settings.dbnsfp_version)
+            command = """cat dbNSFP*_variant.chr* | grep -v "^#" > dbNSFP%s.unordered.txt""" % (settings.dbnsfp_version)
+            
             call(command, shell=True)
 
             command = """
-            sort -k1,1V -k2,2n dbNSFP%s.unordered.txt > dbNSFP%s.ordered.txt
+            mkdir tmp
+            sort -k1,1V -k2,2n dbNSFP*.unordered.txt -T tmp/ > dbNSFP%s.ordered.txt
             cat header.txt > dbNSFP%s.txt
-            cat dbNSFP%s.ordered.txt >> dbNSFP%s.txt
-            """ % (settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version)
+            cat dbNSFP*.ordered.txt >> dbNSFP%s.txt
+            """ % (settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version)
 
             call(command, shell=True)
             
@@ -395,7 +421,7 @@ class Installer(object):
             call(command, shell=True)
 
             #clean files
-            command = "rm dbNSFP*_variant* dbNSFP*_gene* *ordered.txt *.class *.in header.txt LICENSE.txt try.vcf search_dbNSFP32a.java search_dbNSFP32a.readme.pdf "
+            command = "rm -rf tmp dbNSFP*_variant* dbNSFP*_gene* *ordered.txt *.class *.in *.txt LICENSE.txt try.vcf search_dbNSFP* *.zip"
             call(command, shell=True)
 
             #keep original file dbNSFPv3.2a.zip

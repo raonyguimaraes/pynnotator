@@ -102,17 +102,21 @@ class VCF_Annotator(object):
         header_writer.close()
         body_writer.close()
         
-        vcf_reader = open('%s/body.vcf' % (prefix))
+        # this is my a hack to split a vcf into n equal parts!
+        command = 'split -d -l$((`wc -l < %s/body.vcf`/%s)) %s/body.vcf pynnotator/part.' % (prefix, self.cores, prefix)
+        std = os.system(command)
+        
+        # vcf_reader = open('%s/body.vcf' % (prefix))
 
-        groups = self.partition(list(vcf_reader.readlines()), self.cores)
-        for c, group in enumerate(groups):
-            # print 'group', len(group)
-            # print 'c', c
-            part = c + 1
-            part_writer = open('%s/part.%s.vcf' % (prefix, part), 'w')
-            for line in group:
-                part_writer.writelines(line)
-            part_writer.close()
+        # groups = self.partition(list(vcf_reader.readlines()), self.cores)
+        # for c, group in enumerate(groups):
+        #     # print 'group', len(group)
+        #     # print 'c', c
+        #     part = c + 1
+        #     part_writer = open('%s/part.%s.vcf' % (prefix, part), 'w')
+        #     for line in group:
+        #         part_writer.writelines(line)
+        #     part_writer.close()
 
     #convert and annotate the vcf file to snpeff
     def annotate(self, out_prefix):
@@ -127,8 +131,8 @@ class VCF_Annotator(object):
             annfiles[n]['file'] = value
             annfiles[n]['reader'] = pysam.Tabixfile(annfiles[n]['file'],encoding="utf-8")
 
-         
-        vcf_file = 'pynnotator/part.%s.vcf' % (out_prefix)
+        #represent an integer with two digits
+        vcf_file = 'pynnotator/part.%02d' % (out_prefix-1)
 
         vcflist = []
         #read first vcf to be annotated
