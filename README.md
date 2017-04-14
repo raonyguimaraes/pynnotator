@@ -104,19 +104,17 @@ You can change settings of memory usage and number of cores in settings.py
 
 Test
 ====
-::
+
     pynnotator test
 
 How to run it?
 ==============
-::
+
     pynnotator -i sample.vcf
     # this will annotate using all tools and databases available
 
 Others
 ======
-
-::
 
     pynnotator install
     #this will install all libraries and download a compressed file with all the annotation needed
@@ -125,8 +123,6 @@ Others
 
 Development
 ===========
-
-::
 
      git clone https://github.com/raonyguimaraes/pynnotator
      python setup.py develop
