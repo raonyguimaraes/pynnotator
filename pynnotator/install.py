@@ -24,7 +24,8 @@ class Installer(object):
 
     def install(self):
         self.install_requirements()
-        self.install_libs()
+        # self.install_libs()
+        self.download_libs()
         self.download_data()
         self.build_datasets()
         
@@ -100,6 +101,22 @@ class Installer(object):
 
             print("Deleting Compressed File...")
             command = "rm %s" % (settings.data_file)
+            # call(command, shell=True)
+    def download_libs(self):
+        print("Downloading Libs")
+
+        os.chdir(settings.BASE_DIR)
+
+        if not os.path.exists(settings.libs_dir):
+            command = "wget %s -O %s" %(settings.libs_source, settings.libs_file)
+            call(command, shell=True)
+
+            print("Extracting Data...")
+            command = "tar -zxvf %s" % (settings.libs_file)
+            call(command, shell=True)
+
+            print("Deleting Compressed File...")
+            command = "rm %s" % (settings.libs_file)
             # call(command, shell=True)
 
 
