@@ -93,7 +93,7 @@ class Vep(object):
         call(command, shell=True)
 
         tend = datetime.now()
-        print(tend, 'Finished sorting VEP VCF')
+        print(tend, 'Finished sorting vep vcf.')
 
 if  __name__ == '__main__' :
     parser = argparse.ArgumentParser(description='Annotate a VCF File with VEP.')

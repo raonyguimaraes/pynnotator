@@ -40,16 +40,16 @@ class Validator(object):
     def validate(self):
         #check if file is in .gz format
         if not self.vcf_file.endswith('.gz'):
-            command = '%s/bgzip -c %s > validator/%s.gz' % (settings.htslib_dir, self.vcf_file, self.filename)
+            command = '%s/bgzip -c %s > validator/%s.vcf.gz' % (settings.htslib_dir, self.vcf_file, self.filename)
             call(command, shell=True)
         else:
             command = 'cp %s validator/' % (self.vcf_file)
             call(command, shell=True)
 
-        command = '%s/tabix -p vcf validator/%s.gz' % (settings.htslib_dir, self.filename)
+        command = '%s/tabix -p vcf validator/%s.vcf.gz' % (settings.htslib_dir, self.filename)
         call(command, shell=True)
 
-        command = '%s/vcf-validator validator/%s.gz 2>validator/validation.log' % (settings.vcftools_dir_perl, self.filename)
+        command = '%s/vcf-validator validator/%s.vcf.gz 2>validator/validation.log' % (settings.vcftools_dir_perl, self.filename)
 
         # print 'validator command', command
         p = subprocess.call(command, 

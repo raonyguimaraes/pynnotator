@@ -26,31 +26,41 @@ class Annotator(object):
         
         self.filename = os.path.splitext(os.path.basename(str(vcf_file)))[0]
 
+        self.vcf_file = os.path.abspath(vcf_file)
+
+        #this is used to create the folder with the right name
+        self.filename = self.filename.replace('.vcf.gz', '').replace('.vcf', '')
+
         # create a folder for the annotation if it doesn't exists, 
         # or delete and create if the folder already exists
-        ann_name = "ann_%s" % (self.filename)
+        self.ann_name = "ann_%s" % (self.filename)
 
-        self.vcf_file = os.path.abspath(vcf_file)
-        
-        if os.path.exists(ann_name):
-            shutil.rmtree(ann_name)
+        if os.path.exists(self.ann_name):
+            shutil.rmtree(self.ann_name)
 
-        os.makedirs(ann_name)
-        os.chdir(ann_name)
-        #copy vcf to ann folder and rewrite self.vcf_file
+        os.makedirs(self.ann_name)
+        os.chdir(self.ann_name)
         
-        print('vcf_file', self.vcf_file)
-        # os.path.basename(str(vcf_file))
-        
-        # os.makedirs('log')
-        # os.makedirs('reports')
-
 
 
 
     def run(self):
         
         tstart = datetime.now()
+
+        if self.vcf_file.endswith('.vcf.gz'):
+            path = os.path.dirname(self.vcf_file)
+            new_name = '%s/%s/%s.vcf' % (path, self.ann_name, self.filename)
+            command='gunzip -c -d %s > %s' % (self.vcf_file, new_name)
+            self.shell(command)
+            self.vcf_file = new_name
+        else:
+            path = os.path.dirname(self.vcf_file)
+            new_name = '%s/%s/%s.vcf' % (path, self.ann_name, self.filename)
+            command='cp %s %s' % (self.vcf_file, new_name)
+            self.shell(command)
+            self.vcf_file = new_name
+        
 
         #run vcftools vcf-validator on this file 
         validator = Thread(target=self.validator)
@@ -108,13 +118,14 @@ class Annotator(object):
             # logging.info('Finished Annotation, it took %s' % (execution_time))
             print(time_end, 'Finished Annotation, it took %s' % (execution_time))
 
-        #     print 'Delete ann'
-        #     print os.getcwd()
-            #remove folder
-            # if options.delete_ann:
-            #     command = 'rm -rf ../ann'
-            #     self.shell(command)
-
+            output = """
+A       A G       T G       A       A G       T G       A
+| C   C | | C   C | | A   C | C   C | | C   C | | A   C |
+| | T | | | | A | | | | G | | | T | | | | A | | | | G | |
+| G   G | | G   G | | T   G | G   G | | G   G | | T   G |
+T       T C       A C       T       T C       A C       T
+"""
+            print(output)
 
     def log_message(self, message):
         print(message)
