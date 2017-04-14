@@ -102,7 +102,7 @@ class Installer(object):
 
             print("Deleting Compressed File...")
             command = "rm %s" % (settings.data_file)
-            # call(command, shell=True)
+            call(command, shell=True)
     def download_libs(self):
         print("Downloading Libs")
 
