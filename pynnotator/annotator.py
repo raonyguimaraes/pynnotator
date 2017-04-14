@@ -16,7 +16,7 @@ from threading import Thread
 
 from . import settings
 
-from .helpers import validator, sanity_check, snpeff, vep, hi_index, snpsift, vcf_annotator, func_pred, merge
+from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, func_pred, merge
 
 class Annotator(object):
 
@@ -76,8 +76,8 @@ class Annotator(object):
             vep = Thread(target=self.vep)
             threads.append(vep)
 
-            hi_index = Thread(target=self.hi_index)
-            threads.append(hi_index)
+            decipher = Thread(target=self.decipher)
+            threads.append(decipher)
 
             snpsift = Thread(target=self.snpsift)
             threads.append(snpsift)
@@ -101,11 +101,12 @@ class Annotator(object):
             # #wait till finish to continue
             merge.join()
             
-            print("Annotation Completed!")
+            time_end = datetime.now()
+            # print(time_end, "Annotation Completed!")
             tend = datetime.now()
             execution_time = tend -  tstart
             # logging.info('Finished Annotation, it took %s' % (execution_time))
-            print('Finished Annotation, it took %s' % (execution_time))
+            print(time_end, 'Finished Annotation, it took %s' % (execution_time))
 
         #     print 'Delete ann'
         #     print os.getcwd()
@@ -181,7 +182,7 @@ class Annotator(object):
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished snpEff, it took %s' % (execution_time))
-        print('Finished snpEff, it took %s' % (execution_time))
+        # print(tend, 'Finished snpEff, it took %s' % (execution_time))
 
         #subprocess.call(args)
 
@@ -207,27 +208,23 @@ class Annotator(object):
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished VEP, it took %s' % (execution_time))
-        print('Finished VEP, it took %s' % (execution_time))
+        # print(tend, 'Finished VEP, it took %s' % (execution_time))
     
    
-    def hi_index(self):
-        """Hi Index """
-
+    def decipher(self):
+        """Decipher """
         
         #calculate time thread took to finish
         #logging.info('Starting HI score')
         tstart = datetime.now()
-        
-        # command = 'python %s/hi_index.py -i sanity_check/checked.vcf' % (scripts_dir)
-        # self.shell(command)
-
-        hi = hi_index.HI_Index(self.vcf_file)
-        hi.run()
+ 
+        decipher_obj = decipher.Decipher(self.vcf_file)
+        decipher_obj.run()
 
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished HI Score, it took %s' % (execution_time))
-        print('Finished Hi Index, it took %s' % (execution_time))
+        # print(tend, 'Finished Decipher, it took %s' % (execution_time))
 
     def hgmd(self):
         """Hi Index """
@@ -244,12 +241,13 @@ class Annotator(object):
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished HI Score, it took %s' % (execution_time))
-        print('Finished HGMD, it took %s' % (execution_time))
+        # print('Finished HGMD, it took %s' % (execution_time))
         
    
     def merge(self):
 
-        print("Merging all VCF Files...")
+        tstart = datetime.now()
+        print(tstart, "Merging all VCF Files...")
         t_merge_start = datetime.now()
         # # #merge VCF Files
         # command = 'python %s/merge.py -i sanity_check/checked.vcf' % (scripts_dir)
@@ -261,7 +259,7 @@ class Annotator(object):
         execution_time = t_merge_end -  t_merge_start
 
         # logging.info('Finished Merging VCF, it took %s' % (execution_time))
-        print('Finished Merging VCF, it took %s' % (execution_time))
+        # print(t_merge_end, 'Finished Merging VCF, it took %s' % (execution_time))
         
         #compress annotation file to save space
         # command = '%s/bgzip merge/annotation.final.vcf' % (tabix_path)
@@ -286,7 +284,7 @@ class Annotator(object):
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished annovar, it took %s' % (execution_time))
-        print('Finished snpsift, it took %s' % (execution_time))
+        # print(tend, 'Finished snpsift, it took %s' % (execution_time))
 
     def vcf_annotator(self):
         """Vcf annotator"""
@@ -323,7 +321,7 @@ class Annotator(object):
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished annovar, it took %s' % (execution_time))
-        print('Finished vcf_annotator, it took %s' % (execution_time))
+        # print(tend, 'Finished vcf_annotator, it took %s' % (execution_time))
     def func_pred(self):
         """func_pred"""
         
@@ -339,7 +337,7 @@ class Annotator(object):
         tend = datetime.now()
         execution_time = tend -  tstart
         #logging.info('Finished annovar, it took %s' % (execution_time))
-        print('Finished Func Pred, it took %s' % (execution_time))
+        # print(tend, 'Finished Func Pred, it took %s' % (execution_time))
 
 
 

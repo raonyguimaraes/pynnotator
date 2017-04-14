@@ -1,13 +1,12 @@
 # Pynnotator
 
-New release 0.4!
+New 2017 release 0.4!
 
-This is a Python Framework developed to annotate VCF files (Exomes or Genomes) from Humans.
+This is a Python Annotation Framework developed with the goal of annotating VCF files (Exomes or Genomes) from patients with Mendelian Disorders.
 
-This tools is built on state-of-the-art tools and databases for annotating VCFs.
+This tools is built using state-of-the-art tools and databases for genome annotation.
 
 Currently, it can only annotate VCFs generated from build GRCh37.
-
 
 Tools
 =====
@@ -29,9 +28,10 @@ Databases
 Features
 ========
 
+- 20 min installation on Google Cloud or AWS.
 - Multithread Efficient!
-- Annotate a VCF file using multiple VCFs as a reference
-- Combine the best tools available for annotation
+- Annotate a VCF file using multiple VCFs as a reference.
+- Combine the best tools available for annotation.
 
 Files
 =====
@@ -82,11 +82,19 @@ Requirements
 Installation and Running
 ========================
 
+
+How to run it?
+==============
+
+Requires at least 65GB of disk space during installation and 35GB after installed.
+
 1º Method::
 
     docker-compose run pynnotator -i sample.vcf
 
 2º Method::
+
+    # Using Ubuntu 16.04 LTS
 
     sudo apt-get install gcc git python3-dev zlib1g-dev virtualenvwrapper make zip
     source /etc/bash_completion.d/virtualenvwrapper
@@ -94,7 +102,8 @@ Installation and Running
     pip install cython
     pip install pynnotator
     pynnotator install
-
+    #and finally:
+    pynnotator -i sample.vcf
 
 
 Options
@@ -107,22 +116,18 @@ Test
 
     pynnotator test
 
-How to run it?
-==============
-
-    pynnotator -i sample.vcf
-    # this will annotate using all tools and databases available
 
 Others
 ======
 
     pynnotator install
-    #this will install all libraries and download a compressed file with all the annotation needed
+    #this will download and install all libraries and data needed.
     pynnotator build
-    #this will rebuild the whole dataset required from scratch (takes a few hours and requires memory)
+    #this will rebuild the whole dataset required from scratch (this will take about 8h hours and requires a lot of memory)
 
 Development
 ===========
 
      git clone https://github.com/raonyguimaraes/pynnotator
      python setup.py develop
+     #have fun!

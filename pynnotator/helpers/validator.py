@@ -57,11 +57,13 @@ class Validator(object):
             env=env, 
             shell=True)
 
+        time_end = datetime.now()
         
         if p == 0:
-            print('This vcf was sucessfully validated by vcf-validator')
+            
+            print(time_end, 'This vcf was sucessfully validated by vcf-validator!')
         else:
-            print('Sorry this vcf could not be validated!')
+            print(time_end, 'Sorry this vcf could not be validated!')
         return p
 
 if  __name__ == '__main__' :

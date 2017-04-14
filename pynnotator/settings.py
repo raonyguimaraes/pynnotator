@@ -63,6 +63,8 @@ gemini_source = 'https://github.com/arq5x/gemini/raw/master/gemini/scripts/%s' %
 #Decipher
 hi_predictions_file = 'HI_Predictions_Version3.bed.gz'
 hi_predictions_source = 'https://decipher.sanger.ac.uk/files/downloads/%s' % (hi_predictions_file)
+hi_predictions = '%s/decipher/%s' % (data_dir, hi_predictions_file)
+
 
 population_cnv_file = 'population_cnv.txt.gz'
 population_cnv_source = 'https://decipher.sanger.ac.uk/files/downloads/%s' % (population_cnv_file)
@@ -108,8 +110,8 @@ dbscsnv_file = 'dbscSNV%s.txt.gz' % (dbscsnv_version)
 dbscsnv_source = 'ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbscSNV%s.zip' % (dbscsnv_version)
 dbscsnv = '%s/dbnsfp/dbscSNV%s.txt.gz' % (data_dir,dbscsnv_version)
 
-data_file = "pynnotator-data.0.4.tar.gz"
-data_source = "https://storage.cloud.google.com/mendelmd/%s" % (data_file)
+data_file = "pynnotator-data.latest.tar.gz"
+data_source = "https://storage.googleapis.com/mendelmd/%s" % (data_file)
 
-libs_file = "pynnotator-libs.0.4.tar.gz"
-libs_source = "https://storage.cloud.google.com/mendelmd/%s" % (data_file)
+libs_file = "pynnotator-libs.latest.tar.gz"
+libs_source = "https://storage.googleapis.com/mendelmd/%s" % (libs_file)

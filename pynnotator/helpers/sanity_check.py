@@ -128,7 +128,9 @@ class Sanity_check(object):
         #     cwd=os.getcwd(), 
         #     env=env, 
         #     shell=True)
-        print('This vcf was sucessfully checked with sanity_check')
+
+        time_end = datetime.now()
+        print(time_end, 'This vcf was sucessfully checked with sanity_check')
 
         # if p == 0:
         #     print 'This vcf was validated by vcf-sanity_check'

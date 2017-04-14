@@ -72,10 +72,12 @@ class Snpeff(object):
         p = subprocess.call(command, 
             cwd=os.getcwd(), 
             shell=True)
+
+        tend = datetime.now()
         if p == 0:
-            print('This vcf was annotated by snpEff with Success')
+            print(tend, 'This vcf was annotated by snpEff with Success')
         else:
-            print('Sorry this vcf could not be anotated by snpeff')
+            print(tend, 'Sorry this vcf could not be anotated by snpeff')
 
         return p
         # command = "java -Xmx40G -jar %s/GenomeAnalysisTK.jar \

@@ -27,6 +27,7 @@ class Installer(object):
         # self.install_libs()
         self.download_libs()
         self.download_data()
+
         self.build_datasets()
         
 
@@ -34,7 +35,7 @@ class Installer(object):
         """Install Ubuntu Requirements"""
         print('Installing Ubuntu requirements')
         if platform.dist()[0] in ['Ubuntu', 'LinuxMint']:
-            command = 'sudo apt-get install python3-dev python3-pip python3-setuptools vcftools bcftools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget'  # lamp-server^
+            command = 'sudo apt-get install cat sed python3-dev python3-pip python3-setuptools vcftools bcftools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget'  # lamp-server^
             sts = call(command, shell=True)
 
             try:
@@ -270,7 +271,11 @@ class Installer(object):
             command = 'tail -n +2 "%s" > hi_predictions.unsorted.bed' % (file_without_extension)
             call(command, shell=True)
 
-            command = 'sort -k 1,1 -k2,2n hi_predictions.unsorted.bed > hi_predictions.bed'
+            command = 'sort -k 1,1 -k2,2n hi_predictions.unsorted.bed > hi_predictions.chr.bed'
+            call(command, shell=True)
+
+            #remove chr
+            command = "cat hi_predictions.chr.bed | sed 's/^chr//' > hi_predictions.bed"
             call(command, shell=True)
 
             #compress

@@ -52,7 +52,7 @@ class VCF_Annotator(object):
 
         tstart = datetime.now()
 
-        print(tstart, 'Starting vcf annotator: ', self.vcf_file)
+        print(tstart, 'Starting python vcf annotator: ', self.vcf_file)
         
         # std = self.annotator()
 
@@ -77,7 +77,7 @@ class VCF_Annotator(object):
 
         tend = datetime.now()
         annotation_time =  tend - tstart
-        print(tend, 'Finished vcf annotator, it took: ', annotation_time)
+        print(tend, 'Finished python vcf annotator, it took: ', annotation_time)
 
     def partition(self, lst, n):
         division = len(lst) / float(n)

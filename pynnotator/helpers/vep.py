@@ -33,7 +33,7 @@ class Vep(object):
 
         tend = datetime.now()
         annotation_time =  tend - tstart
-        print(tend, 'Finished vep annotation, it took: ', annotation_time)
+        print(tend, 'Finished VEP annotation, it took: ', annotation_time)
 
     #convert and annotate the vcf file to vep
     def annotate(self):
@@ -66,10 +66,12 @@ class Vep(object):
             cwd=os.getcwd(), 
             shell=True)
 
+        tend = datetime.now()
+
         if p == 0:
-            print('This vcf was annotated by %s' % (toolname))
+            print(tend, 'This vcf was sucessfully annotated by %s!' % (toolname))
         else:
-            print('Sorry this vcf could not be annotated by %s' % (toolname))
+            print(tend, 'Sorry this vcf could not be annotated by %s' % (toolname))
 
         # command = '(grep ^# output.vep.vcf; grep -v ^# output.vep.vcf|sort -k1,1N -k2,2n) > output.vep.sorted.vcf'
         #Sort VCF file 
@@ -90,7 +92,8 @@ class Vep(object):
         command = '''grep -E '^M' vep/vep.output.vcf | sort -k1,1d -k2,2n >> vep/vep.output.sorted.vcf'''
         call(command, shell=True)
 
-        print('Finished sorting VCF')
+        tend = datetime.now()
+        print(tend, 'Finished sorting VEP VCF')
 
 if  __name__ == '__main__' :
     parser = argparse.ArgumentParser(description='Annotate a VCF File with VEP.')

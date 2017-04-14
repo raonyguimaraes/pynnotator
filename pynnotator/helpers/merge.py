@@ -51,11 +51,11 @@ class Merge(object):
             'file':pysam.Tabixfile('../snpsift/snpsift.final.vcf.gz', 'r', encoding="utf-8")
             }
 
-        pysam.tabix_index('../hi_index/hi_index.vcf', preset='vcf')
+        pysam.tabix_index('../decipher/hi_predictions.vcf', preset='vcf')
 
-        self.annotation_files['hi_index'] = {
-            'info':'HI_INDEX', 
-            'file':pysam.Tabixfile('../hi_index/hi_index.vcf.gz', 'r', encoding="utf-8")
+        self.annotation_files['decipher'] = {
+            'info':'HI_PREDICTIONS', 
+            'file':pysam.Tabixfile('../decipher/hi_predictions.vcf.gz', 'r', encoding="utf-8")
             }
 
         pysam.tabix_index('../pynnotator/pynnotator.vcf', preset='vcf')
