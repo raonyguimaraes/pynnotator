@@ -36,7 +36,6 @@ Features
 Files
 =====
 
-::
 
     .
     ├── 1000genomes
