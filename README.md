@@ -4,7 +4,7 @@ New 2017 release 0.4!
 
 This is a Python Annotation Framework developed with the goal of annotating VCF files (Exomes or Genomes) from patients with Mendelian Disorders.
 
-This tools is built using state-of-the-art tools and databases for genome annotation.
+This tool is built using state-of-the-art tools and databases for genome annotation.
 
 Currently, it can only annotate VCFs generated from build GRCh37.
 
