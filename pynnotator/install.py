@@ -288,7 +288,7 @@ class Installer(object):
             command = 'tabix -p vcf %s' % (settings.hi_predictions_file)
             call(command, shell=True)
 
-            command = 'rm hi_predictions.unsorted.bed %s' % (file_without_extension)
+            command = 'rm hi_predictions.unsorted.bed %s hi_predictions.chr.bed' % (file_without_extension)
             call(command, shell=True)
 
         if not os.path.isfile(settings.population_cnv_file):
