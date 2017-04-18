@@ -1,6 +1,12 @@
 include README.rst
 include docs/*.txt
-include pynnotator/data.json
-include pynnotator/tests/annotation.v2.vcf.gz
-include pynnotator/tests/annotation.vcf.gz  
 include pynnotator/tests/sample.1000.vcf
+include pynnotator/tests/annotation.validated.vcf.gz
+include pynnotator/tests/examples/miller.vcf.gz
+include pynnotator/tests/examples/NA12878.compound_heterozygous.vcf.gz
+include pynnotator/tests/examples/NA12878.dominant.vcf.gz
+include pynnotator/tests/examples/NA12878.recessive.vcf.gz
+include pynnotator/tests/examples/schinzel_giedion.vcf.gz
+include pynnotator/tests/examples/NA12878.xlinked.vcf.gz
+
+
