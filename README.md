@@ -1,10 +1,8 @@
 # Pynnotator
 
-New 2017 release 0.4!
-
 This is a Python Annotation Framework developed with the goal of annotating VCF files (Exomes or Genomes) from patients with Mendelian Disorders.
 
-This tool is built using state-of-the-art tools and databases for genome annotation.
+This tool is built using state-of-the-art tools and databases for human genome annotation.
 
 Currently, it can only annotate VCFs generated from build GRCh37.
 
@@ -24,16 +22,17 @@ Databases
 - Exome Sequencing Project - ESP6500SI-V2-SSA137.GRCh38-liftover
 - dbNFSP 3.2a (including dbscSNV 1.1)
 - Ensembl 88 (phenotype and clinically associated variants)
+- Decipher (HI_Predictions_Version3 and DDG2P)
 
 Features
 ========
 
-- Annotate an exome in 10 minutes.
+- Annotate an exome in only 10 minutes.
 - Supports .VCF and .VCF.GZ files.
 - 20 min installation on Google Cloud or AWS.
-- Multithread Efficient!
+- Multithread efficient!
 - Annotate a VCF file using multiple VCFs as a reference.
-- Combine the best tools and databases available for vcf annotation.
+- Combine the best tools and databases available for doing vcf annotation.
 
 Files
 =====
@@ -74,8 +73,8 @@ Files
 
 705 directories, 11839 files
 
-Examples of VCFs with Mendelian Disorders
-=========================================
+Examples of VCFs from patients Mendelian Disorders
+==================================================
 
     .
     ├── annotation.validated.vcf.gz
@@ -93,7 +92,7 @@ Requirements
 ============
 
 - Ubuntu 16.04 LTS
-- Python 3
+- Python 2 or 3
 - At least 40GB
 
 How to run it?
@@ -112,10 +111,9 @@ Requires at least 65GB of disk space during installation and 35GB after installe
 
     # Using Ubuntu 16.04 LTS
 
-    sudo apt-get install gcc git python3-dev zlib1g-dev virtualenvwrapper make zip
-    source /etc/bash_completion.d/virtualenvwrapper
-    mkvirtualenv -p /usr/bin/python3 mendelmd
-    pip install cython
+    sudo apt-get install gcc git python3-dev zlib1g-dev make zip
+    python3 -m venv mendelmdenv
+    source mendelmdenv/bin/activate
     pip install pynnotator
     pynnotator install
     
@@ -149,7 +147,7 @@ Development
 
      git clone https://github.com/raonyguimaraes/pynnotator
      python setup.py develop
-     # and have fun!
+     # And have fun!
 
 Annotations you can get from dbnfsp
 ===================================

@@ -15,7 +15,6 @@ import os, shutil
 # import shlex, subprocess
 from pynnotator import settings
 
-dbnfsp_header = open('%s/dbnsfp/header.vcf' % (settings.data_dir)).readlines()
 
 # cores = int(args.cores)
 # prefix = 'func_pred'
@@ -27,6 +26,8 @@ class FUNC_PRED_Annotator(object):
     def __init__(self, vcf_file=None, cores=None):
         
         self.vcf_file = vcf_file
+        self.dbnfsp_header = open('%s/dbnsfp/header.vcf' % (settings.data_dir)).readlines()
+
 
         # print('self.resources', self.resources)
         self.cores = int(cores)
@@ -84,7 +85,7 @@ class FUNC_PRED_Annotator(object):
         for line in vcf_reader:
             if line.startswith('#'):
                 if line.startswith('#CHROM'):
-                    header_writer.writelines(dbnfsp_header)
+                    header_writer.writelines(self.dbnfsp_header)
                 header_writer.writelines(line)
             else:
                 body_writer.writelines(line)
