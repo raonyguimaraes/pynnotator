@@ -48,7 +48,7 @@ class Decipher(object):
         command = '''zcat decipher/%s.vcf.gz | %s/vcf-annotate \
         -a %s \
         --fill-type \
-        -d key=INFO,ID=HI_PREDICTIONS,Number=1,Type=String,Description=\'Haploinsuficiency Predictions\' \
+        -d key=INFO,ID=HI_PREDICTIONS,Number=.,Type=String,Description=\'Haploinsuficiency Predictions\' \
         -c CHROM,FROM,TO,INFO/HI_PREDICTIONS > decipher/hi_predictions.vcf \
         ''' % (self.filename, settings.vcftools_dir_perl, settings.hi_predictions)
 
@@ -63,7 +63,7 @@ class Decipher(object):
         time_end = datetime.now()
 
         if p == 0:
-            print(time_end, 'This vcf was annotated sucessfully by %s!' % (toolname))
+            print(time_end, 'This vcf was sucessfully annotated by %s!' % (toolname))
         else:
             print(time_end, 'Sorry this vcf could not be annotated by %s' % (toolname))
 

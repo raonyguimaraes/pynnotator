@@ -18,6 +18,24 @@ from . import settings
 
 from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, func_pred, merge
 
+
+# add Python2 compatibility
+#http://stackoverflow.com/questions/25156768/cant-pickle-type-instancemethod-using-pythons-multiprocessing-pool-apply-a
+
+if sys.version_info[0] < 3:
+    import copy_reg
+    import types
+
+    def _pickle_method(m):
+        if m.im_self is None:
+            return getattr, (m.im_class, m.im_func.func_name)
+        else:
+            return getattr, (m.im_self, m.im_func.func_name)
+    
+    copy_reg.pickle(types.MethodType, _pickle_method)
+## end of python2 compatibility        
+
+
 class Annotator(object):
 
     is_validated = False

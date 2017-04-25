@@ -33,7 +33,7 @@ class Vep(object):
 
         tend = datetime.now()
         annotation_time =  tend - tstart
-        print(tend, 'Finished VEP annotation, it took: ', annotation_time)
+        print(tend, 'Finished vep annotation, it took: ', annotation_time)
 
     #convert and annotate the vcf file to vep
     def annotate(self):

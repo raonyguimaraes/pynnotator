@@ -11,6 +11,5 @@ docs/_build/
 *.egg-info
 .idea
 
-devlog.txt
 pynnotator/data
 pynnotator/libs

@@ -1,0 +1,5 @@
+
+INFO field at 1:24861704 .. INFO tag [HET=] expected different number of values (expected 1, found 0),INFO tag [SNP=] expected different number of values (expected 1, found 0)
+
+Lot's of Reference VCFs are not validated by vcf-validator!
+
