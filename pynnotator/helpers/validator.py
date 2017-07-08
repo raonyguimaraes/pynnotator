@@ -17,7 +17,6 @@ class Validator(object):
     def __init__(self, vcf_file=None):
         
         self.vcf_file = vcf_file
-
         self.filename = os.path.splitext(os.path.basename(str(vcf_file)))[0]
         #create folder validator if it doesn't exists
         if not os.path.exists('validator'):

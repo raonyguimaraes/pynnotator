@@ -86,64 +86,64 @@ class Annotator(object):
         #wait the process to finish before continue to the next steps 
         validator.join()
 
-        # #Check if thew vcf file is validated
-        if(self.is_validated):#
+        # #Check if the vcf file is validated
+        # if(self.is_validated):#
             
-            threads = []
+        threads = []
 
-            sanitycheck = Thread(target=self.sanitycheck)
-            sanitycheck.start()
-            # #wait till finish to continue
-            sanitycheck.join()
+        sanitycheck = Thread(target=self.sanitycheck)
+        sanitycheck.start()
+        # #wait till finish to continue
+        sanitycheck.join()
 
-            self.vcf_file = 'sanity_check/checked.vcf'
+        self.vcf_file = 'sanity_check/checked.vcf'
 
-            snpeff = Thread(target=self.snpeff)
-            threads.append(snpeff)
+        snpeff = Thread(target=self.snpeff)
+        threads.append(snpeff)
 
-            vep = Thread(target=self.vep)
-            threads.append(vep)
+        vep = Thread(target=self.vep)
+        threads.append(vep)
 
-            decipher = Thread(target=self.decipher)
-            threads.append(decipher)
+        decipher = Thread(target=self.decipher)
+        threads.append(decipher)
 
-            snpsift = Thread(target=self.snpsift)
-            threads.append(snpsift)
+        snpsift = Thread(target=self.snpsift)
+        threads.append(snpsift)
 
-            vcf_annotator = Thread(target=self.vcf_annotator)
-            threads.append(vcf_annotator)
+        vcf_annotator = Thread(target=self.vcf_annotator)
+        threads.append(vcf_annotator)
 
-            func_pred = Thread(target=self.func_pred) #took 0:17:40.699580
-            threads.append(func_pred)
+        func_pred = Thread(target=self.func_pred) #took 0:17:40.699580
+        threads.append(func_pred)
 
-            #execute all tasks in parallel
-            for thread in threads:
-                thread.start()
-                #thread.join()#this option to make it serial
-            
-            for thread in threads:
-                thread.join()
+        #execute all tasks in parallel
+        for thread in threads:
+            thread.start()
+            #thread.join()#this option to make it serial
+        
+        for thread in threads:
+            thread.join()
 
-            merge = Thread(target=self.merge)
-            merge.start()
-            # #wait till finish to continue
-            merge.join()
-            
-            time_end = datetime.now()
-            # print(time_end, "Annotation Completed!")
-            tend = datetime.now()
-            execution_time = tend -  tstart
-            # logging.info('Finished Annotation, it took %s' % (execution_time))
-            print(time_end, 'Finished Annotation, it took %s' % (execution_time))
+        merge = Thread(target=self.merge)
+        merge.start()
+        # #wait till finish to continue
+        merge.join()
+        
+        time_end = datetime.now()
+        # print(time_end, "Annotation Completed!")
+        tend = datetime.now()
+        execution_time = tend -  tstart
+        # logging.info('Finished Annotation, it took %s' % (execution_time))
+        print(time_end, 'Finished Annotation, it took %s' % (execution_time))
 
-            output = """
+        output = """
 A       A G       T G       A       A G       T G       A
 | C   C | | C   C | | A   C | C   C | | C   C | | A   C |
 | | T | | | | A | | | | G | | | T | | | | A | | | | G | |
 | G   G | | G   G | | T   G | G   G | | G   G | | T   G |
 T       T C       A C       T       T C       A C       T
 """
-            print(output)
+        print(output)
 
     def log_message(self, message):
         print(message)
@@ -340,7 +340,6 @@ T       T C       A C       T       T C       A C       T
 
 
         # annfiles = " ".join(annfiles)
-
         # annfiles = ["%s/1000genomes/%s" % (settings.data_dir, settings.genomes1k_file)]
 
         annotator_obj =  vcf_annotator.VCF_Annotator(self.vcf_file, annfiles, resources, settings.vcf_annotator_cores)
@@ -378,4 +377,3 @@ if __name__=="__main__":
 
     a = Annotator(args.vcf_file)
     a.run()
-

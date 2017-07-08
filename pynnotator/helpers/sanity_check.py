@@ -55,6 +55,8 @@ class Sanity_check(object):
         out_vcf = open('sanity_check/onlyvariants.vcf', 'w')
         for line in file_vcf:
             if line.startswith('#'):
+                #fix varscan vcfs            
+                line = line.replace(')>', '>')
                 if not line.startswith('##INFO=<ID=EFF'):
                     if not line.startswith('##INFO=<ID=sumGLbyD'):
                         if not line.startswith('##INFO=<ID=CSQ'):
