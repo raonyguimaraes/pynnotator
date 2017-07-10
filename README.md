@@ -9,9 +9,9 @@ Currently, it can only annotate VCFs generated from build GRCh37.
 Tools
 =====
 
-- htslib (1.4)
-- vcftools (0.1.14)
-- snpeff (SnpEff 4.3k)
+- htslib (1.5)
+- vcftools (0.1.15)
+- snpeff (SnpEff 4.3p)
 - vep (version 88)
 
 Databases
