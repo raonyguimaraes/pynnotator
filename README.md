@@ -73,7 +73,7 @@ Files
 
 705 directories, 11839 files
 
-Examples of VCFs from patients Mendelian Disorders
+Examples of VCFs from patients with Mendelian Disorders
 ==================================================
 
     .
