@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 
 import os
 import subprocess
@@ -20,7 +20,7 @@ class Installer(object):
 
     def __init__(self):
         """Return a Pynnotator Installer object """
-        
+
 
     def install(self):
         self.install_requirements()
@@ -29,7 +29,7 @@ class Installer(object):
         self.download_data()
 
         self.build_datasets()
-        
+
 
     def install_requirements(self):
         """Install Ubuntu Requirements"""
@@ -49,18 +49,34 @@ class Installer(object):
                        sudo apt-get -y install oracle-java8-installer"""
 
                 sts = call(command, shell=True)
+        elif platform.dist()[0] in ['redhat', 'centos']:
 
-            # Perl Requirements
-            command = "sudo cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI"
+            command = 'sudo yum install libcurl-devel sed vcftools bcftools tabix zlib-devel postgresql96-libs perl-local-lib perl-App-cpanminus curl unzip wget'
             sts = call(command, shell=True)
+            command = """sudo yum groupinstall 'Development Tools'"""
+            sts = call(command, shell=True)
+            command = """yum install gcc gcc-c++ make openssl-devel"""
+            sts = call(command, shell=True)
+
+            try:
+                subprocess.call(['java', '-version'])
+            except:
+                command = """wget http://javadl.oracle.com/webapps/download/AutoDL?BundleId=225342_090f390dda5b47b9b721c7dfaa008135 -o java.rpm"""
+                sts = call(command, shell=True)
+                command = """sudo rpm -i java.rpm"""
+                sts = call(command, shell=True)
+
+        # Perl Requirements
+        command = "sudo cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI"
+        sts = call(command, shell=True)
 
 
     def install_libs(self):
-        
+
         if not os.path.exists(libs_dir):
             os.makedirs(libs_dir)
         os.chdir(libs_dir)
-        
+
         # self.install_java()
 
         self.install_htslib()
@@ -81,7 +97,7 @@ class Installer(object):
         self.download_vep_data()
 
         self.download_decipher()
-        self.download_ensembl()        
+        self.download_ensembl()
         self.download_1000genomes()
         self.download_dbsnp()
         self.download_esp()
@@ -144,7 +160,7 @@ class Installer(object):
         #check if file exists
         if not os.path.isfile(settings.htslib_file):
             command = """
-            wget -c %s 
+            wget -c %s
             tar -jxvf %s
             cd htslib-%s; ./configure; make
             """ % (settings.htslib_source, settings.htslib_file, settings.htslib_version)
@@ -170,7 +186,7 @@ class Installer(object):
 
         os.chdir(libs_dir)
 
-    
+
     def install_snpeff(self):
         if not os.path.isdir('snpeff'):
             call('mkdir snpeff', shell=True)
@@ -190,7 +206,7 @@ class Installer(object):
             call(command, shell=True)
 
         os.chdir(libs_dir)
-    
+
     def install_gemini(self):
         if not os.path.isdir('gemini'):
             call('mkdir gemini', shell=True)
@@ -222,7 +238,7 @@ class Installer(object):
 
 
         os.chdir(libs_dir)
-        
+
 
     def download_snpeff_data(self):
 
@@ -331,7 +347,7 @@ class Installer(object):
             #why do you need to extract ? God only knows ... :P (snpsift merge ?)
             # command = 'gunzip -c %s > %s' % (settings.genomes1k_file, settings.genomes1k_vcf)
             # call(command, shell=True)
-        
+
         if not os.path.isfile("%s.tbi" % (settings.genomes1k_file)):
             command = 'tabix -p vcf %s' % (settings.genomes1k_file)
             call(command, shell=True)
@@ -343,7 +359,7 @@ class Installer(object):
         if not os.path.exists('dbsnp'):
             os.makedirs('dbsnp')
         os.chdir('dbsnp')
-        
+
         #download
         if not os.path.isfile(settings.dbsnp_file):
             command = 'wget -c %s' % (settings.dbsnp_source)
@@ -418,7 +434,7 @@ class Installer(object):
             call(command, shell=True)
 
             command = """cat dbNSFP*_variant.chr* | grep -v "^#" > dbNSFP%s.unordered.txt""" % (settings.dbnsfp_version)
-            
+
             call(command, shell=True)
 
             command = """
@@ -429,12 +445,12 @@ class Installer(object):
             """ % (settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version)
 
             call(command, shell=True)
-            
+
             # Compress using block-gzip algorithm
-            
+
             command = 'bgzip dbNSFP%s.txt' % (settings.dbnsfp_version)
             call(command, shell=True)
-            
+
             # Create tabix index
             # http://genome.sph.umich.edu/wiki/RareMETALS
             # NOTE: Tabix 1.X does not seem to support the indexing for generic tab-delimited files. To index the file, please use tabix 0.2.5 or earlier versions.
