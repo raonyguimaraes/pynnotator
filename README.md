@@ -90,10 +90,10 @@ Examples of VCFs from patients with Mendelian Disorders
 
 Requirements
 ============
-
-- Ubuntu 16.04 LTS
+- Docker Compose
+or
+- Ubuntu 16.04 LTS or Red Hat/CentOS 7
 - Python 2 or 3
-- At least 40GB
 
 How to run it?
 ==============
