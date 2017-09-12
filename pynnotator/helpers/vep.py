@@ -38,7 +38,7 @@ class Vep(object):
     #convert and annotate the vcf file to vep
     def annotate(self):
 
-        command = '''perl %s/variant_effect_predictor.pl \
+        command = '''perl %s/vep \
         -i %s \
         --format vcf \
         --dir %s \

@@ -49,10 +49,10 @@ snpeff_dir = os.path.join(libs_dir, 'snpeff', 'snpEff')
 snpeff_data_dir = os.path.join(data_dir, 'snpeff_data')
 
 #vep
-vep_release = '88'
-vep_source = 'https://github.com/Ensembl/ensembl-tools/archive/release/%s.zip' % (vep_release)
+vep_release = '90'
+vep_source = 'https://github.com/Ensembl/ensembl-vep/archive/release/%s.zip' % (vep_release)
 vep_cache_dir = os.path.join(data_dir, 'vep_cache')
-vep_dir = '%s/vep/ensembl-tools-release-%s/scripts/variant_effect_predictor' % (libs_dir, vep_release)
+vep_dir = '%s/vep/ensembl-vep-release-%s/' % (libs_dir, vep_release)
 
 #gemini
 gemini_file = 'gemini_install.py'
@@ -99,7 +99,7 @@ esp_source = 'http://evs.gs.washington.edu/evs_bulk_data/%s' % (esp_file)
 esp_final_file = 'esp6500si.vcf.gz'
 
 #dbnsfp
-dbnsfp_version = '3.4a'
+dbnsfp_version = '3.5a'
 dbnsfp_file = 'dbNSFP%s.txt.gz' % (dbnsfp_version)
 dbnsfp_link = 'ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFPv%s.zip' % (dbnsfp_version)
 dbnsfp = '%s/dbnsfp/dbNSFP%s.txt.gz' % (data_dir, dbnsfp_version)
