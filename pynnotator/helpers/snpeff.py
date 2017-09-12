@@ -50,7 +50,7 @@ class Snpeff(object):
         -noNextProt \
         -no-utr -canon \
         >snpeff/snpeff.output.vcf""" % (settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database, self.vcffile)
-        print(command)
+        # print(command)
 
 
         # -classic

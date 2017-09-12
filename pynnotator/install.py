@@ -35,7 +35,7 @@ class Installer(object):
         """Install Ubuntu Requirements"""
         print('Installing Requirements')
         if platform.dist()[0] in ['Ubuntu', 'LinuxMint']:
-            command = 'sudo apt-get install libcurl4-openssl-dev sed python3-dev python3-pip python3-setuptools vcftools bcftools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget'  # lamp-server^
+            command = 'sudo apt-get install libcurl4-openssl-dev sed python3-dev python3-pip python3-setuptools vcftools bcftools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget pkg-config'  # lamp-server^
             sts = call(command, shell=True)
 
             try:

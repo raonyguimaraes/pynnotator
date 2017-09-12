@@ -31,7 +31,7 @@ htslib_source = 'https://github.com/samtools/htslib/releases/download/%s/%s' % (
 htslib_dir = '%s/htslib/htslib-%s' % (libs_dir, htslib_version)
 
 #vcftools
-vcftools_version = '0.1.14'
+vcftools_version = '0.1.15'
 vcftools_file = 'vcftools-%s.tar.gz' % (vcftools_version)
 vcftools_source = 'https://github.com/vcftools/vcftools/releases/download/v%s/vcftools-%s.tar.gz' % (vcftools_version, vcftools_version)
 #validation
