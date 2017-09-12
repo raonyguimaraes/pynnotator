@@ -25,7 +25,7 @@ data_dir = os.path.join(BASE_DIR, 'data')
 ###LIBS
 
 #htslib (tabix)
-htslib_version = '1.4'
+htslib_version = '1.5'
 htslib_file = 'htslib-%s.tar.bz2' % (htslib_version)
 htslib_source = 'https://github.com/samtools/htslib/releases/download/%s/%s' % (htslib_version, htslib_file)
 htslib_dir = '%s/htslib/htslib-%s' % (libs_dir, htslib_version)
