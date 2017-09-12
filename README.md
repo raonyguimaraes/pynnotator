@@ -2,7 +2,7 @@
 
 This is a Python Annotation Framework developed with the goal of annotating VCF files (Exomes or Genomes) from patients with Mendelian Disorders.
 
-This tool is built using state-of-the-art tools and databases for human genome annotation.
+This tool was built using state-of-the-art tools and databases for human genome annotation.
 
 Currently, it can only annotate VCFs generated from build GRCh37.
 
@@ -17,7 +17,7 @@ Tools
 Databases
 =========
 
-- 1000Genomes (Phase 3) - ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf 
+- 1000Genomes (Phase 3) - ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf
 - dbSNP (including clinvar) - (human_9606_b150_GRCh37p13)
 - Exome Sequencing Project - ESP6500SI-V2-SSA137.GRCh38-liftover
 - dbNFSP 3.2a (including dbscSNV 1.1)
@@ -102,10 +102,10 @@ Requires at least 65GB of disk space during installation and 35GB after installe
 
 1º Method::
 
-    docker-compose run pynnotator -i pynnotator/tests/sample.1000.vcf 
+    docker-compose run pynnotator -i pynnotator/tests/sample.1000.vcf
     or
     docker-compose run pynnotator -i sample.vcf.gz
-    
+
 
 2º Method::
 
@@ -116,7 +116,7 @@ Requires at least 65GB of disk space during installation and 35GB after installe
     source mendelmdenv/bin/activate
     pip install pynnotator
     pynnotator install
-    
+
     #And them finally:
     pynnotator -i sample.vcf
     #or

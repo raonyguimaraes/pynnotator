@@ -6,7 +6,7 @@ setup(name='pynnotator',
       url='http://github.com/raonyguimaraes/pynnotator',
       author='Raony Guimaraes',
       author_email='raony@torchmed.com',
-      license='MIT',
+      license='BSD-3',
       packages=['pynnotator', 'pynnotator.helpers', 'pynnotator.tests'],
       install_requires=[
           'pysam',

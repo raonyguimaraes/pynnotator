@@ -2,8 +2,8 @@ import os
 
 ###MAIN SETTINGS
 
-snpEff_memory = "2G"
-snpsift_merge_memory ="2G"
+snpEff_memory = "4G"
+snpsift_merge_memory ="4G"
 vep_cores = 2
 vcf_annotator_cores = 2
 func_pred_cores = 2
@@ -42,7 +42,7 @@ vcftools_dir_perl = "%s/vcftools/vcftools-%s/src/perl" % (libs_dir, vcftools_ver
 #snpeff
 snpeff_database = 'GRCh37.75' # this is the last build from GRCh37
 snpeff_version = 'snpEff_latest_core'
-snpeff_version = 'snpEff_v4_3p_core'#need to test version 4.3
+snpeff_version = 'snpEff_v4_3r_core'#need to test version 4.3
 snpeff_source = 'http://sourceforge.net/projects/snpeff/files/%s.zip' % (snpeff_version)
 
 snpeff_dir = os.path.join(libs_dir, 'snpeff', 'snpEff')

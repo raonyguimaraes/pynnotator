@@ -21,9 +21,13 @@ class Pynnotator(object):
         print('Starting Installation...')
         installer = Installer()
         installer.install()
-        
+
         print("Installation Finished with success!! \nNow try testing with the command: pynnotator test")
-        
+    def build(self):
+        print('Building Databasets...')
+        installer = Installer()
+        installer.build_datasets()
+
     def install_libs(self):
         print('Installing Libs...')
         installer = Installer()
@@ -32,10 +36,6 @@ class Pynnotator(object):
         print('Installing Libs...')
         installer = Installer()
         installer.install_requirements()
-    def build(self):
-        print('Building Databasets...')
-        installer = Installer()
-        installer.build_datasets()
     def annotate(self, vcf_file):
         print("Annotating VCF... %s" % (vcf_file))
         pynnotator = Annotator(vcf_file)

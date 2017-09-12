@@ -24,7 +24,7 @@ class Installer(object):
 
     def install(self):
         self.install_requirements()
-        # self.install_libs()
+        self.install_libs()
         self.download_libs()
         self.download_data()
 
