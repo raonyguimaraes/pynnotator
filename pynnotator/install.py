@@ -1,15 +1,16 @@
 #!/usr/bin/python
 
 import os
+import platform
 import subprocess
 from subprocess import call
-import platform
 
 from . import settings
 
 BASE_DIR = os.path.dirname(__file__)
 libs_dir = os.path.join(BASE_DIR, 'libs')
 data_dir = os.path.join(BASE_DIR, 'data')
+
 
 class Installer(object):
     """A class to annotate VCFs
@@ -21,7 +22,6 @@ class Installer(object):
     def __init__(self):
         """Return a Pynnotator Installer object """
 
-
     def install(self):
         self.install_requirements()
         self.install_libs()
@@ -29,7 +29,6 @@ class Installer(object):
         self.download_data()
 
         self.build_datasets()
-
 
     def install_requirements(self):
         """Install Ubuntu Requirements"""
@@ -70,7 +69,6 @@ class Installer(object):
         command = "sudo cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI"
         sts = call(command, shell=True)
 
-
     def install_libs(self):
 
         if not os.path.exists(libs_dir):
@@ -84,7 +82,6 @@ class Installer(object):
         self.install_snpeff()
         self.install_gemini()
         self.install_vep()
-
 
     def build_datasets(self):
         print("Building Datasets")
@@ -109,7 +106,7 @@ class Installer(object):
         os.chdir(settings.BASE_DIR)
 
         if not os.path.exists(settings.data_dir):
-            command = "wget %s -O %s" %(settings.data_source, settings.data_file)
+            command = "wget %s -O %s" % (settings.data_source, settings.data_file)
             call(command, shell=True)
 
             print("Extracting Data...")
@@ -119,13 +116,14 @@ class Installer(object):
             print("Deleting Compressed File...")
             command = "rm %s" % (settings.data_file)
             call(command, shell=True)
+
     def download_libs(self):
         print("Downloading Libs")
 
         os.chdir(settings.BASE_DIR)
 
         if not os.path.exists(settings.libs_dir):
-            command = "wget %s -O %s" %(settings.libs_source, settings.libs_file)
+            command = "wget %s -O %s" % (settings.libs_source, settings.libs_file)
             call(command, shell=True)
 
             print("Extracting Data...")
@@ -135,7 +133,6 @@ class Installer(object):
             print("Deleting Compressed File...")
             command = "rm %s" % (settings.libs_file)
             # call(command, shell=True)
-
 
     def install_java(self):
         if not os.path.isdir('java'):
@@ -157,7 +154,7 @@ class Installer(object):
             call('mkdir htslib', shell=True)
 
         os.chdir('htslib')
-        #check if file exists
+        # check if file exists
         if not os.path.isfile(settings.htslib_file):
             command = """
             wget -c %s
@@ -169,12 +166,11 @@ class Installer(object):
 
         os.chdir(libs_dir)
 
-
     def install_vcftools(self):
         if not os.path.isdir('vcftools'):
             call('mkdir vcftools', shell=True)
         os.chdir('vcftools')
-        #check if file exists
+        # check if file exists
         if not os.path.isfile(settings.vcftools_file):
             command = """
             wget -c %s
@@ -186,12 +182,11 @@ class Installer(object):
 
         os.chdir(libs_dir)
 
-
     def install_snpeff(self):
         if not os.path.isdir('snpeff'):
             call('mkdir snpeff', shell=True)
         os.chdir('snpeff')
-        #check if file exists
+        # check if file exists
         if not os.path.isfile('%s.zip' % (settings.snpeff_version)):
             command = """
             wget -c %s
@@ -199,8 +194,8 @@ class Installer(object):
             """ % (settings.snpeff_source, settings.snpeff_version)
             call(command, shell=True)
 
-            #change data_dir
-            #from ./data/ to data.dir = ../../../data/snpeff_data
+            # change data_dir
+            # from ./data/ to data.dir = ../../../data/snpeff_data
             command = """
             sed -i 's/\.\/data\//\.\.\/\.\.\/\.\.\/data\/snpeff_data/g' snpEff/snpEff.config"""
             call(command, shell=True)
@@ -211,7 +206,7 @@ class Installer(object):
         if not os.path.isdir('gemini'):
             call('mkdir gemini', shell=True)
         os.chdir('gemini')
-        #check if file exists
+        # check if file exists
         if not os.path.isfile(settings.gemini_file):
             command = 'wget -c %s -O %s' % (settings.gemini_source, settings.gemini_file)
             call(command, shell=True)
@@ -236,15 +231,14 @@ class Installer(object):
             command = """perl INSTALL.pl -a a"""
             call(command, shell=True)
 
-
         os.chdir(libs_dir)
-
 
     def download_snpeff_data(self):
 
-        #download snpeff data
+        # download snpeff data
         if not os.path.isdir(os.path.join(settings.snpeff_data_dir, settings.snpeff_database)):
-            command = "java -jar %s/snpEff.jar download -c %s/snpEff.config -v %s" % (settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database)
+            command = "java -jar %s/snpEff.jar download -c %s/snpEff.config -v %s" % (
+                settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database)
             call(command, shell=True)
 
     def download_vep_data(self):
@@ -256,18 +250,18 @@ class Installer(object):
             """ % (settings.vep_cache_dir)
             call(command, shell=True)
 
-        #test
-        #     # os.system('perl variant_effect_predictor.pl -i example_GRCh37.vcf --cache --offline --dir_cache vep_cache --fasta vep_cache/homo_sapiens/77_GRCh37/Homo_sapiens.GRCh37.75.dna.primary_assembly.fa')
+            # test
+            #     # os.system('perl variant_effect_predictor.pl -i example_GRCh37.vcf --cache --offline --dir_cache vep_cache --fasta vep_cache/homo_sapiens/77_GRCh37/Homo_sapiens.GRCh37.75.dna.primary_assembly.fa')
 
-        # #download plugins
-        # os.chdir(vep_cache_dir)
-        # if not os.path.isdir('Plugins'):
-        #     os.system('git clone %s Plugins' % (vep_plugins_source))
+            # #download plugins
+            # os.chdir(vep_cache_dir)
+            # if not os.path.isdir('Plugins'):
+            #     os.system('git clone %s Plugins' % (vep_plugins_source))
 
-        # #install condel
-        # os.chdir('Plugins/config/Condel/config')
-        # condel_config = "condel.dir=\\'%s/Plugins/config/Condel\\'" % (vep_cache_dir)
-        # os.system('echo %s >> condel_SP.conf' % (condel_config))
+            # #install condel
+            # os.chdir('Plugins/config/Condel/config')
+            # condel_config = "condel.dir=\\'%s/Plugins/config/Condel\\'" % (vep_cache_dir)
+            # os.system('echo %s >> condel_SP.conf' % (condel_config))
 
     def download_decipher(self):
         os.chdir(data_dir)
@@ -278,26 +272,26 @@ class Installer(object):
         if not os.path.isfile(settings.hi_predictions_file):
             command = 'wget -c %s -O %s' % (settings.hi_predictions_source, settings.hi_predictions_file)
             call(command, shell=True)
-            #extract
+            # extract
             command = 'gunzip -d %s' % (settings.hi_predictions_file)
             call(command, shell=True)
 
-            file_without_extension = settings.hi_predictions_file.replace('.gz','')
-            #remove first line
+            file_without_extension = settings.hi_predictions_file.replace('.gz', '')
+            # remove first line
             command = 'tail -n +2 "%s" > hi_predictions.unsorted.bed' % (file_without_extension)
             call(command, shell=True)
 
             command = 'sort -k 1,1 -k2,2n hi_predictions.unsorted.bed > hi_predictions.chr.bed'
             call(command, shell=True)
 
-            #remove chr
+            # remove chr
             command = "cat hi_predictions.chr.bed | sed 's/^chr//' > hi_predictions.bed"
             call(command, shell=True)
 
-            #compress
+            # compress
             command = 'bgzip hi_predictions.bed'
             call(command, shell=True)
-            #rename
+            # rename
             command = 'mv hi_predictions.bed.gz %s' % (settings.hi_predictions_file)
             call(command, shell=True)
 
@@ -344,7 +338,7 @@ class Installer(object):
         if not os.path.isfile(settings.genomes1k_file):
             command = 'wget -c %s' % (settings.genomes1k_source)
             call(command, shell=True)
-            #why do you need to extract ? God only knows ... :P (snpsift merge ?)
+            # why do you need to extract ? God only knows ... :P (snpsift merge ?)
             # command = 'gunzip -c %s > %s' % (settings.genomes1k_file, settings.genomes1k_vcf)
             # call(command, shell=True)
 
@@ -360,7 +354,7 @@ class Installer(object):
             os.makedirs('dbsnp')
         os.chdir('dbsnp')
 
-        #download
+        # download
         if not os.path.isfile(settings.dbsnp_file):
             command = 'wget -c %s' % (settings.dbsnp_source)
             call(command, shell=True)
@@ -390,8 +384,8 @@ class Installer(object):
             command = 'wget -c %s' % (settings.esp_source)
             call(command, shell=True)
 
-        chroms = list(range(1,23))+['X', 'Y']
-        #run prepare_data.sh
+        chroms = list(range(1, 23)) + ['X', 'Y']
+        # run prepare_data.sh
         if not os.path.isfile(settings.esp_final_file):
             command = 'tar -zxvf %s' % (settings.esp_file)
             call(command, shell=True)
@@ -402,34 +396,31 @@ class Installer(object):
                 command = 'tabix -p vcf %s.chr%s.snps_indels.vcf.gz' % (settings.esp_basename, chr)
                 call(command, shell=True)
                 vcfs.append('%s.chr%s.snps_indels.vcf.gz' % (settings.esp_basename, chr))
-            command  = 'vcf-concat %s | bgzip -c > esp6500si.vcf.gz' % (" ".join(vcfs))
+            command = 'vcf-concat %s | bgzip -c > esp6500si.vcf.gz' % (" ".join(vcfs))
             call(command, shell=True)
-            command  = 'tabix -p vcf esp6500si.vcf.gz'
+            command = 'tabix -p vcf esp6500si.vcf.gz'
             call(command, shell=True)
             command = 'rm %s* -f' % (settings.esp_basename)
             call(command, shell=True)
 
-
     def download_dbnsfp(self):
         os.chdir(data_dir)
-        #download dbnsfp
+        # download dbnsfp
 
         if not os.path.exists('dbnsfp'):
             os.makedirs('dbnsfp')
         os.chdir('dbnsfp')
 
         if not os.path.isfile(settings.dbnsfp_file):
-
             # --user=Anonymous --password=raonyguimaraes@gmail.com
             command = "wget -c %s -O dbNSFPv%s.zip" % (settings.dbnsfp_link, settings.dbnsfp_version)
             call(command, shell=True)
-
 
             # Uncompress
             command = 'unzip dbNSFPv%s.zip' % (settings.dbnsfp_version)
             call(command, shell=True)
 
-            #deal with header
+            # deal with header
             command = """head -n 1 dbNSFP*_variant.chr1 > header.txt """
             call(command, shell=True)
 
@@ -458,11 +449,11 @@ class Installer(object):
             command = 'tabix -f -s 1 -b 2 -e 2 dbNSFP%s.txt.gz' % (settings.dbnsfp_version)
             call(command, shell=True)
 
-            #clean files
+            # clean files
             command = "rm -rf tmp dbNSFP*_variant* dbNSFP*_gene* *ordered.txt *.class *.in *.txt LICENSE.txt try.vcf search_dbNSFP* *.zip"
             call(command, shell=True)
 
-            #keep original file dbNSFPv3.2a.zip
+            # keep original file dbNSFPv3.2a.zip
             # call(command, shell=True)
 
         if not os.path.isfile(settings.dbscsnv_file):
@@ -472,7 +463,8 @@ class Installer(object):
             call(command, shell=True)
             command = 'head -n1 dbscSNV%s.chr1 > h' % (settings.dbscsnv_version)
             call(command, shell=True)
-            command = 'cat dbscSNV%s.chr* | grep -v ^chr | cat h - | bgzip -c > dbscSNV%s.txt.gz' % (settings.dbscsnv_version, settings.dbscsnv_version)
+            command = 'cat dbscSNV%s.chr* | grep -v ^chr | cat h - | bgzip -c > dbscSNV%s.txt.gz' % (
+                settings.dbscsnv_version, settings.dbscsnv_version)
             call(command, shell=True)
             command = 'tabix -s 1 -b 2 -e 2 -c c dbscSNV%s.txt.gz' % (settings.dbscsnv_version)
             call(command, shell=True)

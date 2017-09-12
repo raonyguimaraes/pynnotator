@@ -3,50 +3,46 @@
 
 import argparse
 import os
-import sys
-
-import time
-from datetime import datetime
-
-import csv
 import shutil
-import shlex, subprocess
-
+import subprocess
+import sys
+from datetime import datetime
 from threading import Thread
 
 from . import settings
-
 from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, func_pred, merge
 
-
 # add Python2 compatibility
-#http://stackoverflow.com/questions/25156768/cant-pickle-type-instancemethod-using-pythons-multiprocessing-pool-apply-a
+# http://stackoverflow.com/questions/25156768/cant-pickle-type-instancemethod-using-pythons-multiprocessing-pool-apply-a
 
 if sys.version_info[0] < 3:
     import copy_reg
     import types
+
 
     def _pickle_method(m):
         if m.im_self is None:
             return getattr, (m.im_class, m.im_func.func_name)
         else:
             return getattr, (m.im_self, m.im_func.func_name)
-    
+
+
     copy_reg.pickle(types.MethodType, _pickle_method)
+
+
 ## end of python2 compatibility        
 
 
 class Annotator(object):
-
     is_validated = False
 
     def __init__(self, vcf_file=None):
-        
+
         self.filename = os.path.splitext(os.path.basename(str(vcf_file)))[0]
 
         self.vcf_file = os.path.abspath(vcf_file)
 
-        #this is used to create the folder with the right name
+        # this is used to create the folder with the right name
         self.filename = self.filename.replace('.vcf.gz', '').replace('.vcf', '')
 
         # create a folder for the annotation if it doesn't exists, 
@@ -58,37 +54,33 @@ class Annotator(object):
 
         os.makedirs(self.ann_name)
         os.chdir(self.ann_name)
-        
-
-
 
     def run(self):
-        
+
         tstart = datetime.now()
 
         if self.vcf_file.endswith('.vcf.gz'):
             path = os.path.dirname(self.vcf_file)
             new_name = '%s/%s/%s.vcf' % (path, self.ann_name, self.filename)
-            command='gunzip -c -d %s > %s' % (self.vcf_file, new_name)
+            command = 'gunzip -c -d %s > %s' % (self.vcf_file, new_name)
             self.shell(command)
             self.vcf_file = new_name
         else:
             path = os.path.dirname(self.vcf_file)
             new_name = '%s/%s/%s.vcf' % (path, self.ann_name, self.filename)
-            command='cp %s %s' % (self.vcf_file, new_name)
+            command = 'cp %s %s' % (self.vcf_file, new_name)
             self.shell(command)
             self.vcf_file = new_name
-        
 
-        #run vcftools vcf-validator on this file 
+        # run vcftools vcf-validator on this file 
         validator = Thread(target=self.validator)
         validator.start()
-        #wait the process to finish before continue to the next steps 
+        # wait the process to finish before continue to the next steps 
         validator.join()
 
         # #Check if the vcf file is validated
         # if(self.is_validated):#
-            
+
         threads = []
 
         sanitycheck = Thread(target=self.sanitycheck)
@@ -113,14 +105,14 @@ class Annotator(object):
         vcf_annotator = Thread(target=self.vcf_annotator)
         threads.append(vcf_annotator)
 
-        func_pred = Thread(target=self.func_pred) #took 0:17:40.699580
+        func_pred = Thread(target=self.func_pred)  # took 0:17:40.699580
         threads.append(func_pred)
 
-        #execute all tasks in parallel
+        # execute all tasks in parallel
         for thread in threads:
             thread.start()
-            #thread.join()#this option to make it serial
-        
+            # thread.join()#this option to make it serial
+
         for thread in threads:
             thread.join()
 
@@ -128,11 +120,11 @@ class Annotator(object):
         merge.start()
         # #wait till finish to continue
         merge.join()
-        
+
         time_end = datetime.now()
         # print(time_end, "Annotation Completed!")
         tend = datetime.now()
-        execution_time = tend -  tstart
+        execution_time = tend - tstart
         # logging.info('Finished Annotation, it took %s' % (execution_time))
         print(time_end, 'Finished Annotation, it took %s' % (execution_time))
 
@@ -148,21 +140,22 @@ T       T C       A C       T       T C       A C       T
     def log_message(self, message):
         print(message)
         # logging.info(message)
+
     def shell(self, command):
         # logging.info('Running Command %s' % (command))
         # logging.info('OS CWD: %s' % (os.getcwd()))
         print('Running Command %s' % (command))
         # print 'OS CWD: %s' % (os.getcwd())
-        
+
         try:
-            p = subprocess.check_output(command, 
-            cwd=os.getcwd(), 
-            shell=True)
+            p = subprocess.check_output(command,
+                                        cwd=os.getcwd(),
+                                        shell=True)
             # logging.info('Command Output: %s' % (p))
         except subprocess.CalledProcessError as e:
             print('CalledProcessError:', e)
 
-    #if can validate return True else return False
+    # if can validate return True else return False
     def validator(self):
         """
         VCF Validator
@@ -175,8 +168,8 @@ T       T C       A C       T       T C       A C       T
             self.is_validated = True
 
         tend = datetime.now()
-        execution_time = tend -  tstart
-        
+        execution_time = tend - tstart
+
     def sanitycheck(self):
         """
         Search and Remove variants with [0/0, ./.]
@@ -184,7 +177,7 @@ T       T C       A C       T       T C       A C       T
         Sort VCF by 1...22, X, Y, MT and nothing else
         #Discard other variants
         """
-        #logging.info('Starting Sanity Check...')
+        # logging.info('Starting Sanity Check...')
         tstart = datetime.now()
 
         # command = 'python %s/sanity_check.py -i %s' % (scripts_dir, self.vcf_file)
@@ -192,87 +185,83 @@ T       T C       A C       T       T C       A C       T
 
         sc = sanity_check.Sanity_check(self.vcf_file)
         std = sc.run()
-        
+
         tend = datetime.now()
-        execution_time = tend -  tstart
-        #logging.info('Finished Sanity Check, it took %s' % (execution_time))
+        execution_time = tend - tstart
+        # logging.info('Finished Sanity Check, it took %s' % (execution_time))
 
     def snpeff(self):
         """
         Annotation with snpEff 
-        """        
-        #calculate time thread took to finish
-        #logging.info('Starting snpEff')
+        """
+        # calculate time thread took to finish
+        # logging.info('Starting snpEff')
         tstart = datetime.now()
 
         se = snpeff.Snpeff(self.vcf_file)
         std = se.run()
 
         tend = datetime.now()
-        execution_time = tend -  tstart
-        #logging.info('Finished snpEff, it took %s' % (execution_time))
+        execution_time = tend - tstart
+        # logging.info('Finished snpEff, it took %s' % (execution_time))
         # print(tend, 'Finished snpEff, it took %s' % (execution_time))
 
-        #subprocess.call(args)
+        # subprocess.call(args)
 
     def vep(self):
         """VEP"""
-        
-        #calculate time thread took to finish
-        #logging.info('Starting VEP ')
+
+        # calculate time thread took to finish
+        # logging.info('Starting VEP ')
         tstart = datetime.now()
 
         vep_obj = vep.Vep(self.vcf_file)
         std = vep_obj.run()
-        
+
         # command = 'python %s/vep.py -i sanity_check/checked.vcf' % (scripts_dir)
         # self.shell(command)
 
         # command = 'mv vep/vep.log log/'
         # os.system(command)
-        
+
         # command = 'mv vep/vep.output.vcf_summary.html reports/vep_summary.html'
         # os.system(command)
 
         tend = datetime.now()
-        execution_time = tend -  tstart
-        #logging.info('Finished VEP, it took %s' % (execution_time))
+        execution_time = tend - tstart
+        # logging.info('Finished VEP, it took %s' % (execution_time))
         # print(tend, 'Finished VEP, it took %s' % (execution_time))
-    
-   
+
     def decipher(self):
         """Decipher """
-        
-        #calculate time thread took to finish
-        #logging.info('Starting HI score')
+
+        # calculate time thread took to finish
+        # logging.info('Starting HI score')
         tstart = datetime.now()
- 
+
         decipher_obj = decipher.Decipher(self.vcf_file)
         decipher_obj.run()
 
         tend = datetime.now()
-        execution_time = tend -  tstart
-        #logging.info('Finished HI Score, it took %s' % (execution_time))
+        execution_time = tend - tstart
+        # logging.info('Finished HI Score, it took %s' % (execution_time))
         # print(tend, 'Finished Decipher, it took %s' % (execution_time))
 
     def hgmd(self):
         """Hi Index """
 
-        
-        #calculate time thread took to finish
-        #logging.info('Starting HI score')
+        # calculate time thread took to finish
+        # logging.info('Starting HI score')
         tstart = datetime.now()
-        
+
         command = 'python %s/hgmd.py -i sanity_check/checked.vcf' % (scripts_dir)
         self.shell(command)
 
-
         tend = datetime.now()
-        execution_time = tend -  tstart
-        #logging.info('Finished HI Score, it took %s' % (execution_time))
+        execution_time = tend - tstart
+        # logging.info('Finished HI Score, it took %s' % (execution_time))
         # print('Finished HGMD, it took %s' % (execution_time))
-        
-   
+
     def merge(self):
 
         tstart = datetime.now()
@@ -285,92 +274,90 @@ T       T C       A C       T       T C       A C       T
         mg.run()
 
         t_merge_end = datetime.now()
-        execution_time = t_merge_end -  t_merge_start
+        execution_time = t_merge_end - t_merge_start
 
         # logging.info('Finished Merging VCF, it took %s' % (execution_time))
         # print(t_merge_end, 'Finished Merging VCF, it took %s' % (execution_time))
-        
-        #compress annotation file to save space
+
+        # compress annotation file to save space
         # command = '%s/bgzip merge/annotation.final.vcf' % (tabix_path)
         # os.system(command)
         # print('before merge', os.getcwd())
-        #move final file one up and delete folder!
+        # move final file one up and delete folder!
         command = 'mv annotation.final.vcf ../'
         os.system(command)
 
     def snpsift(self):
         """SnpSift"""
-        
+
         tstart = datetime.now()
-        
+
         # command = 'python %s/snpsift.py -i sanity_check/checked.vcf 2>log/snpsift.log' % (scripts_dir)
         # self.shell(command)
 
         ss = snpsift.SnpSift(self.vcf_file)
         ss.run()
 
-        
         tend = datetime.now()
-        execution_time = tend -  tstart
-        #logging.info('Finished annovar, it took %s' % (execution_time))
+        execution_time = tend - tstart
+        # logging.info('Finished annovar, it took %s' % (execution_time))
         # print(tend, 'Finished snpsift, it took %s' % (execution_time))
 
     def vcf_annotator(self):
         """Vcf annotator"""
-        
+
         tstart = datetime.now()
 
-        #python ../scripts/annotate_vcfs.py -i mm13173_14.ug.target1.vcf -r 1000genomes dbsnp138 clinvar esp6500 -a ../data/1000genomes/ALL.wgs.integrated_phase1_v3.20101123.snps_indels_sv.sites.vcf.gz ../data/dbsnp138/00-All.vcf.gz ../data/dbsnp138/clinvar_00-latest.vcf.gz ../data/ESP6500/ESP6500.vcf.gz
+        # python ../scripts/annotate_vcfs.py -i mm13173_14.ug.target1.vcf -r 1000genomes dbsnp138 clinvar esp6500 -a ../data/1000genomes/ALL.wgs.integrated_phase1_v3.20101123.snps_indels_sv.sites.vcf.gz ../data/dbsnp138/00-All.vcf.gz ../data/dbsnp138/clinvar_00-latest.vcf.gz ../data/ESP6500/ESP6500.vcf.gz
 
         # command = 'python %s/vcf_annotator_parallel.py -n %s -i sanity_check/checked.vcf -r 1000genomes dbsnp clinvar esp6500 -a %s %s %s %s 2>log/pynnotator.log' % (scripts_dir, pynnotator_cores, genomes1k, dbsnp, clinvar, esp)
         # self.shell(command)
 
-        resources = "genomes1k dbsnp clinvar esp6500 ensembl_phen ensembl_clin"#    
+        resources = "genomes1k dbsnp clinvar esp6500 ensembl_phen ensembl_clin"  # 
         resources = resources.split(' ')
         annfiles = [
-        "%s/1000genomes/%s" % (settings.data_dir, settings.genomes1k_file),
-        "%s/dbsnp/%s" % (settings.data_dir, settings.dbsnp_file),
-        "%s/dbsnp/%s" % (settings.data_dir, settings.clinvar_file),
-        "%s/esp6500/%s" % (settings.data_dir, settings.esp_final_file),
-        "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_phenotype_file),
-        "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_clinically_file),
+            "%s/1000genomes/%s" % (settings.data_dir, settings.genomes1k_file),
+            "%s/dbsnp/%s" % (settings.data_dir, settings.dbsnp_file),
+            "%s/dbsnp/%s" % (settings.data_dir, settings.clinvar_file),
+            "%s/esp6500/%s" % (settings.data_dir, settings.esp_final_file),
+            "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_phenotype_file),
+            "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_clinically_file),
         ]
         #
- 
+
 
 
         # annfiles = " ".join(annfiles)
         # annfiles = ["%s/1000genomes/%s" % (settings.data_dir, settings.genomes1k_file)]
 
-        annotator_obj =  vcf_annotator.VCF_Annotator(self.vcf_file, annfiles, resources, settings.vcf_annotator_cores)
+        annotator_obj = vcf_annotator.VCF_Annotator(self.vcf_file, annfiles, resources, settings.vcf_annotator_cores)
 
         annotator_obj.run()
-        
+
         tend = datetime.now()
-        execution_time = tend -  tstart
-        #logging.info('Finished annovar, it took %s' % (execution_time))
+        execution_time = tend - tstart
+        # logging.info('Finished annovar, it took %s' % (execution_time))
         # print(tend, 'Finished vcf_annotator, it took %s' % (execution_time))
+
     def func_pred(self):
         """func_pred"""
-        
+
         tstart = datetime.now()
 
-        #python ../scripts/annotate_vcfs.py -i mm13173_14.ug.target1.vcf -r 1000genomes dbsnp138 clinvar esp6500 -a ../data/1000genomes/ALL.wgs.integrated_phase1_v3.20101123.snps_indels_sv.sites.vcf.gz ../data/dbsnp138/00-All.vcf.gz ../data/dbsnp138/clinvar_00-latest.vcf.gz ../data/ESP6500/ESP6500.vcf.gz
+        # python ../scripts/annotate_vcfs.py -i mm13173_14.ug.target1.vcf -r 1000genomes dbsnp138 clinvar esp6500 -a ../data/1000genomes/ALL.wgs.integrated_phase1_v3.20101123.snps_indels_sv.sites.vcf.gz ../data/dbsnp138/00-All.vcf.gz ../data/dbsnp138/clinvar_00-latest.vcf.gz ../data/ESP6500/ESP6500.vcf.gz
 
         # command = 'python %s/cadd_dann.py -n %s -i sanity_check/checked.vcf 2>log/cadd_dann.log' % (scripts_dir, cadd_vest_cores)
         # self.shell(command)
         fp = func_pred.FUNC_PRED_Annotator(self.vcf_file, settings.func_pred_cores)
         fp.run()
-        
+
         tend = datetime.now()
-        execution_time = tend -  tstart
-        #logging.info('Finished annovar, it took %s' % (execution_time))
+        execution_time = tend - tstart
+        # logging.info('Finished annovar, it took %s' % (execution_time))
         # print(tend, 'Finished Func Pred, it took %s' % (execution_time))
 
 
-
-if __name__=="__main__":
-    
+if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Annotate a VCF File with Annotator.')
     parser.add_argument('-i', dest='vcf_file', required=True, metavar='example.vcf', help='a VCF file to be annotated')
     args = parser.parse_args()

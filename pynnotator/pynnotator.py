@@ -1,9 +1,9 @@
 import os
-from subprocess import call, check_output, check_call
 import subprocess
+from subprocess import call, check_output
 
-from .install import Installer
 from .annotator import Annotator
+from .install import Installer
 
 
 class Pynnotator(object):
@@ -15,7 +15,7 @@ class Pynnotator(object):
 
     def __init__(self, vcf_file=False):
         """Return a Pynnotator object with a defined VCF file to be annotated."""
-        self.vcf_file= vcf_file
+        self.vcf_file = vcf_file
 
     def install(self):
         print('Starting Installation...')
@@ -23,6 +23,7 @@ class Pynnotator(object):
         installer.install()
 
         print("Installation Finished with success!! \nNow try testing with the command: pynnotator test")
+
     def build(self):
         print('Building Databasets...')
         installer = Installer()
@@ -32,10 +33,12 @@ class Pynnotator(object):
         print('Installing Libs...')
         installer = Installer()
         installer.install_libs()
+
     def install_requirements(self):
         print('Installing Libs...')
         installer = Installer()
         installer.install_requirements()
+
     def annotate(self, vcf_file):
         print("Annotating VCF... %s" % (vcf_file))
         pynnotator = Annotator(vcf_file)
@@ -50,8 +53,8 @@ class Pynnotator(object):
         pynnotator.run()
         os.chdir(path)
 
-        #command = 'grep -v "^#" ann_sample.1000/annotation.final.vcf > result.vcf'
-        #call(command, shell=True)
+        # command = 'grep -v "^#" ann_sample.1000/annotation.final.vcf > result.vcf'
+        # call(command, shell=True)
 
         # compare result with reference
         try:
