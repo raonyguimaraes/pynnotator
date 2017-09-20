@@ -437,9 +437,10 @@ class Installer(object):
 
             call(command, shell=True)
 
+            #use sort -k1,1V -k2,2n for hg38 
             command = """
             mkdir tmp
-            sort -k1,1V -k2,2n dbNSFP*.unordered.txt -T tmp/ > dbNSFP%s.ordered.txt
+            sort -k8,8V -k9,9n dbNSFP*.unordered.txt -T tmp/ > dbNSFP%s.ordered.txt
             cat header.txt > dbNSFP%s.txt
             cat dbNSFP*.ordered.txt >> dbNSFP%s.txt
             """ % (settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version)
@@ -454,13 +455,13 @@ class Installer(object):
             # Create tabix index
             # http://genome.sph.umich.edu/wiki/RareMETALS
             # NOTE: Tabix 1.X does not seem to support the indexing for generic tab-delimited files. To index the file, please use tabix 0.2.5 or earlier versions.
-
-            command = 'tabix -f -s 1 -b 2 -e 2 dbNSFP%s.txt.gz' % (settings.dbnsfp_version)
+            # use tabix -s 1 -b 2 -e 2 for hg38 and 
+            command = 'tabix -s 8 -b 9 -e 9 dbNSFP%s.txt.gz' % (settings.dbnsfp_version)
             call(command, shell=True)
 
             #clean files
             command = "rm -rf tmp dbNSFP*_variant* dbNSFP*_gene* *ordered.txt *.class *.in *.txt LICENSE.txt try.vcf search_dbNSFP* *.zip"
-            call(command, shell=True)
+            # call(command, shell=True)
 
             #keep original file dbNSFPv3.2a.zip
             # call(command, shell=True)
