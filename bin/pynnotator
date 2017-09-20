@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-import pynnotator
 import argparse
-import os
+
+import pynnotator
 
 parser = argparse.ArgumentParser()
-parser.add_argument('options', help='install test',nargs='?') #nargs='?', , action='store_true', default=False
+parser.add_argument('options', help='install test', nargs='?')  # nargs='?', , action='store_true', default=False
 # parser.add_argument('update', help='update libraries', required=False)
 
 parser.add_argument('-i', dest='vcf_file', required=False, metavar='example.vcf', help='a VCF file to be annotated')

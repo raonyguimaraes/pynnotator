@@ -2,41 +2,42 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import os
+import subprocess
 from datetime import datetime
-import os, shutil
-import shlex, subprocess
+from subprocess import call
 
 from pynnotator import settings
-from subprocess import call
 
 toolname = 'decipher'
 
-#enable perl5_lib
+# enable perl5_lib
 env = os.environ.copy()
 env['PERL5LIB'] = settings.vcftools_dir_perl
 
+
 class Decipher(object):
     def __init__(self, vcffile=None):
-        
+
         self.vcffile = vcffile
         self.filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
-        
-        #create folder decipher if it doesn't exists
+
+        # create folder decipher if it doesn't exists
         if not os.path.exists('decipher'):
             os.makedirs('decipher')
-    
+
     def run(self):
 
         tstart = datetime.now()
         print(tstart, 'Starting decipher annotation: ', self.vcffile)
-        
+
         self.annotate()
 
         tend = datetime.now()
-        annotation_time =  tend - tstart
+        annotation_time = tend - tstart
         print(tend, 'Finished decipher annotation, it took: ', annotation_time)
 
-    #Annotate vcf file with Haploinsuficiency Index
+    # Annotate vcf file with Haploinsuficiency Index
     def annotate(self):
 
         command = '%s/bgzip -c %s > decipher/%s.vcf.gz' % (settings.htslib_dir, self.vcffile, self.filename)
@@ -54,11 +55,10 @@ class Decipher(object):
 
         # print command
 
-        p = subprocess.call(command, 
-            cwd=os.getcwd(), 
-            env=env, 
-            shell=True)
-
+        p = subprocess.call(command,
+                            cwd=os.getcwd(),
+                            env=env,
+                            shell=True)
 
         time_end = datetime.now()
 
@@ -67,9 +67,8 @@ class Decipher(object):
         else:
             print(time_end, 'Sorry this vcf could not be annotated by %s' % (toolname))
 
-        
 
-if  __name__ == '__main__' :
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Annotate a VCF File with Decipher.')
 
     parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')

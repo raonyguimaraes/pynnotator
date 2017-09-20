@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import os
+import subprocess
 from datetime import datetime
-import os, shutil
-import shlex, subprocess
 
 from pynnotator import settings
+
 
 class Snpeff(object):
     def __init__(self, vcffile=None):
@@ -14,10 +15,9 @@ class Snpeff(object):
         self.vcffile = vcffile
         self.filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
 
-        #create folder snpeff if it doesn't exists
+        # create folder snpeff if it doesn't exists
         if not os.path.exists('snpeff'):
             os.makedirs('snpeff')
-
 
     def run(self):
         tstart = datetime.now()
@@ -26,18 +26,17 @@ class Snpeff(object):
         self.annotate()
 
         tend = datetime.now()
-        annotation_time =  tend - tstart
+        annotation_time = tend - tstart
         print(tend, 'Finished snpEff annotation, it took: ', annotation_time)
 
-    #convert and annotate the vcf file to snpeff
+    # convert and annotate the vcf file to snpeff
     def annotate(self):
 
-
         BASE_DIR = os.getcwd()
-        #print BASE_DIR
-        #-canon to report only canonical transcript, -o gatk to report only one #GRCh37.64
-        #true
-        #snpeff 4.0
+        # print BASE_DIR
+        # -canon to report only canonical transcript, -o gatk to report only one #GRCh37.64
+        # true
+        # snpeff 4.0
         command = """java -Xmx%s -jar %s/snpEff.jar \
         -c %s/snpEff.config \
         %s %s \
@@ -49,15 +48,16 @@ class Snpeff(object):
         -no-upstream \
         -noNextProt \
         -no-utr -canon \
-        >snpeff/snpeff.output.vcf""" % (settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database, self.vcffile)
+        >snpeff/snpeff.output.vcf""" % (
+            settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database, self.vcffile)
         # print(command)
 
 
         # -classic
 
         p = subprocess.call(command,
-            cwd=os.getcwd(),
-            shell=True)
+                            cwd=os.getcwd(),
+                            shell=True)
 
         tend = datetime.now()
         if p == 0:
@@ -67,7 +67,7 @@ class Snpeff(object):
         return p
 
 
-if  __name__ == '__main__' :
+if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Annotate a VCF File with Snpeff.')
 
     parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')

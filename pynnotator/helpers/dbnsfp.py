@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from settings import *
-
 import argparse
-from datetime import datetime
-import os, shutil
-import shlex, subprocess
+import os
 import pysam
+from datetime import datetime
 
+from settings import *
 from settings import *
 
 parser = argparse.ArgumentParser(description='Annotate a VCF File with DbNSFP.')
@@ -99,9 +97,10 @@ dbnfsp_header = '''##INFO=<ID=dbNSFP_GERP++_RS,Number=A,Type=Float,Description="
 ##INFO=<ID=dbNSFP_1000Gp1_EUR_AC,Number=A,Type=Integer,Description="Field '1000Gp1_EUR_AC' from dbNSFP">
 '''
 
+
 class Dbnsfp(object):
     def __init__(self, vcffile=None):
-        
+
         self.vcffile = vcffile
 
         self.filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
@@ -110,42 +109,42 @@ class Dbnsfp(object):
         # for item in self.dbnfsp_reader.header:
         #     print 'item',item
         #     #self.header.append(item)
-        #print self.header
-        
-        #create folder snpeff if it doesn't exists
+        # print self.header
+
+        # create folder snpeff if it doesn't exists
         if not os.path.exists('dbnfsp'):
             os.makedirs('dbnfsp')
-        #enter inside folder
+        # enter inside folder
         os.chdir('dbnfsp')
-        
-    
+
     def run(self):
         tstart = datetime.now()
         print(tstart, 'Starting dbnfsp annotation: ', self.vcffile)
-        
+
         self.annotate()
 
         tend = datetime.now()
-        annotation_time =  tend - tstart
+        annotation_time = tend - tstart
         print(tend, 'Finished dbnfsp annotation, it took: ', annotation_time)
 
     def check_ref_alt(self, variant, ann):
-        #compare REF
+        # compare REF
         if variant[3] == ann[2]:
             alts = variant[4].split(',')
             alts_ann = ann[3].split(',')
-            #compare ALT
+            # compare ALT
             for alt in alts:
                 if alt in alts_ann:
                     return True
         return False
-    #convert and annotate the vcf file to snpeff
+
+    # convert and annotate the vcf file to snpeff
     def annotate(self):
-        #print 'Hello'
-        #print self.dbnfsp_reader
+        # print 'Hello'
+        # print self.dbnfsp_reader
         vcf_reader = open('../%s' % (self.vcffile))
         vcf_writer = open('dbnsfp.vcf', 'w')
-        
+
         for line in vcf_reader:
             if line.startswith('#'):
                 if line.startswith('#CHROM'):
@@ -155,9 +154,9 @@ class Dbnsfp(object):
                 variant = line.split('\t')
                 variant[0] = variant[0].replace('chr', '')
                 index = '%s-%s' % (variant[0], variant[1])
-                #print index
+                # print index
                 try:
-                    records = self.dbnfsp_reader.fetch(variant[0], int(variant[1])-1, int(variant[1]))
+                    records = self.dbnfsp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]))
                 except ValueError:
                     records = []
                 for record in records:
@@ -165,19 +164,18 @@ class Dbnsfp(object):
 
                     if self.check_ref_alt(variant, ann):
                         new_ann = []
-                        #this is the column from where to start annotation
+                        # this is the column from where to start annotation
                         start_index = 11
                         start_index = 108
-                        #only freequencies 108 - 175
+                        # only freequencies 108 - 175
                         for k, item in enumerate(self.header[start_index:]):
                             # print k, item, ann[k+8]
-                            if ann[k+start_index] != '.':
-                                new_ann.append('dbnsfp.%s=%s' % (item, ann[k+start_index].replace(';', '|')))
+                            if ann[k + start_index] != '.':
+                                new_ann.append('dbnsfp.%s=%s' % (item, ann[k + start_index].replace(';', '|')))
                         variant[7] = '%s;%s' % (variant[7], ";".join(new_ann))
                 vcf_writer.writelines("\t".join(variant))
-                    
 
 
-if  __name__ == '__main__' :
+if __name__ == '__main__':
     dbnsfp = Dbnsfp(args.vcffile)
     dbnsfp.run()
