@@ -2,7 +2,7 @@
 
 This is a Python Annotation Framework developed with the goal of annotating VCF files (Exomes or Genomes) from patients with Mendelian Disorders.
 
-This tool was built using state-of-the-art tools and databases for human genome annotation.
+It was built using state-of-the-art tools and databases for human genome annotation.
 
 Currently, it can only annotate VCFs generated from build GRCh37.
 
@@ -11,8 +11,8 @@ Tools
 
 - htslib (1.5)
 - vcftools (0.1.15)
-- snpeff (SnpEff 4.3p)
-- vep (version 88)
+- snpeff (SnpEff 4.3r)
+- vep (version 90)
 
 Databases
 =========
@@ -20,8 +20,8 @@ Databases
 - 1000Genomes (Phase 3) - ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf
 - dbSNP (including clinvar) - (human_9606_b150_GRCh37p13)
 - Exome Sequencing Project - ESP6500SI-V2-SSA137.GRCh38-liftover
-- dbNFSP 3.2a (including dbscSNV 1.1)
-- Ensembl 88 (phenotype and clinically associated variants)
+- dbNFSP 3.5a (including dbscSNV 1.1)
+- Ensembl 90 (phenotype and clinically associated variants)
 - Decipher (HI_Predictions_Version3 and DDG2P)
 
 Features
@@ -29,10 +29,10 @@ Features
 
 - Annotate an exome in only 10 minutes.
 - Supports .VCF and .VCF.GZ files.
-- 20 min installation on Google Cloud or AWS.
+- 20 min installation only.
 - Multithread efficient!
 - Annotate a VCF file using multiple VCFs as a reference.
-- Combine the best tools and databases available for doing vcf annotation.
+- Combine the best tools and databases currently available for vcf annotation.
 
 Files
 =====

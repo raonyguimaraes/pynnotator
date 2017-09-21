@@ -34,7 +34,7 @@ class Installer(object):
         """Install Ubuntu Requirements"""
         print('Installing Requirements')
         if platform.dist()[0] in ['Ubuntu', 'LinuxMint']:
-            command = 'sudo apt-get install libcurl4-openssl-dev sed python3-dev python3-pip python3-setuptools vcftools bcftools tabix zlib1g-dev libpq-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget pkg-config'  # lamp-server^
+            command = 'sudo apt-get install libcurl4-openssl-dev sed python3-dev python3-pip python3-setuptools vcftools bcftools tabix zlib1g-dev liblzma-dev libpq-dev libbz2-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget pkg-config'  # lamp-server^
             sts = call(command, shell=True)
 
             try:
@@ -427,6 +427,7 @@ class Installer(object):
             command = """cat dbNSFP*_variant.chr* | grep -v "^#" > dbNSFP%s.unordered.txt""" % (settings.dbnsfp_version)
 
             call(command, shell=True)
+            # die()
 
             #use sort -k1,1V -k2,2n for hg38 
             command = """
@@ -435,7 +436,6 @@ class Installer(object):
             cat header.txt > dbNSFP%s.txt
             cat dbNSFP*.ordered.txt >> dbNSFP%s.txt
             """ % (settings.dbnsfp_version, settings.dbnsfp_version, settings.dbnsfp_version)
-
             call(command, shell=True)
 
             # Compress using block-gzip algorithm

@@ -10,7 +10,7 @@ from datetime import datetime
 from threading import Thread
 
 from . import settings
-from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, func_pred, merge
+from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, dbnsfp, merge
 
 # add Python2 compatibility
 # http://stackoverflow.com/questions/25156768/cant-pickle-type-instancemethod-using-pythons-multiprocessing-pool-apply-a
@@ -105,8 +105,8 @@ class Annotator(object):
         vcf_annotator = Thread(target=self.vcf_annotator)
         threads.append(vcf_annotator)
 
-        func_pred = Thread(target=self.func_pred)  # took 0:17:40.699580
-        threads.append(func_pred)
+        dbnsfp = Thread(target=self.dbnsfp)  # took 0:17:40.699580
+        threads.append(dbnsfp)
 
         # execute all tasks in parallel
         for thread in threads:
@@ -116,10 +116,10 @@ class Annotator(object):
         for thread in threads:
             thread.join()
 
-        merge = Thread(target=self.merge)
-        merge.start()
-        # #wait till finish to continue
-        merge.join()
+        # merge = Thread(target=self.merge)
+        # merge.start()
+        # # #wait till finish to continue
+        # merge.join()
 
         time_end = datetime.now()
         # print(time_end, "Annotation Completed!")
@@ -339,7 +339,7 @@ T       T C       A C       T       T C       A C       T
         # logging.info('Finished annovar, it took %s' % (execution_time))
         # print(tend, 'Finished vcf_annotator, it took %s' % (execution_time))
 
-    def func_pred(self):
+    def dbnsfp(self):
         """func_pred"""
 
         tstart = datetime.now()
@@ -348,8 +348,8 @@ T       T C       A C       T       T C       A C       T
 
         # command = 'python %s/cadd_dann.py -n %s -i sanity_check/checked.vcf 2>log/cadd_dann.log' % (scripts_dir, cadd_vest_cores)
         # self.shell(command)
-        fp = func_pred.FUNC_PRED_Annotator(self.vcf_file, settings.func_pred_cores)
-        fp.run()
+        db = dbnsfp.Dbnsfp(self.vcf_file, settings.dbnsfp_cores)
+        db.run()
 
         tend = datetime.now()
         execution_time = tend - tstart
@@ -358,6 +358,7 @@ T       T C       A C       T       T C       A C       T
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(description='Annotate a VCF File with Annotator.')
     parser.add_argument('-i', dest='vcf_file', required=True, metavar='example.vcf', help='a VCF file to be annotated')
     args = parser.parse_args()

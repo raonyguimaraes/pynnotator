@@ -9,7 +9,6 @@ import os
 import pysam
 from datetime import datetime
 
-
 class VCF_Annotator(object):
     def __init__(self, vcf_file=None, ann_files=None, resources=None, cores=None):
 
@@ -101,7 +100,7 @@ class VCF_Annotator(object):
         header_writer.close()
         body_writer.close()
 
-        # this is my a hack to split a vcf into n equal parts!
+        # this is a hack to split a vcf into n equal parts!
         command = 'split -d -l$((`wc -l < %s/body.vcf`/%s)) %s/body.vcf pynnotator/part.' % (prefix, self.cores, prefix)
         std = os.system(command)
 

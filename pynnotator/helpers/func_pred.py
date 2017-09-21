@@ -188,36 +188,3 @@ if __name__ == '__main__':
     func_pred = FUNC_PRED_Annotator(args.vcf_file, args.cores)
     func_pred.run()
 
-
-
-# def annotate(vcffile, index, dbnsfp):
-#     print 'vcf', vcffile, index
-#     # filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
-#     dbnfsp_reader = pysam.Tabixfile(dbnsfp)
-
-# splitvcf(args.vcffile)
-
-# # job_server = pp.Server()
-# prefix = 'func_pred'
-# # Define your jobs
-# jobs = []
-# final_parts = []
-# for n in range(0,cores):
-#     index = n+1
-#     part = '%s/part.%s.vcf' % (prefix, index)
-
-#     job = Process(target=annotate, args=(part, index, args.dbnsfp))
-#     final_file = 'func_pred/func_pred.%s.vcf' % (index)
-#     final_parts.append(final_file)
-#     jobs.append(job)
-
-
-# for job in jobs:
-#     job.start()
-
-# for job in jobs:
-#     job.join()
-
-# command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/func_pred.vcf' % (prefix)
-# os.system(command)
-# #merge all files

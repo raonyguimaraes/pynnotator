@@ -14,7 +14,6 @@ toolname = 'validator'
 env = os.environ.copy()
 env['PERL5LIB'] = settings.vcftools_dir_perl
 
-
 class Validator(object):
     def __init__(self, vcf_file=None):
 
@@ -50,8 +49,11 @@ class Validator(object):
         command = '%s/tabix -p vcf validator/%s.vcf.gz' % (settings.htslib_dir, self.filename)
         call(command, shell=True)
 
-        command = '%s/vcf-validator validator/%s.vcf.gz 2>validator/validation.log' % (
-            settings.vcftools_dir_perl, self.filename)
+        # command = '%s/vcf-validator validator/%s.vcf.gz 2>validator/validation.log' % (
+            # settings.vcftools_dir_perl, self.filename)
+        
+        command = '%s/vcf_validator -i validator/%s.vcf.gz 2>validator/validation.log' % (
+            settings.vcf_validator_dir, self.filename)
 
         # print 'validator command', command
         p = subprocess.call(command,
@@ -62,7 +64,6 @@ class Validator(object):
         time_end = datetime.now()
 
         if p == 0:
-
             print(time_end, 'This vcf was sucessfully validated by vcf-validator!')
         else:
             print(time_end, 'Sorry this vcf could not be validated!')

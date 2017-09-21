@@ -137,7 +137,7 @@ class Merge(object):
                     # print(info)
                     ann_vcf_file = self.annotation_files[annotation]['file']
                     try:
-                        records = ann_vcf_file.fetch(variant[0], int(variant[1]) - 1, int(variant[1]))
+                        records = ann_vcf_file.fetch(variant[0], int(variant[1]) - 1, int(variant[1]), multiple_iterators=True)
                     except:
                         records = []
                     for record in records:
@@ -166,7 +166,7 @@ class Merge(object):
                 # now dbsnp
 
                 try:
-                    records = self.dbsnp.fetch(variant[0], int(variant[1]) - 1, int(variant[1]))
+                    records = self.dbsnp.fetch(variant[0], int(variant[1]) - 1, int(variant[1]), multiple_iterators=True)
                 except:
                     records = []
                 rsids = []

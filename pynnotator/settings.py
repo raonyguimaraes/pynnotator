@@ -2,11 +2,11 @@ import os
 
 ###MAIN SETTINGS
 
-snpEff_memory = "4G"
-snpsift_merge_memory = "4G"
-vep_cores = 2
-vcf_annotator_cores = 2
-func_pred_cores = 2
+snpEff_memory = "16G"
+snpsift_merge_memory = "16G"
+vep_cores = 8
+vcf_annotator_cores = 8
+dbnsfp_cores = 8
 
 # server settings
 # snpeff configs
@@ -38,6 +38,7 @@ vcftools_source = 'https://github.com/vcftools/vcftools/releases/download/v%s/vc
 # validation
 vcftools_dir = "%s/vcftools/vcftools-%s/src/cpp" % (libs_dir, vcftools_version)
 vcftools_dir_perl = "%s/vcftools/vcftools-%s/src/perl" % (libs_dir, vcftools_version)
+vcf_validator_dir = "%s/vcf-validator" % (libs_dir)
 
 # snpeff
 snpeff_database = 'GRCh37.75'  # this is the last build from GRCh37
