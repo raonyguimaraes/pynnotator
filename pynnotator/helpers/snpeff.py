@@ -64,10 +64,10 @@ class Snpeff(object):
         command = 'mv snpEff_genes.txt snpEff_summary.html snpeff/'
         run(command, shell=True)
         
-        if p == 0:
-            print(tend, 'This vcf was annotated by snpEff with Success.')
-        else:
-            print(tend, 'Sorry this vcf could not be anotated by snpeff.')
+        # if p == 0:
+        #     print(tend, 'This vcf was annotated by snpEff with Success.')
+        # else:
+        #     print(tend, 'Sorry this vcf could not be anotated by snpeff.')
         return p
 
 

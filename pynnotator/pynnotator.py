@@ -47,7 +47,7 @@ class Pynnotator(object):
     def test(self):
         print('Testing Annotation...')
         path = '%s/tests' % (os.path.dirname(__file__))
-        vcf_file = 'sample.1000.vcf'
+        vcf_file = 'sample.1000.vcf.gz'
         os.chdir(path)
         pynnotator = Annotator(vcf_file)
         pynnotator.run()
@@ -57,14 +57,14 @@ class Pynnotator(object):
         # call(command, shell=True)
 
         # compare result with reference
-        try:
-            command = "zdiff annotation.validated.vcf.gz ann_sample.1000/annotation.final.vcf"
-            diff = check_output(command, shell=True)
-        except subprocess.CalledProcessError as e:
-            diff = '1'
+        # try:
+        #     command = "zdiff annotation.validated.vcf.gz ann_sample.1000/annotation.final.vcf"
+        #     diff = check_output(command, shell=True)
+        # except subprocess.CalledProcessError as e:
+        #     diff = '1'
 
-        if diff == b'':
-            print('Congratulations, The Python Annotation Framework is working as expected, Happy Annotation!!!\n\n')
+        # if diff == b'':
+        #     print('Congratulations, The Python Annotation Framework is working as expected, Happy Annotation!!!\n\n')
 
         command = 'rm -rf ann_sample.1000'
         call(command, shell=True)

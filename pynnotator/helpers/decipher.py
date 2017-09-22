@@ -66,10 +66,10 @@ class Decipher(object):
         run(command, shell=True)
 
 
-        if p == 0:
-            print(time_end, 'This vcf was sucessfully annotated by %s!' % (toolname))
-        else:
-            print(time_end, 'Sorry this vcf could not be annotated by %s' % (toolname))
+        # if p == 0:
+        #     print(time_end, 'This vcf was sucessfully annotated by %s!' % (toolname))
+        # else:
+        #     print(time_end, 'Sorry this vcf could not be annotated by %s' % (toolname))
 
 
 if __name__ == '__main__':

@@ -3,5 +3,12 @@ INFO field at 1:24861704 .. INFO tag [HET=] expected different number of values 
 
 Lot's of Reference VCFs are not validated by vcf-validator!
 
-Make pynnotator compatible with centos7!
+Make pynnotator compatible with centos7! DONE!
 https://stackoverflow.com/questions/6469508/is-it-possible-to-express-a-platform-specific-dependency-in-setup-py-without-bui
+
+rsync pynnotator-data.latest.tar root@51.15.218.80:/var/www/html/ --progress
+
+CHANGELOG
+
+Updated all data and libs, specially dbnfsp.
+Speed up the annotation.

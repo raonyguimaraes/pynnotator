@@ -12,13 +12,11 @@ def install():
 
 
 def pack_data():
-    local('cd pynnotator;tar -czvf pynnotator-data.latest.tar.gz data')
-    local('gsutil cp pynnotator-data.latest.tar.gz gs://mendelmd/')
+    local('cd pynnotator;tar -cvf pynnotator-data.latest.tar.gz data')
 
 
 def pack_libs():
     local('cd pynnotator;tar -czvf pynnotator-libs.latest.tar.gz libs')
-    local('gsutil cp pynnotator-libs.latest.tar.gz gs://mendelmd/')
 
 
 def publish():

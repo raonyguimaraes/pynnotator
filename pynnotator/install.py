@@ -24,10 +24,10 @@ class Installer(object):
 
     def install(self):
         self.install_requirements()
-        self.install_libs()
+        
         self.download_libs()
         self.download_data()
-
+        # self.install_libs()
         self.build_datasets()
 
     def install_requirements(self):
@@ -110,7 +110,7 @@ class Installer(object):
             call(command, shell=True)
 
             print("Extracting Data...")
-            command = "tar -zxvf %s" % (settings.data_file)
+            command = "tar -xvf %s" % (settings.data_file)
             call(command, shell=True)
 
             print("Deleting Compressed File...")

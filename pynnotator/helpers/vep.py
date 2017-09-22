@@ -68,10 +68,10 @@ class Vep(object):
 
         tend = datetime.now()
 
-        if p == 0:
-            print(tend, 'This vcf was sucessfully annotated by %s!' % (toolname))
-        else:
-            print(tend, 'Sorry this vcf could not be annotated by %s' % (toolname))
+        # if p == 0:
+        #     print(tend, 'This vcf was sucessfully annotated by %s!' % (toolname))
+        # else:
+        #     print(tend, 'Sorry this vcf could not be annotated by %s' % (toolname))
 
         # command = '(grep ^# output.vep.vcf; grep -v ^# output.vep.vcf|sort -k1,1N -k2,2n) > output.vep.sorted.vcf'
         # Sort VCF file 
