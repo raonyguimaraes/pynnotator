@@ -13,15 +13,7 @@ MAINTAINER Raony Guimaraes
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y software-properties-common python3 python3-dev python3-pip \
-    python3-setuptools vcftools bcftools tabix zlib1g-dev libpq-dev build-essential \
-    zlib1g-dev libbz2-dev liblocal-lib-perl cpanminus curl unzip wget sudo git gcc \
-    wget make zip htop vim liblzma-dev screen less perl unzip libcurl4-openssl-dev && \
-    add-apt-repository ppa:webupd8team/java -y && \
-    apt-get update && \
-    echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
-    apt-get install -y oracle-java8-installer && \
-    apt-get clean
+    apt-get install -y software-properties-common python3 python3-dev python3-pip git
 
 ################## BEGIN INSTALLATION ######################
 # Create the default software directory
@@ -31,7 +23,6 @@ RUN apt-get update && \
 RUN git clone http://github.com/raonyguimaraes/pynnotator
 WORKDIR /pynnotator
 RUN python3 setup.py install
-
 RUN pynnotator install
 
 ENTRYPOINT ["pynnotator"]
