@@ -18,8 +18,6 @@ RUN apt-get update && \
 ################## BEGIN INSTALLATION ######################
 # Create the default software directory
 
-#RUN pip3 install pynnotator
-#RUN pynnotator install
 RUN git clone http://github.com/raonyguimaraes/pynnotator
 WORKDIR /pynnotator
 RUN python3 setup.py install
