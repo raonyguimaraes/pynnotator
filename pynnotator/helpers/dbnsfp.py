@@ -11,6 +11,7 @@ import os
 import pysam
 from datetime import datetime
 from pynnotator import settings
+from subprocess import run
 
 class Dbnsfp(object):
     def __init__(self, vcf_file=None, cores=None):
@@ -53,9 +54,12 @@ class Dbnsfp(object):
         command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/dbnfsp.vcf' % (prefix)
         std = os.system(command)
 
+        command = 'rm %s/header.vcf %s/body.vcf %s/dbnfsp.*.vcf %s/part.*' % (prefix, prefix, prefix, prefix)
+        run(command, shell=True)
+
         tend = datetime.now()
         annotation_time = tend - tstart
-        print(tend, 'Finished DBNFSP, it took: ', annotation_time)
+        print(tend, 'Finished DBNSFP, it took: ', annotation_time)
 
     def partition(self, lst, n):
         division = len(lst) / float(n)

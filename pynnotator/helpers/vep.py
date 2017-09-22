@@ -93,7 +93,12 @@ class Vep(object):
         call(command, shell=True)
 
         tend = datetime.now()
-        print(tend, 'Finished sorting vep vcf.')
+        # print(tend, 'Finished sorting vep vcf.')
+
+        command = 'rm vep/vep.output.vcf'
+        call(command, shell=True)
+
+
 
 
 if __name__ == '__main__':

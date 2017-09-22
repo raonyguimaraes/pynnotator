@@ -5,7 +5,7 @@ import argparse
 import os
 import subprocess
 from datetime import datetime
-from subprocess import call
+from subprocess import call, run
 
 from pynnotator import settings
 
@@ -62,6 +62,9 @@ class Validator(object):
                             shell=True)
 
         time_end = datetime.now()
+
+        command = 'rm validator/%s.vcf.gz*' % (self.filename)
+        run(command, shell=True)
 
         if p == 0:
             print(time_end, 'This vcf was sucessfully validated by vcf-validator!')

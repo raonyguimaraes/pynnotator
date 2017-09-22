@@ -8,6 +8,7 @@ import multiprocessing as mp
 import os
 import pysam
 from datetime import datetime
+from subprocess import run
 
 class VCF_Annotator(object):
     def __init__(self, vcf_file=None, ann_files=None, resources=None, cores=None):
@@ -72,6 +73,10 @@ class VCF_Annotator(object):
 
         command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/pynnotator.vcf' % (prefix)
         std = os.system(command)
+
+        command = 'rm %s/header.vcf %s/body.vcf %s/pynnotator.*.vcf %s/part.*' % (prefix, prefix, prefix, prefix)
+        run(command, shell=True)
+
 
         tend = datetime.now()
         annotation_time = tend - tstart

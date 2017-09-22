@@ -5,7 +5,7 @@ import argparse
 import os
 import subprocess
 from datetime import datetime
-from subprocess import call
+from subprocess import call, run
 
 from pynnotator import settings
 
@@ -61,6 +61,10 @@ class Decipher(object):
                             shell=True)
 
         time_end = datetime.now()
+
+        command = 'rm %s/checked.vcf.gz*' % (toolname)
+        run(command, shell=True)
+
 
         if p == 0:
             print(time_end, 'This vcf was sucessfully annotated by %s!' % (toolname))

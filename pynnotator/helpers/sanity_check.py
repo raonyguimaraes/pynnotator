@@ -4,7 +4,7 @@
 import argparse
 import os
 from datetime import datetime
-from subprocess import call
+from subprocess import call, run
 
 from pynnotator import settings
 
@@ -125,6 +125,10 @@ class Sanity_check(object):
         # only MT
         command = "grep -E '^M' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf"
         call(command, shell=True)
+
+        command = 'rm sanity_check/onlyvariants.vcf'
+        run(command, shell=True)
+
 
         # p = subprocess.call(command, 
         #     cwd=os.getcwd(), 
