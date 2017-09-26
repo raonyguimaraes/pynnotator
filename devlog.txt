@@ -11,4 +11,11 @@ rsync pynnotator-data.latest.tar root@51.15.218.80:/var/www/html/ --progress
 CHANGELOG
 
 Updated all data and libs, specially dbnfsp.
-Speed up the annotation.
+Speed up the annotation to 30 min for a genome.
+
+Push image to docker
+
+docker logout                                   # to make sure you're logged out and not cause any clashes
+docker tag <imageId> myusername/docker-whale    # use :1.0.0 for specific version, default is 'latest'
+docker login --username=myusername              # use the username/pwd to login to docker hub
+docker push myusername/docker-whale     

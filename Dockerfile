@@ -13,12 +13,20 @@ MAINTAINER Raony Guimaraes
 
 RUN apt-get update && \
     apt-get upgrade -y && \
-    apt-get install -y software-properties-common python3 python3-dev python3-pip git
+    apt-get install -y software-properties-common python3 python3-dev python3-pip libcurl4-openssl-dev sed python3-setuptools vcftools bcftools tabix zlib1g-dev liblzma-dev libpq-dev libbz2-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget pkg-config cython3 && \
+	add-apt-repository ppa:webupd8team/java -y && \
+	apt-get update && \
+	echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
+	apt-get install -y oracle-java8-installer && \
+	apt-get clean && \
+	cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI
 
 ################## BEGIN INSTALLATION ######################
 # Create the default software directory
 
-RUN git clone http://github.com/raonyguimaraes/pynnotator
+#RUN git clone http://github.com/raonyguimaraes/pynnotator
+
+COPY . /pynnotator
 WORKDIR /pynnotator
 RUN python3 setup.py install
 RUN pynnotator install

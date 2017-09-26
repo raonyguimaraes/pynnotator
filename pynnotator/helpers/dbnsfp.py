@@ -120,7 +120,7 @@ class Dbnsfp(object):
         vcffile = 'dbnfsp/part.%s.vcf' % (out_prefix)
 
         vcf_reader = open('%s' % (vcffile))
-        vcf_writer = open('dbnfsp/dbnfsp.%s.vcf' % (out_prefix), 'w')
+        vcf_writer = open('dbnfsp/dbnfsp.%s.vcf' % (out_prefix), 'w', encoding="utf-8")
 
         for line in vcf_reader:
             if line.startswith('#'):

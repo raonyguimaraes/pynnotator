@@ -142,7 +142,7 @@ class VCF_Annotator(object):
         # print 'vcf_file', vcf_file
         vcf_file = open('%s' % (vcf_file), 'r')
 
-        outvcf_file = open('pynnotator/pynnotator.%s.vcf' % (out_prefix), 'w')
+        outvcf_file = open('pynnotator/pynnotator.%s.vcf' % (out_prefix), 'w', encoding="utf-8")
 
         for line in vcf_file:
             if not line.startswith('#'):

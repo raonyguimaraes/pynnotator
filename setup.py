@@ -9,9 +9,9 @@ setup(name='pynnotator',
       license='BSD-3',
       packages=['pynnotator', 'pynnotator.helpers', 'pynnotator.tests'],
       install_requires=[
-          'pysam',
-          'cython',
           'wheel',
+          'pysam',
+          'cython'
       ],
       test_suite='nose.collector',
       tests_require=['nose'],

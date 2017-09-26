@@ -3,4 +3,4 @@ services:
  pynnotator:
    build: .
    volumes:
-     - .:/code
+     - .:/pynnotator
