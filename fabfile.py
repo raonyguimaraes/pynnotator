@@ -22,3 +22,6 @@ def pack_libs():
 def publish():
     # local('python setup.py sdist')
     local('python setup.py build sdist upload')
+
+def save():
+    local('docker image save pynnotator_pynnotator -o pynnotator.tar')
