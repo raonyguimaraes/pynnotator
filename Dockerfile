@@ -29,6 +29,6 @@ RUN apt-get update && \
 COPY . /pynnotator
 WORKDIR /pynnotator
 RUN python3 setup.py install
-#RUN pynnotator install
+RUN pynnotator install
 
 ENTRYPOINT ["pynnotator"]
