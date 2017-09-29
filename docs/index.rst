@@ -6,10 +6,11 @@ contain the root `toctree` directive.
 Welcome to Pynnotator's documentation!
 ======================================
 
-Contents:
 
 .. toctree::
-:maxdepth: 2
+   :maxdepth: 2
+   :caption: Contents:
+
     getting_started
     installation
 

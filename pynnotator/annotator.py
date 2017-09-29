@@ -116,10 +116,10 @@ class Annotator(object):
         for thread in threads:
             thread.join()
 
-        # merge = Thread(target=self.merge)
-        # merge.start()
-        # # #wait till finish to continue
-        # merge.join()
+        merge = Thread(target=self.merge)
+        merge.start()
+        # #wait till finish to continue
+        merge.join()
 
         time_end = datetime.now()
         # print(time_end, "Annotation Completed!")

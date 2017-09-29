@@ -25,3 +25,5 @@ def publish():
 
 def save():
     local('docker image save pynnotator_pynnotator -o pynnotator.tar')
+def load():
+    local('docker load -i pynnotator.tar')

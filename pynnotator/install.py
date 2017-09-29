@@ -23,11 +23,11 @@ class Installer(object):
         """Return a Pynnotator Installer object """
 
     def install(self):
-        self.install_requirements()
-        
+
+        self.install_requirements()        
         self.download_libs()
         self.download_data()
-        # self.install_libs()
+        self.install_libs()
         self.build_datasets()
 
     def install_requirements(self):
@@ -215,8 +215,10 @@ class Installer(object):
 
     def install_vep(self):
 
-        if not os.path.isdir('vep'):
-            call('mkdir vep', shell=True)
+        os.chdir(libs_dir)
+        if not os.path.exists('vep'):
+            os.makedirs('vep')
+            # vep_dir = 
         os.chdir('vep')
 
         if not os.path.isfile('%s.zip' % (settings.vep_release)):
