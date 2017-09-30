@@ -2,7 +2,7 @@ import os
 
 ###MAIN SETTINGS
 
-snpEff_memory = "16G"
+snpEff_memory = "50G"
 snpsift_merge_memory = "16G"
 vep_cores = 8
 vcf_annotator_cores = 8
