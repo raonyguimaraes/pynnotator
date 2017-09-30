@@ -54,7 +54,7 @@ class Installer(object):
             sts = call(command, shell=True)
             command = """sudo yum groupinstall 'Development Tools'"""
             sts = call(command, shell=True)
-            command = """yum install gcc gcc-c++ make openssl-devel"""
+            command = """sudo yum install gcc gcc-c++ make openssl-devel"""
             sts = call(command, shell=True)
 
             try:
