@@ -12,13 +12,14 @@ from threading import Thread
 from . import settings
 from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, dbnsfp, merge
 
+import logging
+
 # add Python2 compatibility
 # http://stackoverflow.com/questions/25156768/cant-pickle-type-instancemethod-using-pythons-multiprocessing-pool-apply-a
 
 if sys.version_info[0] < 3:
     import copy_reg
     import types
-
 
     def _pickle_method(m):
         if m.im_self is None:
@@ -44,6 +45,8 @@ class Annotator(object):
 
         # this is used to create the folder with the right name
         self.filename = self.filename.replace('.vcf.gz', '').replace('.vcf', '')
+
+        logging.basicConfig(filename='%s.log' % (self.filename) ,level=logging.DEBUG)
 
         # create a folder for the annotation if it doesn't exists, 
         # or delete and create if the folder already exists
@@ -151,9 +154,10 @@ T       T C       A C       T       T C       A C       T
             p = subprocess.check_output(command,
                                         cwd=os.getcwd(),
                                         shell=True)
-            # logging.info('Command Output: %s' % (p))
+            logging.info('Command Output: %s' % (p))
         except subprocess.CalledProcessError as e:
             print('CalledProcessError:', e)
+            logging.info('Command Error: %s' % (e))
 
     # if can validate return True else return False
     def validator(self):
