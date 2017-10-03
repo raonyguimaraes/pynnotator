@@ -98,7 +98,10 @@ class FUNC_PRED_Annotator(object):
             part_writer = open('%s/part.%s.vcf' % (prefix, part), 'w')
             for line in group:
                 part_writer.writelines(line)
+            part_writer.flush()
+            os.fsync(part_writer.fileno())
             part_writer.close()
+            
 
     # convert and annotate the vcf file to snpeff
     def annotate(self, out_prefix):
@@ -143,7 +146,7 @@ class FUNC_PRED_Annotator(object):
                 index = '%s-%s' % (variant[0], variant[1])
                 # print index
                 try:
-                    records = dbnfsp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]))
+                    records = dbnfsp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]), multiple_iterators=True)
                 except:
                     records = []
 

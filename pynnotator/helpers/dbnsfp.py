@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # parallel https://code.google.com/p/pysam/issues/detail?id=105
-
-
 # import pp
 
 import argparse
