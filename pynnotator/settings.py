@@ -2,8 +2,8 @@ import os
 
 ###MAIN SETTINGS
 
-snpEff_memory = "16G"
-snpsift_merge_memory = "16G"
+snpEff_memory = "32G"
+snpsift_merge_memory = "32G"
 vep_cores = 8
 vcf_annotator_cores = 8
 dbnsfp_cores = 8
