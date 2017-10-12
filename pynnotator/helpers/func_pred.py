@@ -24,7 +24,7 @@ class FUNC_PRED_Annotator(object):
     def __init__(self, vcf_file=None, cores=None):
 
         self.vcf_file = vcf_file
-        self.dbnfsp_header = open('%s/dbnsfp/header.vcf' % (settings.data_dir)).readlines()
+        self.dbnfsp_header = open('%s/dbnsfp/header.vcf' % (settings.data_dir), 'r', encoding="utf-8").readlines()
 
         # print('self.resources', self.resources)
         self.cores = int(cores)
@@ -73,7 +73,7 @@ class FUNC_PRED_Annotator(object):
         # print('split file', vcffile)
         # print 'numero de cores', cores
         prefix = 'func_pred'
-        vcf_reader = open('%s' % (vcffile))
+        vcf_reader = open('%s' % (vcffile), encoding='utf-8')
         header_writer = open('%s/header.vcf' % (prefix), 'w')
         body_writer = open('%s/body.vcf' % (prefix), 'w')
 
@@ -88,7 +88,7 @@ class FUNC_PRED_Annotator(object):
         header_writer.close()
         body_writer.close()
 
-        vcf_reader = open('%s/body.vcf' % (prefix))
+        vcf_reader = open('%s/body.vcf' % (prefix), encoding="utf-8")
 
         groups = self.partition(list(vcf_reader.readlines()), self.cores)
         for c, group in enumerate(groups):
@@ -122,7 +122,7 @@ class FUNC_PRED_Annotator(object):
         clinvar_end = 191
 
         # print 'input',vcffile, out_prefix, dbnsfp 
-        dbnfsp_reader = pysam.Tabixfile(settings.dbnsfp, 'r')
+        dbnfsp_reader = pysam.Tabixfile(settings.dbnsfp, 'r', encoding='utf-8')
 
         # print('header')
         for item in dbnfsp_reader.header:
