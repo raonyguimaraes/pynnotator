@@ -132,7 +132,7 @@ class FUNC_PRED_Annotator(object):
 
         vcffile = 'func_pred/part.%s.vcf' % (out_prefix)
 
-        vcf_reader = open('%s' % (vcffile))
+        vcf_reader = open('%s' % (vcffile), encoding='utf-8')
         vcf_writer = open('func_pred/func_pred.%s.vcf' % (out_prefix), 'w')
 
         for line in vcf_reader:
