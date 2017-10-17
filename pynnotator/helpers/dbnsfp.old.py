@@ -143,7 +143,7 @@ class Dbnsfp(object):
                 index = '%s-%s' % (variant[0], variant[1])
                 # print(index)
                 try:
-                    records = self.dbnfsp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]), multiple_iterators=True)
+                    records = self.dbnfsp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]))
                 except ValueError:
                     records = []
                 for record in records:

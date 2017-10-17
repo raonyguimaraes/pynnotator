@@ -146,7 +146,7 @@ class FUNC_PRED_Annotator(object):
                 index = '%s-%s' % (variant[0], variant[1])
                 # print index
                 try:
-                    records = dbnfsp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]), multiple_iterators=True)
+                    records = dbnfsp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]))
                 except:
                     records = []
 
