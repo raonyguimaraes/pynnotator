@@ -28,6 +28,7 @@ class Snpeff(object):
         tend = datetime.now()
         annotation_time = tend - tstart
         print(tend, 'Finished snpEff annotation, it took: ', annotation_time)
+        
 
     # convert and annotate the vcf file to snpeff
     def annotate(self):
@@ -47,13 +48,13 @@ class Snpeff(object):
         -no-intron \
         -no-upstream \
         -noNextProt \
-        -no-utr -canon \
+        -no-utr -canon -classic \
         >snpeff/snpeff.output.vcf""" % (
             settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database, self.vcffile)
         # print(command)
 
 
-        # -classic
+        # 
 
         p = subprocess.call(command,
                             cwd=os.getcwd(),

@@ -61,6 +61,9 @@ class FUNC_PRED_Annotator(object):
         command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/func_pred.vcf' % (prefix)
         std = os.system(command)
 
+        command = 'cat %s/func_pred.vcf | vcf-sort > %s/func_pred_sorted.vcf' % (prefix, prefix)
+        std = os.system(command)
+
         tend = datetime.now()
         annotation_time = tend - tstart
         print(tend, 'Finished func pred, it took: ', annotation_time)
@@ -85,6 +88,7 @@ class FUNC_PRED_Annotator(object):
                 header_writer.writelines(line)
             else:
                 body_writer.writelines(line)
+        
         header_writer.close()
         body_writer.close()
 

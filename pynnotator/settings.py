@@ -2,11 +2,11 @@ import os
 
 ###MAIN SETTINGS
 
-snpEff_memory = "4G"
-snpsift_merge_memory = "4G"
-vep_cores = 4
-vcf_annotator_cores = 4
-dbnsfp_cores = 4
+snpEff_memory = "40G"
+snpsift_merge_memory = "40G"
+vep_cores = 2
+vcf_annotator_cores = 2
+dbnsfp_cores = 2
 
 # server settings
 # snpeff configs
