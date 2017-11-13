@@ -29,7 +29,7 @@ Features
 
 - Annotate an exome in only 10 minutes.
 - Supports .VCF and .VCF.GZ files.
-- 20 min installation only.
+- 20 min installation.
 - Multithread efficient!
 - Annotate a VCF file using multiple VCFs as a reference.
 - Combine the best tools and databases currently available for vcf annotation.
@@ -111,7 +111,7 @@ Requires at least 65GB of disk space during installation and 35GB after installe
 
     # Using Ubuntu 16.04 LTS
 
-    sudo apt-get install gcc git python3-dev zlib1g-dev make zip libssl-dev
+    sudo apt-get install gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev
     python3 -m venv mendelmdenv
     source mendelmdenv/bin/activate
     pip install pynnotator

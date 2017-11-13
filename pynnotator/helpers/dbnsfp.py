@@ -111,7 +111,7 @@ class Dbnsfp(object):
 
         # print('header')
         for item in dbnfsp_reader.header:
-            header = item.decode('utf-8').strip().split('\t')
+            header = item.strip().split('\t')
 
         # header = dbnfsp_reader.header.next().strip().split('\t')
 

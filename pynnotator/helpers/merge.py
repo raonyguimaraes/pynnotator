@@ -100,7 +100,6 @@ class Merge(object):
 
             for line in ann_vcf_file.header:
 
-                line = line.decode('utf-8')
 
                 # print(annotation)
                 if annotation == 'pynnotator':
