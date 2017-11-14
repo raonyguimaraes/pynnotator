@@ -4,9 +4,9 @@ import os
 
 snpEff_memory = "40G"
 snpsift_merge_memory = "40G"
-vep_cores = 2
-vcf_annotator_cores = 2
-dbnsfp_cores = 2
+vep_cores = 4
+vcf_annotator_cores = 4
+dbnsfp_cores = 4
 
 # server settings
 # snpeff configs
@@ -25,7 +25,7 @@ data_dir = os.path.join(BASE_DIR, 'data')
 ###LIBS
 
 # htslib (tabix)
-htslib_version = '1.5'
+htslib_version = '1.6'
 htslib_file = 'htslib-%s.tar.bz2' % (htslib_version)
 htslib_source = 'https://github.com/samtools/htslib/releases/download/%s/%s' % (htslib_version, htslib_file)
 htslib_dir = '%s/htslib/htslib-%s' % (libs_dir, htslib_version)
@@ -50,7 +50,7 @@ snpeff_dir = os.path.join(libs_dir, 'snpeff', 'snpEff')
 snpeff_data_dir = os.path.join(data_dir, 'snpeff_data')
 
 # vep
-vep_release = '90'
+vep_release = '90.8'
 vep_source = 'https://github.com/Ensembl/ensembl-vep/archive/release/%s.zip' % (vep_release)
 vep_cache_dir = os.path.join(data_dir, 'vep_cache')
 vep_dir = '%s/vep/ensembl-vep-release-%s/' % (libs_dir, vep_release)

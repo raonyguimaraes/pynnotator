@@ -34,7 +34,7 @@ class Installer(object):
         """Install Ubuntu Requirements"""
         print('Installing Requirements')
         if platform.dist()[0] in ['Ubuntu', 'LinuxMint']:
-            command = 'sudo apt-get install libcurl4-openssl-dev sed python3-dev python3-pip python3-setuptools vcftools bcftools tabix zlib1g-dev liblzma-dev libpq-dev libbz2-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget pkg-config'  # lamp-server^
+            command = 'sudo apt-get install apache2 bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev libmysqlclient-dev libpng12-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev'  # lamp-server^
             sts = call(command, shell=True)
 
             try:
@@ -66,7 +66,7 @@ class Installer(object):
                 sts = call(command, shell=True)
 
         # Perl Requirements
-        command = "sudo cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI"
+        command = "sudo cpanm DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI"
         sts = call(command, shell=True)
 
     def install_libs(self):
