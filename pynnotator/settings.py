@@ -43,7 +43,7 @@ vcf_validator_dir = "%s/vcf-validator" % (libs_dir)
 # snpeff
 snpeff_database = 'GRCh37.75'  # this is the last build from GRCh37
 snpeff_version = 'snpEff_latest_core'
-snpeff_version = 'snpEff_v4_3r_core'  # need to test version 4.3
+snpeff_version = 'snpEff_v4_3t_core'  # need to test version 4.3
 snpeff_source = 'http://sourceforge.net/projects/snpeff/files/%s.zip' % (snpeff_version)
 
 snpeff_dir = os.path.join(libs_dir, 'snpeff', 'snpEff')
