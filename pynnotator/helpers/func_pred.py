@@ -129,7 +129,7 @@ class FUNC_PRED_Annotator(object):
         dbnfsp_reader = pysam.Tabixfile(settings.dbnsfp, 'r', encoding='utf-8')
 
         # print('header')
-        for item in dbnfsp_reader.header:
+        for item in str(dbnfsp_reader.header):
             header = item.strip().split('\t')
 
         # header = dbnfsp_reader.header.next().strip().split('\t')

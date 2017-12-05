@@ -98,7 +98,7 @@ class Merge(object):
             # print(info)
             ann_vcf_file = self.annotation_files[annotation]['file']
 
-            for line in ann_vcf_file.header:
+            for line in str(ann_vcf_file.header):
 
 
                 # print(annotation)
