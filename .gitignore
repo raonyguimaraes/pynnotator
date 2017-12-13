@@ -13,3 +13,4 @@ docs/_build/
 
 pynnotator/data
 pynnotator/libs
+venv/
