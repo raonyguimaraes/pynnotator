@@ -7,7 +7,7 @@ pynnotator sample.vcf
 
 Pynnotator is a Python annotation framework developed for annotating VCF files (Exomes or Genomes) from patients with Human Mendelian Disorders.
 
-This tool was built using state-of-the-art tools and databases for Human genome annotation.
+This tool was built using other state-of-the-art tools and databases for Human Genome annotation.
 
 Tools
 =====

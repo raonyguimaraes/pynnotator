@@ -1,5 +1,0 @@
-Sphinx
-Fabric3
-numpy
-cython
-pysam

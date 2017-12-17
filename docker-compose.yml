@@ -4,3 +4,5 @@ services:
    build: .
    volumes:
      - .:/pynnotator
+     - ./pynnotator/data:/pynnotator/data
+     - ./pynnotator/libs:/pynnotator/libs
