@@ -1,51 +1,45 @@
 import argparse
-from subprocess import run, check_output
-import subprocess
-
-import os
 import logging
+import os
+import subprocess
+from subprocess import check_output
 
 import common
 
-logging.basicConfig(filename='vt.log',level=logging.DEBUG)
-
-logging.info('So should this!')
+logging.basicConfig(filename='vt.log', level=logging.DEBUG)
 
 
 class VT():
 
-	def __init__(self, args):
+    def __init__(self, args):
+        if args.install:
+            self.install()
+        self.vt = '{}/vt'.format(common.libs_dir)
 
+    def install(self):
+        # change to libs dir
 
-		if args.install:
-			self.install()
+        os.chdir(common.libs_dir)
 
-		self.vt = '{}/vt'.format(common.libs_dir)
+        if not os.path.exists('vt'):
+            command = 'git clone https://github.com/atks/vt'
+            output = check_output(command, shell=True)
 
-	def install(self):
-		#change to libs dir
+            logging.info(output)
+            os.chdir('vt')
+            command = 'make'
+            output = check_output(command, shell=True)
+            print(output)
+            logging.info(output)
 
-		os.chdir(common.libs_dir)
+    def main(self):
+        vt = self.vt
+        command = '{}/vt decompose -s {} \
+        | {}/vt normalize -r {} - > {}'.format(self.vt, args.input, self.vt, args.reference, args.output)
+        output = check_output(command, shell=True, stderr=subprocess.STDOUT).decode('utf-8')
+        print(output)
+        logging.info(output)
 
-		if not os.path.exists('vt'):
-			command = 'git clone https://github.com/atks/vt'
-			output = check_output(command, shell=True)
-			print(output)
-			logging.info(output)
-			os.chdir('vt')
-			command = 'make'			
-			output = check_output(command, shell=True)
-			print(output)
-			logging.info(output)
-
-	def main(self):
-		vt = self.vt
-		command = '{}/vt decompose -s {} \
-		| {}/vt normalize -r {} - > {}'.format(self.vt, args.input, self.vt, args.reference, args.output)
-		output = check_output(command, shell=True, stderr=subprocess.STDOUT).decode('utf-8')
-		print(output)
-		logging.info(output)
-		
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Decompose and normalize a VCF file.')
@@ -55,7 +49,6 @@ if __name__ == '__main__':
     parser.add_argument('-r', dest='reference', required=False, metavar='reference.fasta', help='a reference fasta')
     parser.add_argument('-o', dest='output', required=False, metavar='reference.fasta', help='a reference fasta')
     args = parser.parse_args()
-    print(args)
 
     vt = VT(args)
     vt.main()

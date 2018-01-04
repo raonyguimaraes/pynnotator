@@ -15,7 +15,7 @@ Tools
 - htslib (1.5)
 - vcftools (0.1.15)
 - snpeff (SnpEff 4.3r)
-- vep (version 90)
+- vep (version 91.1)
 - gemini (0.20.1)
 
 Databases

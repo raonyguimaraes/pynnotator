@@ -11,7 +11,7 @@ parser.add_argument('options', help='install test', nargs='?')  # nargs='?', , a
 parser.add_argument('-i', dest='vcf_file', required=False, metavar='example.vcf', help='a VCF file to be annotated')
 
 args = parser.parse_args()
-# print(args)
+
 if args.options == 'install':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.install()
