@@ -18,7 +18,6 @@ def main():
         output = check_call('pip install -U pynnotator', shell=True)
         if output == 0:
             print('Pynnotator was updated!')
-
     if args.options == 'install':
         obj = pynnotator.Pynnotator()
         obj.install()
