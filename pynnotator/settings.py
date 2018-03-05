@@ -21,6 +21,8 @@ htslib_file = 'htslib-%s.tar.bz2' % (htslib_version)
 htslib_source = 'https://github.com/samtools/htslib/releases/download/%s/%s' % (htslib_version, htslib_file)
 htslib_dir = '%s/htslib/htslib-%s' % (libs_dir, htslib_version)
 
+vcfanno_dir = '%s/vcfanno/' % (libs_dir)
+
 # vcftools
 vcftools_version = '0.1.15'
 vcftools_file = 'vcftools-%s.tar.gz' % (vcftools_version)

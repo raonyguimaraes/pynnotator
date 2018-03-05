@@ -15,8 +15,6 @@ class Dbnsfp(object):
     def __init__(self, vcf_file=None, cores=None):
 
         self.vcf_file = vcf_file
-        self.dbnfsp_header = open('%s/dbnsfp/header.vcf' % (settings.data_dir)).readlines()
-
         # print('self.resources', self.resources)
         self.cores = int(cores)
 
@@ -33,27 +31,27 @@ class Dbnsfp(object):
 
         # std = self.annotator()
 
-        self.splitvcf(self.vcf_file)
+        # self.splitvcf(self.vcf_file)
 
-        pool = mp.Pool()
-        pool.map(self.annotate, range(1, self.cores + 1))
-        # pool.close()
-        # pool.join()
+        # pool = mp.Pool()
+        # pool.map(self.annotate, range(1, self.cores + 1))
+        # # pool.close()
+        # # pool.join()
 
-        prefix = 'dbnfsp'
-        # # Define your jobs
-        # jobs = []
-        final_parts = []
-        for n in range(0, self.cores):
-            index = n + 1
-            final_file = 'dbnfsp/dbnfsp.%s.vcf' % (index)
-            final_parts.append(final_file)
+        # prefix = 'dbnfsp'
+        # # # Define your jobs
+        # # jobs = []
+        # final_parts = []
+        # for n in range(0, self.cores):
+        #     index = n + 1
+        #     final_file = 'dbnfsp/dbnfsp.%s.vcf' % (index)
+        #     final_parts.append(final_file)
 
-        command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/dbnfsp.vcf' % (prefix)
+        command = '%s/vcfanno_linux64 ' % (settings.vcfanno_dir)
         std = os.system(command)
 
-        command = 'rm %s/header.vcf %s/body.vcf %s/dbnfsp.*.vcf %s/part.*' % (prefix, prefix, prefix, prefix)
-        run(command, shell=True)
+        # command = 'rm %s/header.vcf %s/body.vcf %s/dbnfsp.*.vcf %s/part.*' % (prefix, prefix, prefix, prefix)
+        # run(command, shell=True)
 
         tend = datetime.now()
         annotation_time = tend - tstart
