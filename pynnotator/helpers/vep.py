@@ -25,6 +25,10 @@ class Vep(object):
             # enter inside folder
             # os.chdir('vep')
 
+    def install(self):
+        print('install')
+
+
     def run(self):
         tstart = datetime.now()
         print(tstart, 'Starting vep annotation: ', self.vcffile)

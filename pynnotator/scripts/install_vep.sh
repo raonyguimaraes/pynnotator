@@ -1,0 +1,67 @@
+### docker container for ensembl-vep
+
+# update aptitude and install some required packages
+# a lot of them are required for Bio::DB::BigFile
+apt-get update && apt-get -y install apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev manpages mysql-client openssl perl perl-base unzip vim wget
+# install ensembl dependencies
+cpanm DBI DBD::mysql
+
+# create vep user
+#useradd -r -m -U -d /home/vep -s /bin/bash -c "VEP User" -p '' vep
+#usermod -a -G sudo vep
+#USER vep
+export HOME=../libs/vep/
+#cd $HOME
+#cd ../libs/vep/
+
+# clone git repositories
+mkdir -p src
+cd src
+
+git clone https://github.com/Ensembl/ensembl.git
+git clone https://github.com/Ensembl/ensembl-vep.git
+
+# get VEP dependencies
+
+bash ensembl-vep/travisci/get_dependencies.sh
+export PERL5LIB=$PERL5LIB:$HOME/src/bioperl-live-release-1-6-924
+export KENT_SRC=$HOME/src/kent-335_base/src
+export HTSLIB_DIR=$HOME/src/htslib
+export MACHTYPE=x86_64
+export CFLAGS="-fPIC"
+export DEPS=$HOME/src
+
+# and run the complilation/install as root
+bash ensembl-vep/travisci/build_c.sh
+
+# install htslib binaries (need bgzip, tabix)
+cd $HTSLIB_DIR
+make install
+
+# install bioperl-ext, faster alignments for haplo
+cd $HOME/src
+git clone https://github.com/bioperl/bioperl-ext.git
+cd bioperl-ext/Bio/Ext/Align/
+perl -pi -e"s|(cd libs.+)CFLAGS=\\\'|\$1CFLAGS=\\\'-fPIC |" Makefile.PL
+perl Makefile.PL
+make
+make install
+
+# install perl dependencies
+cd $HOME/src
+cpanm --installdeps --with-recommends --notest --cpanfile ensembl/cpanfile .
+cpanm --installdeps --with-recommends --notest --cpanfile ensembl-vep/cpanfile .
+
+# switch back to vep user
+# update bash profile
+echo >> $HOME/.profile && \
+echo PATH=$HOME/src/ensembl-vep:\$PATH >> $HOME/.profile && \
+echo export PATH >> $HOME/.profile
+
+# setup environment
+PATH $HOME/src/ensembl-vep:$PATH
+
+# run INSTALL.pl
+cd $HOME/src/ensembl-vep
+chmod u+x *.pl
+./INSTALL.pl -a a -l
