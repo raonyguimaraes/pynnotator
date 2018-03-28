@@ -35,7 +35,7 @@ export DEPS=$HOME/src
 bash ensembl-vep/travisci/build_c.sh
 
 # install htslib binaries (need bgzip, tabix)
-cd $HTSLIB_DIR
+cd htslib
 make install
 
 # install bioperl-ext, faster alignments for haplo
@@ -59,9 +59,11 @@ echo PATH=$HOME/src/ensembl-vep:\$PATH >> $HOME/.profile && \
 echo export PATH >> $HOME/.profile
 
 # setup environment
-PATH $HOME/src/ensembl-vep:$PATH
+export PATH=/storage3/dev/pynnotator/pynnotator/libs/vep/src/ensembl-vep:$PATH
 
 # run INSTALL.pl
 cd $HOME/src/ensembl-vep
 chmod u+x *.pl
-./INSTALL.pl -a a -l
+# rm -rf Bio
+# \./INSTALL.pl -a a -l --NO_TEST
+./INSTALL.pl --NO_TEST -a acf -s homo_sapiens -c /storage3/dev/pynnotator/pynnotator/data/vep_data --ASSEMBLY GRCh37
