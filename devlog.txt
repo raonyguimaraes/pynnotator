@@ -19,3 +19,5 @@ docker logout                                   # to make sure you're logged out
 docker tag <imageId> myusername/docker-whale    # use :1.0.0 for specific version, default is 'latest'
 docker login --username=myusername              # use the username/pwd to login to docker hub
 docker push myusername/docker-whale     
+
+- Add support for ghr38

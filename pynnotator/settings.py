@@ -43,8 +43,8 @@ snpeff_data_dir = os.path.join(data_dir, 'snpeff_data')
 # vep
 vep_release = '91.3'
 vep_source = 'https://github.com/Ensembl/ensembl-vep/archive/release/%s.zip' % (vep_release)
-vep_cache_dir = os.path.join(data_dir, 'vep_cache')
-vep_dir = '%s/vep/ensembl-vep-release-%s/' % (libs_dir, vep_release)
+vep_cache_dir = os.path.join(data_dir, 'vep_data')
+vep_dir = '%s/vep/src/ensembl-vep/' % (libs_dir)
 
 # gemini
 gemini_file = 'gemini_install.py'

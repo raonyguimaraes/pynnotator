@@ -36,6 +36,6 @@ def main():
     elif args.options == 'test':
         obj = pynnotator.Pynnotator()
         obj.test()
-
-
-
+    elif args.options == 'vep':
+        obj = pynnotator.Pynnotator()
+        obj.vep()

@@ -1,17 +1,20 @@
+#!/bin/bash
+
 ### docker container for ensembl-vep
+
 
 # update aptitude and install some required packages
 # a lot of them are required for Bio::DB::BigFile
-apt-get update && apt-get -y install apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev manpages mysql-client openssl perl perl-base unzip vim wget
+sudo apt-get update && sudo apt-get -y install apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev manpages mysql-client openssl perl perl-base unzip vim wget
 # install ensembl dependencies
-cpanm DBI DBD::mysql
+sudo cpanm DBI DBD::mysql Bio::DB::HTS::Faidx
 
 # create vep user
 #useradd -r -m -U -d /home/vep -s /bin/bash -c "VEP User" -p '' vep
 #usermod -a -G sudo vep
 #USER vep
-export HOME=../libs/vep/
-#cd $HOME
+export HOME=/storage3/dev/pynnotator/pynnotator/libs/vep
+cd $HOME
 #cd ../libs/vep/
 
 # clone git repositories
@@ -66,4 +69,4 @@ cd $HOME/src/ensembl-vep
 chmod u+x *.pl
 # rm -rf Bio
 # \./INSTALL.pl -a a -l --NO_TEST
-./INSTALL.pl --NO_TEST -a acf -s homo_sapiens -c /storage3/dev/pynnotator/pynnotator/data/vep_data --ASSEMBLY GRCh37
+./INSTALL.pl -a acf -s homo_sapiens -c /storage3/dev/pynnotator/pynnotator/data/vep_data --ASSEMBLY GRCh37 --NO_TEST

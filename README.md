@@ -4,8 +4,6 @@ This is a Python Annotation Framework developed with the goal of annotating VCF 
 
 It was built using state-of-the-art tools and databases for human genome annotation.
 
-Currently, it can only annotate VCFs generated from build GRCh37.
-
 Tools
 =====
 

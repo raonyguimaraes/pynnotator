@@ -231,7 +231,7 @@ class Installer(object):
 
             os.chdir(settings.vep_dir)
             # download vep cache
-            command = """perl INSTALL.pl -a a"""
+            command = """perl INSTALL.pl -a a --NO_TEST"""
             call(command, shell=True)
 
         os.chdir(libs_dir)

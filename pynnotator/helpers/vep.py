@@ -28,7 +28,6 @@ class Vep(object):
     def install(self):
         print('install')
 
-
     def run(self):
         tstart = datetime.now()
         print(tstart, 'Starting vep annotation: ', self.vcffile)
@@ -44,21 +43,22 @@ class Vep(object):
 
         command = '''perl %s/vep \
         -i %s \
-        --format vcf \
+        --cache \
         --dir %s \
-        -sift b -polyphen b \
-        -o vep/vep.output.vcf --vcf --cache --force_overwrite \
-        --no_progress \
-        --no_intergenic \
-        --numbers \
-        --biotype \
-        --total_length \
-        --coding_only \
-        --pick \
         --offline \
-        --symbol \
-        1>vep/vep.log \
-        --fork %s \
+        --format vcf \
+        -o vep/vep.output.vcf --vcf --force_overwrite \
+        # -sift b -polyphen b \
+        # --no_progress \
+        # --no_intergenic \
+        # --numbers \
+        # --biotype \
+        # --total_length \
+        # --coding_only \
+        # --pick \
+        # --symbol \
+        # 1>vep/vep.log \
+        # --fork %s \
         ''' % (settings.vep_dir, self.vcffile, settings.vep_cache_dir, settings.vep_cores)
         # 1> vepreport.log \
         ##--pick \
