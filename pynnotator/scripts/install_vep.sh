@@ -13,9 +13,13 @@ sudo cpanm DBI DBD::mysql Bio::DB::HTS::Faidx
 #useradd -r -m -U -d /home/vep -s /bin/bash -c "VEP User" -p '' vep
 #usermod -a -G sudo vep
 #USER vep
-export HOME=/storage3/dev/pynnotator/pynnotator/libs/vep
-cd $HOME
+export parent=`dirname $PWD`
+export grandparent=`dirname $parent`
+
+#cd $HOME
 #cd ../libs/vep/
+
+export HOME=$parent/libs/vep
 
 # clone git repositories
 mkdir -p src
@@ -39,7 +43,7 @@ bash ensembl-vep/travisci/build_c.sh
 
 # install htslib binaries (need bgzip, tabix)
 cd htslib
-make install
+sudo make install
 
 # install bioperl-ext, faster alignments for haplo
 cd $HOME/src
@@ -48,7 +52,7 @@ cd bioperl-ext/Bio/Ext/Align/
 perl -pi -e"s|(cd libs.+)CFLAGS=\\\'|\$1CFLAGS=\\\'-fPIC |" Makefile.PL
 perl Makefile.PL
 make
-make install
+sudo make install
 
 # install perl dependencies
 cd $HOME/src
@@ -69,4 +73,4 @@ cd $HOME/src/ensembl-vep
 chmod u+x *.pl
 # rm -rf Bio
 # \./INSTALL.pl -a a -l --NO_TEST
-./INSTALL.pl -a acf -s homo_sapiens -c /storage3/dev/pynnotator/pynnotator/data/vep_data --ASSEMBLY GRCh37 --NO_TEST
+# ./INSTALL.pl -a acf -s homo_sapiens -c $parent/data/vep_data --ASSEMBLY GRCh37 --NO_TEST

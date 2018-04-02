@@ -222,17 +222,18 @@ class Installer(object):
             # vep_dir = 
         os.chdir('vep')
 
-        if not os.path.isfile('%s.zip' % (settings.vep_release)):
-            command = """
-            wget %s -O %s.zip
-            unzip %s.zip
-            """ % (settings.vep_source, settings.vep_release, settings.vep_release)
-            call(command, shell=True)
-
-            os.chdir(settings.vep_dir)
+        # if not os.path.isfile('%s.zip' % (settings.vep_release)):
+        #     command = """
+        #     wget %s -O %s.zip
+        #     unzip %s.zip
+        #     """ % (settings.vep_source, settings.vep_release, settings.vep_release)
+        #     call(command, shell=True)
+        #
+        #     os.chdir(settings.vep_dir)
             # download vep cache
-            command = """perl INSTALL.pl -a a --NO_TEST"""
-            call(command, shell=True)
+            # command = """perl INSTALL.pl -a a --NO_TEST"""
+        command = 'bash {}/scripts/install_vep.sh'.format(settings.BASE_DIR)
+        call(command, shell=True)
 
         os.chdir(libs_dir)
 
@@ -249,7 +250,7 @@ class Installer(object):
         os.chdir(settings.vep_dir)
         # download vep cache
         if not os.path.isdir(settings.vep_cache_dir):
-            command = """perl INSTALL.pl -a acf -s homo_sapiens -c %s --ASSEMBLY GRCh37
+            command = """perl ./INSTALL.pl -a acf -s homo_sapiens -c %s --ASSEMBLY GRCh37 --NO_TEST
             """ % (settings.vep_cache_dir)
             call(command, shell=True)
 
