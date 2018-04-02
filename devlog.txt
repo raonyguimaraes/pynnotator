@@ -21,3 +21,16 @@ docker login --username=myusername              # use the username/pwd to login 
 docker push myusername/docker-whale     
 
 - Add support for ghr38
+- Refactor dbnfsp annotation
+- Install vcfanno
+- INstall Gemini
+- Install Oncotator
+- Other types of annotators
+
+time python ../helpers/dbnsfp.py -i Venter.vcf -n 4
+2018-04-02 21:11:16.933580 Starting DBNSFP annotator:  Venter.vcf
+2018-04-02 21:29:27.071418 Finished DBNSFP, it took:  0:18:10.137838
+
+real    18m10.331s
+user    52m15.944s
+sys     0m29.347s

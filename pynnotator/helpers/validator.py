@@ -55,17 +55,17 @@ class Validator(object):
     def validate(self):
         # check if file is in .gz format
 
-        if not self.vcf_file.endswith('.gz'):
-            command = '%s/bgzip -c %s > validator/%s.vcf.gz' % (settings.htslib_dir, self.vcf_file, self.filename)
-            call(command, shell=True)
-        else:
-            command = 'cp %s validator/' % (self.vcf_file)
-            call(command, shell=True)
-
-        command = '%s/tabix -p vcf validator/%s.vcf.gz' % (settings.htslib_dir, self.filename)
+        # if not self.vcf_file.endswith('.gz'):
+        #     command = '%s/bgzip -c %s > validator/%s.vcf.gz' % (settings.htslib_dir, self.vcf_file, self.filename)
+        #     call(command, shell=True)
+        # else:
+        command = 'cp %s validator/' % (self.vcf_file)
         call(command, shell=True)
+
+        # command = '%s/tabix -p vcf validator/%s.vcf.gz' % (settings.htslib_dir, self.filename)
+        # call(command, shell=True)
         
-        command = '%s/vcf_validator -i validator/%s.vcf.gz 2>validator/validation.log' % (
+        command = '%s/vcf_validator -i validator/%s.vcf 2>validator/validation.log' % (
             settings.vcf_validator_dir, self.filename)
 
         try:
@@ -77,7 +77,7 @@ class Validator(object):
             self.log(msg)
                 
         time_end = datetime.now()
-        command = 'rm validator/%s.vcf.gz*' % (self.filename)
+        command = 'rm validator/%s.vcf' % (self.filename)
         run(command, shell=True)
 
 

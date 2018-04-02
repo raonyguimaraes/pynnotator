@@ -66,7 +66,7 @@ echo PATH=$HOME/src/ensembl-vep:\$PATH >> $HOME/.profile && \
 echo export PATH >> $HOME/.profile
 
 # setup environment
-export PATH=/storage3/dev/pynnotator/pynnotator/libs/vep/src/ensembl-vep:$PATH
+export PATH=$parent/libs/vep/src/ensembl-vep:$PATH
 
 # run INSTALL.pl
 cd $HOME/src/ensembl-vep

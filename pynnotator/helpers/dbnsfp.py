@@ -13,7 +13,7 @@ from subprocess import run
 
 class Dbnsfp(object):
     def __init__(self, vcf_file=None, cores=None):
-
+    
         self.vcf_file = vcf_file
         self.dbnfsp_header = open('%s/dbnsfp/header.vcf' % (settings.data_dir)).readlines()
 

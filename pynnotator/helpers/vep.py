@@ -48,17 +48,18 @@ class Vep(object):
         --offline \
         --format vcf \
         -o vep/vep.output.vcf --vcf --force_overwrite \
-        # -sift b -polyphen b \
-        # --no_progress \
-        # --no_intergenic \
-        # --numbers \
-        # --biotype \
-        # --total_length \
-        # --coding_only \
-        # --pick \
-        # --symbol \
-        # 1>vep/vep.log \
-        # --fork %s \
+        --assembly GRCh37 \
+        -sift b -polyphen b \
+        --no_progress \
+        --no_intergenic \
+        --numbers \
+        --biotype \
+        --total_length \
+        --coding_only \
+        --pick \
+        --symbol \
+        1>vep/vep.log \
+        --fork %s \
         ''' % (settings.vep_dir, self.vcffile, settings.vep_cache_dir, settings.vep_cores)
         # 1> vepreport.log \
         ##--pick \
