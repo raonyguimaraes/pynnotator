@@ -1,0 +1,571 @@
+##INFO=<ID=HI_PREDICTIONS,Number=.,Type=String,Description="Haploinsuficiency Predictions">
+##INFO=<ID=TYPE,Number=A,Type=String,Description="Variant type">
+##source_20180409.1=vcf-annotate(v0.1.14-12-gcdb80b8) -a /storage3/dev/pynnotator/pynnotator/data/decipher/HI_Predictions_Version3.bed.gz --fill-type -d key=INFO,ID=HI_PREDICTIONS,Number=.,Type=String,Description=Haploinsuficiency Predictions -c CHROM,FROM,TO,INFO/HI_PREDICTIONS
+##SnpEffVersion="4.3t (build 2017-11-24 10:18), by Pablo Cingolani"
+##SnpEffCmd="SnpEff  GRCh37.75 sanity_check/checked.vcf -no-downstream -no-intergenic -no intragenic -no-intron -no-upstream -no-utr -classic "
+##INFO=<ID=EFF,Number=.,Type=String,Description="Predicted effects for this variant.Format: 'Effect ( Effect_Impact | Functional_Class | Codon_Change | Amino_Acid_Change| Amino_Acid_length | Gene_Name | Transcript_BioType | Gene_Coding | Transcript_ID | Exon_Rank  | Genotype [ | ERRORS | WARNINGS ] )' ">
+##INFO=<ID=LOF,Number=.,Type=String,Description="Predicted loss of function effects for this variant. Format: 'Gene_Name | Gene_ID | Number_of_transcripts_in_gene | Percent_of_transcripts_affected'">
+##INFO=<ID=NMD,Number=.,Type=String,Description="Predicted nonsense mediated decay effects for this variant. Format: 'Gene_Name | Gene_ID | Number_of_transcripts_in_gene | Percent_of_transcripts_affected'">
+##SnpSiftVersion="SnpSift 4.3t (build 2017-11-24 10:18), by Pablo Cingolani"
+##SnpSiftCmd="SnpSift VarType sanity_check/checked.vcf"
+##INFO=<ID=VARTYPE,Number=A,Type=String,Description="Comma separated list of variant types. One per allele">
+##INFO=<ID=SNP,Number=0,Type=Flag,Description="Variant is a SNP">
+##INFO=<ID=MNP,Number=0,Type=Flag,Description="Variant is a MNP">
+##INFO=<ID=INS,Number=0,Type=Flag,Description="Variant is a INS">
+##INFO=<ID=DEL,Number=0,Type=Flag,Description="Variant is a DEL">
+##INFO=<ID=MIXED,Number=0,Type=Flag,Description="Variant is a MIXED">
+##INFO=<ID=HOM,Number=0,Type=Flag,Description="Variant is homozygous">
+##INFO=<ID=HET,Number=0,Type=Flag,Description="Variant is heterozygous">
+##VEP="v91" time="2018-04-09 23:37:02" cache="/storage3/dev/pynnotator/pynnotator/data/vep_data/homo_sapiens/91_GRCh37" ensembl-io=91.923d668 ensembl-variation=91.c78d8b4 ensembl-funcgen=91.4681d69 ensembl=91.18ee742 1000genomes="phase3" COSMIC="81" ClinVar="201706" ESP="20141103" HGMD-PUBLIC="20164" assembly="GRCh37.p13" dbSNP="150" gencode="GENCODE 19" genebuild="2011-04" gnomAD="170228" polyphen="2.2.2" regbuild="1.0" sift="sift5.2.2"
+##INFO=<ID=CSQ,Number=.,Type=String,Description="Consequence annotations from Ensembl VEP. Format: Allele|Consequence|IMPACT|SYMBOL|Gene|Feature_type|Feature|BIOTYPE|EXON|INTRON|HGVSc|HGVSp|cDNA_position|CDS_position|Protein_position|Amino_acids|Codons|Existing_variation|DISTANCE|STRAND|FLAGS|SYMBOL_SOURCE|HGNC_ID|SIFT|PolyPhen">
+##INFO=<ID=genomes1k.CIEND,Number=2,Type=Integer,Description="Confidence interval around END for imprecise variants">
+##INFO=<ID=genomes1k.CIPOS,Number=2,Type=Integer,Description="Confidence interval around POS for imprecise variants">
+##INFO=<ID=genomes1k.CS,Number=1,Type=String,Description="Source call set.">
+##INFO=<ID=genomes1k.END,Number=1,Type=Integer,Description="End coordinate of this variant">
+##INFO=<ID=genomes1k.IMPRECISE,Number=0,Type=Flag,Description="Imprecise structural variation">
+##INFO=<ID=genomes1k.MC,Number=.,Type=String,Description="Merged calls.">
+##INFO=<ID=genomes1k.MEINFO,Number=4,Type=String,Description="Mobile element info of the form NAME,START,END<POLARITY; If there is only 5' OR 3' support for this call, will be NULL NULL for START and END">
+##INFO=<ID=genomes1k.MEND,Number=1,Type=Integer,Description="Mitochondrial end coordinate of inserted sequence">
+##INFO=<ID=genomes1k.MLEN,Number=1,Type=Integer,Description="Estimated length of mitochondrial insert">
+##INFO=<ID=genomes1k.MSTART,Number=1,Type=Integer,Description="Mitochondrial start coordinate of inserted sequence">
+##INFO=<ID=genomes1k.SVLEN,Number=.,Type=Integer,Description="SV length. It is only calculated for structural variation MEIs. For other types of SVs, one may calculate the SV length by INFO:END-START+1, or by finding the difference between lengthes of REF and ALT alleles">
+##INFO=<ID=genomes1k.SVTYPE,Number=1,Type=String,Description="Type of structural variant">
+##INFO=<ID=genomes1k.TSD,Number=1,Type=String,Description="Precise Target Site Duplication for bases, if unknown, value will be NULL">
+##INFO=<ID=genomes1k.AC,Number=A,Type=Integer,Description="Total number of alternate alleles in called genotypes">
+##INFO=<ID=genomes1k.AF,Number=A,Type=Float,Description="Estimated allele frequency in the range (0,1)">
+##INFO=<ID=genomes1k.NS,Number=1,Type=Integer,Description="Number of samples with data">
+##INFO=<ID=genomes1k.AN,Number=1,Type=Integer,Description="Total number of alleles in called genotypes">
+##INFO=<ID=genomes1k.EAS_AF,Number=A,Type=Float,Description="Allele frequency in the EAS populations calculated from AC and AN, in the range (0,1)">
+##INFO=<ID=genomes1k.EUR_AF,Number=A,Type=Float,Description="Allele frequency in the EUR populations calculated from AC and AN, in the range (0,1)">
+##INFO=<ID=genomes1k.AFR_AF,Number=A,Type=Float,Description="Allele frequency in the AFR populations calculated from AC and AN, in the range (0,1)">
+##INFO=<ID=genomes1k.AMR_AF,Number=A,Type=Float,Description="Allele frequency in the AMR populations calculated from AC and AN, in the range (0,1)">
+##INFO=<ID=genomes1k.SAS_AF,Number=A,Type=Float,Description="Allele frequency in the SAS populations calculated from AC and AN, in the range (0,1)">
+##INFO=<ID=genomes1k.DP,Number=1,Type=Integer,Description="Total read depth; only low coverage data were counted towards the DP, exome data were not used">
+##INFO=<ID=genomes1k.AA,Number=1,Type=String,Description="Ancestral Allele. Format: AA|REF|ALT|IndelType. AA: Ancestral allele, REF:Reference Allele, ALT:Alternate Allele, IndelType:Type of Indel (REF, ALT and IndelType are only defined for indels)">
+##INFO=<ID=genomes1k.VT,Number=.,Type=String,Description="indicates what type of variant the line represents">
+##INFO=<ID=genomes1k.EX_TARGET,Number=0,Type=Flag,Description="indicates whether a variant is within the exon pull down target boundaries">
+##INFO=<ID=genomes1k.MULTI_ALLELIC,Number=0,Type=Flag,Description="indicates whether a site is multi-allelic">
+##INFO=<ID=genomes1k.OLD_VARIANT,Number=1,Type=String,Description="old variant location. Format chrom:position:REF_allele/ALT_allele">
+##INFO=<ID=dbsnp.RS,Number=1,Type=Integer,Description="dbSNP ID (i.e. rs number)">
+##INFO=<ID=dbsnp.RSPOS,Number=1,Type=Integer,Description="Chr position reported in dbSNP">
+##INFO=<ID=dbsnp.RV,Number=0,Type=Flag,Description="RS orientation is reversed">
+##INFO=<ID=dbsnp.VP,Number=1,Type=String,Description="Variation Property.  Documentation is at ftp://ftp.ncbi.nlm.nih.gov/snp/specs/dbSNP_BitField_latest.pdf">
+##INFO=<ID=dbsnp.GENEINFO,Number=1,Type=String,Description="Pairs each of gene symbol:gene id.  The gene symbol and id are delimited by a colon (:) and each pair is delimited by a vertical bar (|)">
+##INFO=<ID=dbsnp.dbSNPBuildID,Number=1,Type=Integer,Description="First dbSNP Build for RS">
+##INFO=<ID=dbsnp.SAO,Number=1,Type=Integer,Description="Variant Allele Origin: 0 - unspecified, 1 - Germline, 2 - Somatic, 3 - Both">
+##INFO=<ID=dbsnp.SSR,Number=1,Type=Integer,Description="Variant Suspect Reason Codes (may be more than one value added together) 0 - unspecified, 1 - Paralog, 2 - byEST, 4 - oldAlign, 8 - Para_EST, 16 - 1kg_failed, 1024 - other">
+##INFO=<ID=dbsnp.WGT,Number=1,Type=Integer,Description="Weight, 00 - unmapped, 1 - weight 1, 2 - weight 2, 3 - weight 3 or more">
+##INFO=<ID=dbsnp.VC,Number=1,Type=String,Description="Variation Class">
+##INFO=<ID=dbsnp.PM,Number=0,Type=Flag,Description="Variant is Precious(Clinical,Pubmed Cited)">
+##INFO=<ID=dbsnp.TPA,Number=0,Type=Flag,Description="Provisional Third Party Annotation(TPA) (currently rs from PHARMGKB who will give phenotype data)">
+##INFO=<ID=dbsnp.PMC,Number=0,Type=Flag,Description="Links exist to PubMed Central article">
+##INFO=<ID=dbsnp.S3D,Number=0,Type=Flag,Description="Has 3D structure - SNP3D table">
+##INFO=<ID=dbsnp.SLO,Number=0,Type=Flag,Description="Has SubmitterLinkOut - From SNP->SubSNP->Batch.link_out">
+##INFO=<ID=dbsnp.NSF,Number=0,Type=Flag,Description="Has non-synonymous frameshift A coding region variation where one allele in the set changes all downstream amino acids. FxnClass = 44">
+##INFO=<ID=dbsnp.NSM,Number=0,Type=Flag,Description="Has non-synonymous missense A coding region variation where one allele in the set changes protein peptide. FxnClass = 42">
+##INFO=<ID=dbsnp.NSN,Number=0,Type=Flag,Description="Has non-synonymous nonsense A coding region variation where one allele in the set changes to STOP codon (TER). FxnClass = 41">
+##INFO=<ID=dbsnp.REF,Number=0,Type=Flag,Description="Has reference A coding region variation where one allele in the set is identical to the reference sequence. FxnCode = 8">
+##INFO=<ID=dbsnp.SYN,Number=0,Type=Flag,Description="Has synonymous A coding region variation where one allele in the set does not change the encoded amino acid. FxnCode = 3">
+##INFO=<ID=dbsnp.U3,Number=0,Type=Flag,Description="In 3' UTR Location is in an untranslated region (UTR). FxnCode = 53">
+##INFO=<ID=dbsnp.U5,Number=0,Type=Flag,Description="In 5' UTR Location is in an untranslated region (UTR). FxnCode = 55">
+##INFO=<ID=dbsnp.ASS,Number=0,Type=Flag,Description="In acceptor splice site FxnCode = 73">
+##INFO=<ID=dbsnp.DSS,Number=0,Type=Flag,Description="In donor splice-site FxnCode = 75">
+##INFO=<ID=dbsnp.INT,Number=0,Type=Flag,Description="In Intron FxnCode = 6">
+##INFO=<ID=dbsnp.R3,Number=0,Type=Flag,Description="In 3' gene region FxnCode = 13">
+##INFO=<ID=dbsnp.R5,Number=0,Type=Flag,Description="In 5' gene region FxnCode = 15">
+##INFO=<ID=dbsnp.OTH,Number=0,Type=Flag,Description="Has other variant with exactly the same set of mapped positions on NCBI refernce assembly.">
+##INFO=<ID=dbsnp.CFL,Number=0,Type=Flag,Description="Has Assembly conflict. This is for weight 1 and 2 variant that maps to different chromosomes on different assemblies.">
+##INFO=<ID=dbsnp.ASP,Number=0,Type=Flag,Description="Is Assembly specific. This is set if the variant only maps to one assembly">
+##INFO=<ID=dbsnp.MUT,Number=0,Type=Flag,Description="Is mutation (journal citation, explicit fact): a low frequency variation that is cited in journal and other reputable sources">
+##INFO=<ID=dbsnp.VLD,Number=0,Type=Flag,Description="Is Validated.  This bit is set if the variant has 2+ minor allele count based on frequency or genotype data.">
+##INFO=<ID=dbsnp.G5A,Number=0,Type=Flag,Description=">5% minor allele frequency in each and all populations">
+##INFO=<ID=dbsnp.G5,Number=0,Type=Flag,Description=">5% minor allele frequency in 1+ populations">
+##INFO=<ID=dbsnp.HD,Number=0,Type=Flag,Description="Marker is on high density genotyping kit (50K density or greater).  The variant may have phenotype associations present in dbGaP.">
+##INFO=<ID=dbsnp.GNO,Number=0,Type=Flag,Description="Genotypes available. The variant has individual genotype (in SubInd table).">
+##INFO=<ID=dbsnp.KGPhase1,Number=0,Type=Flag,Description="1000 Genome phase 1 (incl. June Interim phase 1)">
+##INFO=<ID=dbsnp.KGPhase3,Number=0,Type=Flag,Description="1000 Genome phase 3">
+##INFO=<ID=dbsnp.CDA,Number=0,Type=Flag,Description="Variation is interrogated in a clinical diagnostic assay">
+##INFO=<ID=dbsnp.LSD,Number=0,Type=Flag,Description="Submitted from a locus-specific database">
+##INFO=<ID=dbsnp.MTP,Number=0,Type=Flag,Description="Microattribution/third-party annotation(TPA:GWAS,PAGE)">
+##INFO=<ID=dbsnp.OM,Number=0,Type=Flag,Description="Has OMIM/OMIA">
+##INFO=<ID=dbsnp.NOC,Number=0,Type=Flag,Description="Contig allele not present in variant allele list. The reference sequence allele at the mapped position is not present in the variant allele list, adjusted for orientation.">
+##INFO=<ID=dbsnp.WTD,Number=0,Type=Flag,Description="Is Withdrawn by submitter If one member ss is withdrawn by submitter, then this bit is set.  If all member ss' are withdrawn, then the rs is deleted to SNPHistory">
+##INFO=<ID=dbsnp.NOV,Number=0,Type=Flag,Description="Rs cluster has non-overlapping allele sets. True when rs set has more than 2 alleles from different submissions and these sets share no alleles in common.">
+##INFO=<ID=dbsnp.CAF,Number=.,Type=String,Description="An ordered, comma delimited list of allele frequencies based on 1000Genomes, starting with the reference allele followed by alternate alleles as ordered in the ALT column. Where a 1000Genomes alternate allele is not in the dbSNPs alternate allele set, the allele is added to the ALT column. The minor allele is the second largest value in the list, and was previuosly reported in VCF as the GMAF. This is the GMAF reported on the RefSNP and EntrezSNP pages and VariationReporter">
+##INFO=<ID=dbsnp.COMMON,Number=1,Type=Integer,Description="RS is a common SNP.  A common SNP is one that has at least one 1000Genomes population with a minor allele of frequency >= 1% and for which 2 or more founders contribute to that minor allele frequency.">
+##INFO=<ID=dbsnp.TOPMED,Number=.,Type=String,Description="An ordered, comma delimited list of allele frequencies based on TOPMed, starting with the reference allele followed by alternate alleles as ordered in the ALT column. The TOPMed minor allele is the second largest value in the list.">
+##INFO=<ID=clinvar.RS,Number=1,Type=Integer,Description="dbSNP ID (i.e. rs number)">
+##INFO=<ID=clinvar.RSPOS,Number=1,Type=Integer,Description="Chr position reported in dbSNP">
+##INFO=<ID=clinvar.RV,Number=0,Type=Flag,Description="RS orientation is reversed">
+##INFO=<ID=clinvar.VP,Number=1,Type=String,Description="Variation Property.  Documentation is at ftp://ftp.ncbi.nlm.nih.gov/snp/specs/dbSNP_BitField_latest.pdf">
+##INFO=<ID=clinvar.GENEINFO,Number=1,Type=String,Description="Pairs each of gene symbol:gene id.  The gene symbol and id are delimited by a colon (:) and each pair is delimited by a vertical bar (|)">
+##INFO=<ID=clinvar.dbSNPBuildID,Number=1,Type=Integer,Description="First dbSNP Build for RS">
+##INFO=<ID=clinvar.SAO,Number=1,Type=Integer,Description="Variant Allele Origin: 0 - unspecified, 1 - Germline, 2 - Somatic, 3 - Both">
+##INFO=<ID=clinvar.SSR,Number=1,Type=Integer,Description="Variant Suspect Reason Codes (may be more than one value added together) 0 - unspecified, 1 - Paralog, 2 - byEST, 4 - oldAlign, 8 - Para_EST, 16 - 1kg_failed, 1024 - other">
+##INFO=<ID=clinvar.WGT,Number=1,Type=Integer,Description="Weight, 00 - unmapped, 1 - weight 1, 2 - weight 2, 3 - weight 3 or more">
+##INFO=<ID=clinvar.VC,Number=1,Type=String,Description="Variation Class">
+##INFO=<ID=clinvar.PM,Number=0,Type=Flag,Description="Variant is Precious(Clinical,Pubmed Cited)">
+##INFO=<ID=clinvar.TPA,Number=0,Type=Flag,Description="Provisional Third Party Annotation(TPA) (currently rs from PHARMGKB who will give phenotype data)">
+##INFO=<ID=clinvar.PMC,Number=0,Type=Flag,Description="Links exist to PubMed Central article">
+##INFO=<ID=clinvar.S3D,Number=0,Type=Flag,Description="Has 3D structure - SNP3D table">
+##INFO=<ID=clinvar.SLO,Number=0,Type=Flag,Description="Has SubmitterLinkOut - From SNP->SubSNP->Batch.link_out">
+##INFO=<ID=clinvar.NSF,Number=0,Type=Flag,Description="Has non-synonymous frameshift A coding region variation where one allele in the set changes all downstream amino acids. FxnClass = 44">
+##INFO=<ID=clinvar.NSM,Number=0,Type=Flag,Description="Has non-synonymous missense A coding region variation where one allele in the set changes protein peptide. FxnClass = 42">
+##INFO=<ID=clinvar.NSN,Number=0,Type=Flag,Description="Has non-synonymous nonsense A coding region variation where one allele in the set changes to STOP codon (TER). FxnClass = 41">
+##INFO=<ID=clinvar.REF,Number=0,Type=Flag,Description="Has reference A coding region variation where one allele in the set is identical to the reference sequence. FxnCode = 8">
+##INFO=<ID=clinvar.SYN,Number=0,Type=Flag,Description="Has synonymous A coding region variation where one allele in the set does not change the encoded amino acid. FxnCode = 3">
+##INFO=<ID=clinvar.U3,Number=0,Type=Flag,Description="In 3' UTR Location is in an untranslated region (UTR). FxnCode = 53">
+##INFO=<ID=clinvar.U5,Number=0,Type=Flag,Description="In 5' UTR Location is in an untranslated region (UTR). FxnCode = 55">
+##INFO=<ID=clinvar.ASS,Number=0,Type=Flag,Description="In acceptor splice site FxnCode = 73">
+##INFO=<ID=clinvar.DSS,Number=0,Type=Flag,Description="In donor splice-site FxnCode = 75">
+##INFO=<ID=clinvar.INT,Number=0,Type=Flag,Description="In Intron FxnCode = 6">
+##INFO=<ID=clinvar.R3,Number=0,Type=Flag,Description="In 3' gene region FxnCode = 13">
+##INFO=<ID=clinvar.R5,Number=0,Type=Flag,Description="In 5' gene region FxnCode = 15">
+##INFO=<ID=clinvar.OTH,Number=0,Type=Flag,Description="Has other variant with exactly the same set of mapped positions on NCBI refernce assembly.">
+##INFO=<ID=clinvar.CFL,Number=0,Type=Flag,Description="Has Assembly conflict. This is for weight 1 and 2 variant that maps to different chromosomes on different assemblies.">
+##INFO=<ID=clinvar.ASP,Number=0,Type=Flag,Description="Is Assembly specific. This is set if the variant only maps to one assembly">
+##INFO=<ID=clinvar.MUT,Number=0,Type=Flag,Description="Is mutation (journal citation, explicit fact): a low frequency variation that is cited in journal and other reputable sources">
+##INFO=<ID=clinvar.VLD,Number=0,Type=Flag,Description="Is Validated.  This bit is set if the variant has 2+ minor allele count based on frequency or genotype data.">
+##INFO=<ID=clinvar.G5A,Number=0,Type=Flag,Description=">5% minor allele frequency in each and all populations">
+##INFO=<ID=clinvar.G5,Number=0,Type=Flag,Description=">5% minor allele frequency in 1+ populations">
+##INFO=<ID=clinvar.HD,Number=0,Type=Flag,Description="Marker is on high density genotyping kit (50K density or greater).  The variant may have phenotype associations present in dbGaP.">
+##INFO=<ID=clinvar.GNO,Number=0,Type=Flag,Description="Genotypes available. The variant has individual genotype (in SubInd table).">
+##INFO=<ID=clinvar.KGPhase1,Number=0,Type=Flag,Description="1000 Genome phase 1 (incl. June Interim phase 1)">
+##INFO=<ID=clinvar.KGPhase3,Number=0,Type=Flag,Description="1000 Genome phase 3">
+##INFO=<ID=clinvar.CDA,Number=0,Type=Flag,Description="Variation is interrogated in a clinical diagnostic assay">
+##INFO=<ID=clinvar.LSD,Number=0,Type=Flag,Description="Submitted from a locus-specific database">
+##INFO=<ID=clinvar.MTP,Number=0,Type=Flag,Description="Microattribution/third-party annotation(TPA:GWAS,PAGE)">
+##INFO=<ID=clinvar.OM,Number=0,Type=Flag,Description="Has OMIM/OMIA">
+##INFO=<ID=clinvar.NOC,Number=0,Type=Flag,Description="Contig allele not present in variant allele list. The reference sequence allele at the mapped position is not present in the variant allele list, adjusted for orientation.">
+##INFO=<ID=clinvar.WTD,Number=0,Type=Flag,Description="Is Withdrawn by submitter If one member ss is withdrawn by submitter, then this bit is set.  If all member ss' are withdrawn, then the rs is deleted to SNPHistory">
+##INFO=<ID=clinvar.NOV,Number=0,Type=Flag,Description="Rs cluster has non-overlapping allele sets. True when rs set has more than 2 alleles from different submissions and these sets share no alleles in common.">
+##INFO=<ID=clinvar.CAF,Number=.,Type=String,Description="An ordered, comma delimited list of allele frequencies based on 1000Genomes, starting with the reference allele followed by alternate alleles as ordered in the ALT column. Where a 1000Genomes alternate allele is not in the dbSNPs alternate allele set, the allele is added to the ALT column. The minor allele is the second largest value in the list, and was previuosly reported in VCF as the GMAF. This is the GMAF reported on the RefSNP and EntrezSNP pages and VariationReporter">
+##INFO=<ID=clinvar.COMMON,Number=1,Type=Integer,Description="RS is a common SNP.  A common SNP is one that has at least one 1000Genomes population with a minor allele of frequency >= 1% and for which 2 or more founders contribute to that minor allele frequency.">
+##INFO=<ID=clinvar.CLNHGVS,Number=.,Type=String,Description="Variant names from HGVS.    The order of these variants corresponds to the order of the info in the other clinical  INFO tags.">
+##INFO=<ID=clinvar.CLNALLE,Number=.,Type=Integer,Description="Variant alleles from REF or ALT columns.  0 is REF, 1 is the first ALT allele, etc.  This is used to match alleles with other corresponding clinical (CLN) INFO tags.  A value of -1 indicates that no allele was found to match a corresponding HGVS allele name.">
+##INFO=<ID=clinvar.CLNSRC,Number=.,Type=String,Description="Variant Clinical Chanels">
+##INFO=<ID=clinvar.CLNORIGIN,Number=.,Type=String,Description="Allele Origin. One or more of the following values may be added: 0 - unknown; 1 - germline; 2 - somatic; 4 - inherited; 8 - paternal; 16 - maternal; 32 - de-novo; 64 - biparental; 128 - uniparental; 256 - not-tested; 512 - tested-inconclusive; 1073741824 - other">
+##INFO=<ID=clinvar.CLNSRCID,Number=.,Type=String,Description="Variant Clinical Channel IDs">
+##INFO=<ID=clinvar.CLNSIG,Number=.,Type=String,Description="Variant Clinical Significance, 0 - Uncertain significance, 1 - not provided, 2 - Benign, 3 - Likely benign, 4 - Likely pathogenic, 5 - Pathogenic, 6 - drug response, 7 - histocompatibility, 255 - other">
+##INFO=<ID=clinvar.CLNDSDB,Number=.,Type=String,Description="Variant disease database name">
+##INFO=<ID=clinvar.CLNDSDBID,Number=.,Type=String,Description="Variant disease database ID">
+##INFO=<ID=clinvar.CLNDBN,Number=.,Type=String,Description="Variant disease name">
+##INFO=<ID=clinvar.CLNREVSTAT,Number=.,Type=String,Description="no_assertion - No assertion provided, no_criteria - No assertion criteria provided, single - Criteria provided single submitter, mult - Criteria provided multiple submitters no conflicts, conf - Criteria provided conflicting interpretations, exp - Reviewed by expert panel, guideline - Practice guideline">
+##INFO=<ID=clinvar.CLNACC,Number=.,Type=String,Description="Variant Accession and Versions">
+##INFO=<ID=esp6500.DBSNP,Number=.,Type=String,Description="dbSNP version which established the rs_id">
+##INFO=<ID=esp6500.EA_AC,Number=.,Type=String,Description="European American Allele Count in the order of AltAlleles,RefAllele. For INDELs, A1, A2, or An refers to the N-th alternate allele while R refers to the reference allele.">
+##INFO=<ID=esp6500.AA_AC,Number=.,Type=String,Description="African American Allele Count in the order of AltAlleles,RefAllele. For INDELs, A1, A2, or An refers to the N-th alternate allele while R refers to the reference allele.">
+##INFO=<ID=esp6500.TAC,Number=.,Type=String,Description="Total Allele Count in the order of AltAlleles,RefAllele For INDELs, A1, A2, or An refers to the N-th alternate allele while R refers to the reference allele.">
+##INFO=<ID=esp6500.MAF,Number=.,Type=String,Description="Minor Allele Frequency in percent in the order of EA,AA,All">
+##INFO=<ID=esp6500.GTS,Number=.,Type=String,Description="Observed Genotypes. For INDELs, A1, A2, or An refers to the N-th alternate allele while R refers to the reference allele.">
+##INFO=<ID=esp6500.EA_GTC,Number=.,Type=String,Description="European American Genotype Counts in the order of listed GTS">
+##INFO=<ID=esp6500.AA_GTC,Number=.,Type=String,Description="African American Genotype Counts in the order of listed GTS">
+##INFO=<ID=esp6500.GTC,Number=.,Type=String,Description="Total Genotype Counts in the order of listed GTS">
+##INFO=<ID=esp6500.DP,Number=1,Type=Integer,Description="Average Sample Read Depth">
+##INFO=<ID=esp6500.AA,Number=1,Type=String,Description="chimpAllele">
+##INFO=<ID=esp6500.FG,Number=.,Type=String,Description="functionGVS">
+##INFO=<ID=esp6500.HGVS_CDNA_VAR,Number=.,Type=String,Description="HGVS Coding DNA Variant">
+##INFO=<ID=esp6500.HGVS_PROTEIN_VAR,Number=.,Type=String,Description="HGVS Protein Variant">
+##INFO=<ID=esp6500.CDS_SIZES,Number=.,Type=String,Description="Coding DNA Sizes">
+##INFO=<ID=esp6500.PH,Number=.,Type=String,Description="polyPhen2 result including prediction class and score">
+##INFO=<ID=esp6500.CP,Number=1,Type=Float,Description="scorePhastCons">
+##INFO=<ID=esp6500.CG,Number=1,Type=Float,Description="consScoreGERP">
+##INFO=<ID=esp6500.GL,Number=.,Type=String,Description="geneList">
+##INFO=<ID=esp6500.GS,Number=.,Type=String,Description="granthamScore">
+##INFO=<ID=esp6500.CA,Number=.,Type=String,Description="clinicalAssociation">
+##INFO=<ID=esp6500.EXOME_CHIP,Number=.,Type=String,Description="Whether a SNP is on the Illumina HumanExome Chip">
+##INFO=<ID=esp6500.GWAS_PUBMED,Number=.,Type=String,Description="PubMed records for GWAS hits">
+##INFO=<ID=esp6500.EA_AGE,Number=.,Type=String,Description="Esitmated Variant Age in kilo years for the European American Population">
+##INFO=<ID=esp6500.AA_AGE,Number=.,Type=String,Description="Esitmated Variant Age in kilo years for the African American Population">
+##INFO=<ID=esp6500.GRCh38_POSITION,Number=.,Type=String,Description="GRCh38 chromosomal postion liftover from the original GRCh37 chromosomal position. A value of -1 means the GRCh37 position can not be mapped to the GRCh38 build.">
+##INFO=<ID=ensembl_phen.HumanCoreExome-12_1,Number=0,Type=Flag,Description="Variants from the Illumina HumanCoreExome-12 v1 genotyping chip.">
+##INFO=<ID=ensembl_phen.HGMD_PUBLIC_20154,Number=0,Type=Flag,Description="Variants from HGMD-PUBLIC dataset December 2015 (mapped to GRCh38)">
+##INFO=<ID=ensembl_phen.PhenCode_20140430,Number=0,Type=Flag,Description="PhenCode is a collaborative project to better understand the relationship between genotype and phenotype in humans">
+##INFO=<ID=ensembl_phen.dbSNP_146,Number=0,Type=Flag,Description="Variants (including SNPs and indels) imported from dbSNP">
+##INFO=<ID=ensembl_phen.ClinVar_201601,Number=0,Type=Flag,Description="Variants of clinical significance imported from ClinVar">
+##INFO=<ID=ensembl_phen.COSMIC_75,Number=0,Type=Flag,Description="Somatic mutations found in human cancers from the COSMIC catalogue">
+##INFO=<ID=ensembl_phen.ESP_20141103,Number=0,Type=Flag,Description="Data from NHLBI ESP version v.0.0.30. The goal of the NHLBI GO Exome Sequencing Project is to discover novel genes and mechanisms contributing to heart, lung and blood disorders by sequencing the protein coding regions of the human genome.">
+##INFO=<ID=ensembl_phen.TSA,Number=1,Type=String,Description="Type of sequence alteration. Child of term sequence_alteration as defined by the sequence ontology project.">
+##INFO=<ID=ensembl_phen.E_Cited,Number=0,Type=Flag,Description="Cited.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_phen.E_Multiple_observations,Number=0,Type=Flag,Description="Multiple_observations.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_phen.E_Freq,Number=0,Type=Flag,Description="Frequency.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_phen.E_Hapmap,Number=0,Type=Flag,Description="HapMap.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_phen.E_Phenotype_or_Disease,Number=0,Type=Flag,Description="Phenotype_or_Disease.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_phen.E_ESP,Number=0,Type=Flag,Description="ESP.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_phen.E_1000G,Number=0,Type=Flag,Description="1000Genomes.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_phen.E_ExAC,Number=0,Type=Flag,Description="ExAC.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_phen.CLIN_risk_factor,Number=0,Type=Flag,Description="risk factor.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_protective,Number=0,Type=Flag,Description="protective.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_confers_sensitivity,Number=0,Type=Flag,Description="confers sensitivity.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_other,Number=0,Type=Flag,Description="other.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_drug_response,Number=0,Type=Flag,Description="drug response.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_uncertain_significance,Number=0,Type=Flag,Description="uncertain significance.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_benign,Number=0,Type=Flag,Description="benign.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_likely_pathogenic,Number=0,Type=Flag,Description="likely pathogenic.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_pathogenic,Number=0,Type=Flag,Description="pathogenic.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_likely_benign,Number=0,Type=Flag,Description="likely benign.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_histocompatibility,Number=0,Type=Flag,Description="histocompatibility.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_not_provided,Number=0,Type=Flag,Description="not provided.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.CLIN_association,Number=0,Type=Flag,Description="association.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_phen.MA,Number=1,Type=String,Description="Minor Allele">
+##INFO=<ID=ensembl_phen.MAF,Number=1,Type=Float,Description="Minor Allele Frequency">
+##INFO=<ID=ensembl_phen.MAC,Number=1,Type=Integer,Description="Minor Alelele Count">
+##INFO=<ID=ensembl_phen.AA,Number=1,Type=String,Description="Ancestral Allele">
+##INFO=<ID=ensembl_clin.HumanCoreExome-12_1,Number=0,Type=Flag,Description="Variants from the Illumina HumanCoreExome-12 v1 genotyping chip.">
+##INFO=<ID=ensembl_clin.HGMD_PUBLIC_20154,Number=0,Type=Flag,Description="Variants from HGMD-PUBLIC dataset December 2015 (mapped to GRCh38)">
+##INFO=<ID=ensembl_clin.PhenCode_20140430,Number=0,Type=Flag,Description="PhenCode is a collaborative project to better understand the relationship between genotype and phenotype in humans">
+##INFO=<ID=ensembl_clin.dbSNP_146,Number=0,Type=Flag,Description="Variants (including SNPs and indels) imported from dbSNP">
+##INFO=<ID=ensembl_clin.ClinVar_201601,Number=0,Type=Flag,Description="Variants of clinical significance imported from ClinVar">
+##INFO=<ID=ensembl_clin.COSMIC_75,Number=0,Type=Flag,Description="Somatic mutations found in human cancers from the COSMIC catalogue">
+##INFO=<ID=ensembl_clin.ESP_20141103,Number=0,Type=Flag,Description="Data from NHLBI ESP version v.0.0.30. The goal of the NHLBI GO Exome Sequencing Project is to discover novel genes and mechanisms contributing to heart, lung and blood disorders by sequencing the protein coding regions of the human genome.">
+##INFO=<ID=ensembl_clin.TSA,Number=1,Type=String,Description="Type of sequence alteration. Child of term sequence_alteration as defined by the sequence ontology project.">
+##INFO=<ID=ensembl_clin.E_Cited,Number=0,Type=Flag,Description="Cited.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_clin.E_Multiple_observations,Number=0,Type=Flag,Description="Multiple_observations.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_clin.E_Freq,Number=0,Type=Flag,Description="Frequency.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_clin.E_Hapmap,Number=0,Type=Flag,Description="HapMap.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_clin.E_Phenotype_or_Disease,Number=0,Type=Flag,Description="Phenotype_or_Disease.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_clin.E_ESP,Number=0,Type=Flag,Description="ESP.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_clin.E_1000G,Number=0,Type=Flag,Description="1000Genomes.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_clin.E_ExAC,Number=0,Type=Flag,Description="ExAC.http://www.ensembl.org/info/docs/variation/data_description.html#evidence_status">
+##INFO=<ID=ensembl_clin.CLIN_risk_factor,Number=0,Type=Flag,Description="risk factor.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_protective,Number=0,Type=Flag,Description="protective.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_confers_sensitivity,Number=0,Type=Flag,Description="confers sensitivity.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_other,Number=0,Type=Flag,Description="other.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_drug_response,Number=0,Type=Flag,Description="drug response.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_uncertain_significance,Number=0,Type=Flag,Description="uncertain significance.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_benign,Number=0,Type=Flag,Description="benign.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_likely_pathogenic,Number=0,Type=Flag,Description="likely pathogenic.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_pathogenic,Number=0,Type=Flag,Description="pathogenic.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_likely_benign,Number=0,Type=Flag,Description="likely benign.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_histocompatibility,Number=0,Type=Flag,Description="histocompatibility.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_not_provided,Number=0,Type=Flag,Description="not provided.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.CLIN_association,Number=0,Type=Flag,Description="association.http://www.ensembl.org/info/genome/variation/data_description.html#clin_significance">
+##INFO=<ID=ensembl_clin.MA,Number=1,Type=String,Description="Minor Allele">
+##INFO=<ID=ensembl_clin.MAF,Number=1,Type=Float,Description="Minor Allele Frequency">
+##INFO=<ID=ensembl_clin.MAC,Number=1,Type=Integer,Description="Minor Alelele Count">
+##INFO=<ID=ensembl_clin.AA,Number=1,Type=String,Description="Ancestral Allele">
+##INFO=<ID=dbNSFP_chr,Number=A,Type=String,Description="chromosome number">
+##INFO=<ID=dbNSFP_pos(1-based),Number=A,Type=String,Description="physical position on the chromosome as to hg38 (1-based coordinate).For mitochondrial SNV, this position refers to the rCRS (GenBank: NC_012920).">
+##INFO=<ID=dbNSFP_ref,Number=A,Type=String,Description="reference nucleotide allele (as on the + strand)">
+##INFO=<ID=dbNSFP_alt,Number=A,Type=String,Description="alternative nucleotide allele (as on the + strand)">
+##INFO=<ID=dbNSFP_aaref,Number=A,Type=String,Description="reference amino acid. if the variant is a splicing site SNP (2bp on each end of an intron)">
+##INFO=<ID=dbNSFP_aaalt,Number=A,Type=String,Description="alternative amino acid. if the variant is a splicing site SNP (2bp on each end of an intron)">
+##INFO=<ID=dbNSFP_rs_dbSNP150,Number=A,Type=String,Description="rs number from dbSNP 150">
+##INFO=<ID=dbNSFP_hg19_chr,Number=A,Type=String,Description="chromosome as to hg19, . means missing">
+##INFO=<ID=dbNSFP_hg19_pos(1-based),Number=A,Type=String,Description="physical position on the chromosome as to hg19 (1-based coordinate).For mitochondrial SNV, this position refers to a YRI sequence (GenBank: AF347015)">
+##INFO=<ID=dbNSFP_hg18_chr,Number=A,Type=String,Description="chromosome as to hg18, . means missing">
+##INFO=<ID=dbNSFP_hg18_pos(1-based),Number=A,Type=String,Description="physical position on the chromosome as to hg18 (1-based coordinate)For mitochondrial SNV, this position refers to a YRI sequence (GenBank: AF347015)">
+##INFO=<ID=dbNSFP_genename,Number=A,Type=String,Description="gene name; if the nsSNV can be assigned to multiple genes, gene names areseparated by ;">
+##INFO=<ID=dbNSFP_cds_strand,Number=A,Type=String,Description="coding sequence (CDS) strand (+ or -)">
+##INFO=<ID=dbNSFP_refcodon,Number=A,Type=String,Description="reference codon">
+##INFO=<ID=dbNSFP_codonpos,Number=A,Type=String,Description="position on the codon (1, 2 or 3)">
+##INFO=<ID=dbNSFP_codon_degeneracy,Number=A,Type=String,Description="degenerate type (0, 2 or 3)">
+##INFO=<ID=dbNSFP_Ancestral_allele,Number=A,Type=String,Description="ancestral allele based on 8 primates EPO.Ancestral alleles by Ensembl 84. The following comes from its original README file:ACTG - high-confidence call, ancestral state supported by the other two sequencesactg - low-confidence call, ancestral state supported by one sequence onlyN    - failure, the ancestral state is not supported by any other sequence-    - the extant species contains an insertion at this position.    - no coverage in the alignment">
+##INFO=<ID=dbNSFP_AltaiNeandertal,Number=A,Type=String,Description="genotype of a deep sequenced Altai Neanderthal">
+##INFO=<ID=dbNSFP_Denisova,Number=A,Type=String,Description="genotype of a deep sequenced Denisova">
+##INFO=<ID=dbNSFP_Ensembl_geneid,Number=A,Type=String,Description="Ensembl gene id">
+##INFO=<ID=dbNSFP_Ensembl_transcriptid,Number=A,Type=String,Description="Ensembl transcript ids (Multiple entries separated by ;)">
+##INFO=<ID=dbNSFP_Ensembl_proteinid,Number=A,Type=String,Description="Ensembl protein idsMultiple entries separated by ;,  corresponding to Ensembl_transcriptids">
+##INFO=<ID=dbNSFP_aapos,Number=A,Type=String,Description="amino acid position as to the protein.-1 if the variant is a splicing site SNP (2bp on each end of an intron).Multiple entries separated by ;, corresponding to Ensembl_proteinid">
+##INFO=<ID=dbNSFP_SIFT_score,Number=A,Type=String,Description="SIFT score (SIFTori). Scores range from 0 to 1. The smaller the score themore likely the SNP has damaging effect.Multiple scores separated by ;, corresponding to Ensembl_proteinid.">
+##INFO=<ID=dbNSFP_SIFT_converted_rankscore,Number=A,Type=String,Description="SIFTori scores were first converted to SIFTnew=1-SIFTori,then ranked among all SIFTnew scores in dbNSFP. The rankscore is the ratio ofthe rank the SIFTnew score over the total number of SIFTnew scores in dbNSFP.If there are multiple scores, only the most damaging (largest) rankscore is presented.The rankscores range from 0.00963 to 0.91219.">
+##INFO=<ID=dbNSFP_SIFT_pred,Number=A,Type=String,Description="If SIFTori is smaller than 0.05 (rankscore>0.395) the corresponding nsSNV ispredicted as D(amaging); otherwise it is predicted as T(olerated).Multiple predictions separated by ;">
+##INFO=<ID=dbNSFP_Uniprot_acc_Polyphen2,Number=A,Type=String,Description="Uniprot accession number provided by Polyphen2.Multiple entries separated by ;.">
+##INFO=<ID=dbNSFP_Uniprot_id_Polyphen2,Number=A,Type=String,Description="Uniprot ID numbers corresponding to Uniprot_acc_Polyphen2.Multiple entries separated by ;.">
+##INFO=<ID=dbNSFP_Uniprot_aapos_Polyphen2,Number=A,Type=String,Description="amino acid position as to Uniprot_acc_Polyphen2.Multiple entries separated by ;.">
+##INFO=<ID=dbNSFP_Polyphen2_HDIV_score,Number=A,Type=String,Description="Polyphen2 score based on HumDiv, i.e. hdiv_prob.The score ranges from 0 to 1.Multiple entries separated by ;, corresponding to Uniprot_acc_Polyphen2.">
+##INFO=<ID=dbNSFP_Polyphen2_HDIV_rankscore,Number=A,Type=String,Description="Polyphen2 HDIV scores were first ranked among all HDIV scoresin dbNSFP. The rankscore is the ratio of the rank the score over the total number ofthe scores in dbNSFP. If there are multiple scores, only the most damaging (largest)rankscore is presented. The scores range from 0.02634 to 0.89865.">
+##INFO=<ID=dbNSFP_Polyphen2_HDIV_pred,Number=A,Type=String,Description="Polyphen2 prediction based on HumDiv, D (probably damaging,HDIV score in [0.957,1] or rankscore in [0.52844,0.89865]), P (possibly damaging,HDIV score in [0.453,0.956] or rankscore in [0.34282,0.52689]) and B (benign,HDIV score in [0,0.452] or rankscore in [0.02634,0.34268]). Score cutoff for binaryclassification is 0.5 for HDIV score or 0.3528 for rankscore, i.e. the prediction isneutral if the HDIV score is smaller than 0.5 (rankscore is smaller than 0.3528),and deleterious if the HDIV score is larger than 0.5 (rankscore is larger than0.3528). Multiple entries are separated by ;.">
+##INFO=<ID=dbNSFP_Polyphen2_HVAR_score,Number=A,Type=String,Description="Polyphen2 score based on HumVar, i.e. hvar_prob.The score ranges from 0 to 1.Multiple entries separated by ;, corresponding to Uniprot_acc_Polyphen2.">
+##INFO=<ID=dbNSFP_Polyphen2_HVAR_rankscore,Number=A,Type=String,Description="Polyphen2 HVAR scores were first ranked among all HVAR scoresin dbNSFP. The rankscore is the ratio of the rank the score over the total number ofthe scores in dbNSFP. If there are multiple scores, only the most damaging (largest)rankscore is presented. The scores range from 0.01257 to 0.97092.">
+##INFO=<ID=dbNSFP_Polyphen2_HVAR_pred,Number=A,Type=String,Description="Polyphen2 prediction based on HumVar, D (probably damaging,HVAR score in [0.909,1] or rankscore in [0.62797,0.97092]), P (possibly damaging,HVAR in [0.447,0.908] or rankscore in [0.44195,0.62727]) and B (benign, HVARscore in [0,0.446] or rankscore in [0.01257,0.44151]). Score cutoff for binaryclassification is 0.5 for HVAR score or 0.45833 for rankscore, i.e. the predictionis neutral if the HVAR score is smaller than 0.5 (rankscore is smaller than0.45833), and deleterious if the HVAR score is larger than 0.5 (rankscore is largerthan 0.45833). Multiple entries are separated by ;.">
+##INFO=<ID=dbNSFP_LRT_score,Number=A,Type=String,Description="The original LRT two-sided p-value (LRTori), ranges from 0 to 1.">
+##INFO=<ID=dbNSFP_LRT_converted_rankscore,Number=A,Type=String,Description="LRTori scores were first converted as LRTnew=1-LRTori*0.5 ifOmega<1, or LRTnew=LRTori*0.5 if Omega>=1. Then LRTnew scores were ranked among allLRTnew scores in dbNSFP. The rankscore is the ratio of the rank over the total numberof the scores in dbNSFP. The scores range from 0.00162 to 0.84324.">
+##INFO=<ID=dbNSFP_LRT_pred,Number=A,Type=String,Description="LRT prediction, D(eleterious), N(eutral) or U(nknown), which is not solelydetermined by the score.">
+##INFO=<ID=dbNSFP_LRT_Omega,Number=A,Type=String,Description="estimated nonsynonymous-to-synonymous-rate ratio (Omega, reported by LRT)">
+##INFO=<ID=dbNSFP_MutationTaster_score,Number=A,Type=String,Description="MutationTaster p-value (MTori), ranges from 0 to 1.Multiple scores are separated by ;. Information on corresponding transcript(s) canbe found by querying http://www.mutationtaster.org/ChrPos.html">
+##INFO=<ID=dbNSFP_MutationTaster_converted_rankscore,Number=A,Type=String,Description="The MTori scores were first converted: if the predictionis A or D MTnew=MTori; if the prediction is N or P, MTnew=1-MTori. Then MTnewscores were ranked among all MTnew scores in dbNSFP. If there are multiple scores of aSNV, only the largest MTnew was used in ranking. The rankscore is the ratio of therank of the score over the total number of MTnew scores in dbNSFP. The scores rangefrom 0.08979 to 0.81033.">
+##INFO=<ID=dbNSFP_MutationTaster_pred,Number=A,Type=String,Description="MutationTaster prediction, A (disease_causing_automatic),D (disease_causing), N (polymorphism) or P (polymorphism_automatic). Thescore cutoff between D and N is 0.5 for MTnew and 0.31713 for the rankscore.">
+##INFO=<ID=dbNSFP_MutationTaster_model,Number=A,Type=String,Description="MutationTaster prediction models.">
+##INFO=<ID=dbNSFP_MutationTaster_AAE,Number=A,Type=String,Description="MutationTaster predicted amino acid change.">
+##INFO=<ID=dbNSFP_MutationAssessor_UniprotID,Number=A,Type=String,Description="Uniprot ID number provided by MutationAssessor.">
+##INFO=<ID=dbNSFP_MutationAssessor_variant,Number=A,Type=String,Description="AA variant as to MutationAssessor_UniprotID.">
+##INFO=<ID=dbNSFP_MutationAssessor_score,Number=A,Type=String,Description="MutationAssessor functional impact combined score (MAori). Thescore ranges from -5.135 to 6.49 in dbNSFP.">
+##INFO=<ID=dbNSFP_MutationAssessor_rankscore,Number=A,Type=String,Description="MAori scores were ranked among all MAori scores in dbNSFP.The rankscore is the ratio of the rank of the score over the total number of MAoriscores in dbNSFP. The scores range from 0 to 1.">
+##INFO=<ID=dbNSFP_MutationAssessor_pred,Number=A,Type=String,Description="MutationAssessor's functional impact of a variant :predicted functional, i.e. high (H) or medium (M), or predicted non-functional,i.e. low (L) or neutral (N). The MAori score cutoffs between H and M,M and L, and L and N, are 3.5, 1.935 and 0.8, respectively. The rankscore cutoffsbetween H and M, M and L, and L and N, are 0.92922, 0.51944 and 0.19719,respectively.">
+##INFO=<ID=dbNSFP_FATHMM_score,Number=A,Type=String,Description="FATHMM default score (weighted for human inherited-disease mutations withDisease Ontology) (FATHMMori). Scores range from -16.13 to 10.64. The smaller the scorethe more likely the SNP has damaging effect.Multiple scores separated by ;, corresponding to Ensembl_proteinid.">
+##INFO=<ID=dbNSFP_FATHMM_converted_rankscore,Number=A,Type=String,Description="FATHMMori scores were first converted toFATHMMnew=1-(FATHMMori+16.13)/26.77, then ranked among all FATHMMnew scores in dbNSFP.The rankscore is the ratio of the rank of the score over the total number of FATHMMnewscores in dbNSFP. If there are multiple scores, only the most damaging (largest)rankscore is presented. The scores range from 0 to 1.">
+##INFO=<ID=dbNSFP_FATHMM_pred,Number=A,Type=String,Description="If a FATHMMori score is <=-1.5 (or rankscore >=0.81332) the corresponding nsSNVis predicted as D(AMAGING); otherwise it is predicted as T(OLERATED).Multiple predictions separated by ;, corresponding to Ensembl_proteinid.">
+##INFO=<ID=dbNSFP_PROVEAN_score,Number=A,Type=String,Description="PROVEAN score (PROVEANori). Scores range from -14 to 14. The smaller the scorethe more likely the SNP has damaging effect.Multiple scores separated by ;, corresponding to Ensembl_proteinid.">
+##INFO=<ID=dbNSFP_PROVEAN_converted_rankscore,Number=A,Type=String,Description="PROVEANori were first converted to PROVEANnew=1-(PROVEANori+14)/28,then ranked among all PROVEANnew scores in dbNSFP. The rankscore is the ratio ofthe rank the PROVEANnew score over the total number of PROVEANnew scores in dbNSFP.If there are multiple scores, only the most damaging (largest) rankscore is presented.The scores range from 0 to 1.">
+##INFO=<ID=dbNSFP_PROVEAN_pred,Number=A,Type=String,Description="If PROVEANori <= -2.5 (rankscore>=0.543) the corresponding nsSNV ispredicted as D(amaging); otherwise it is predicted as N(eutral).Multiple predictions separated by ;, corresponding to Ensembl_proteinid.">
+##INFO=<ID=dbNSFP_Transcript_id_VEST3,Number=A,Type=String,Description="Transcript id provided by VEST3.">
+##INFO=<ID=dbNSFP_Transcript_var_VEST3,Number=A,Type=String,Description="amino acid change as to Transcript_id_VEST3.">
+##INFO=<ID=dbNSFP_VEST3_score,Number=A,Type=String,Description="VEST 3.0 score. Score ranges from 0 to 1. The larger the score the more likelythe mutation may cause functional change.Multiple scores separated by ;, corresponding to Transcript_id_VEST3.Please note this score is free for non-commercial use. For more details please refer tohttp://wiki.chasmsoftware.org/index.php/SoftwareLicense. Commercial users should contactthe Johns Hopkins Technology Transfer office.">
+##INFO=<ID=dbNSFP_VEST3_rankscore,Number=A,Type=String,Description="VEST3 scores were ranked among all VEST3 scores in dbNSFP.The rankscore is the ratio of the rank of the score over the total number of VEST3scores in dbNSFP. In case there are multiple scores for the same variant, the largestscore (most damaging) is presented. The scores range from 0 to 1.Please note VEST score is free for non-commercial use. For more details please refer tohttp://wiki.chasmsoftware.org/index.php/SoftwareLicense. Commercial users should contactthe Johns Hopkins Technology Transfer office.">
+##INFO=<ID=dbNSFP_MetaSVM_score,Number=A,Type=String,Description="Our support vector machine (SVM) based ensemble prediction score, whichincorporated 10 scores (SIFT, PolyPhen-2 HDIV, PolyPhen-2 HVAR, GERP++, MutationTaster,Mutation Assessor, FATHMM, LRT, SiPhy, PhyloP) and the maximum frequency observed inthe 1000 genomes populations. Larger value means the SNV is more likely to be damaging.Scores range from -2 to 3 in dbNSFP.">
+##INFO=<ID=dbNSFP_MetaSVM_rankscore,Number=A,Type=String,Description="MetaSVM scores were ranked among all MetaSVM scores in dbNSFP.The rankscore is the ratio of the rank of the score over the total number of MetaSVMscores in dbNSFP. The scores range from 0 to 1.">
+##INFO=<ID=dbNSFP_MetaSVM_pred,Number=A,Type=String,Description="Prediction of our SVM based ensemble prediction score,T(olerated) orD(amaging). The score cutoff between D and T is 0. The rankscore cutoff betweenD and T is 0.82268.">
+##INFO=<ID=dbNSFP_MetaLR_score,Number=A,Type=String,Description="Our logistic regression (LR) based ensemble prediction score, whichincorporated 10 scores (SIFT, PolyPhen-2 HDIV, PolyPhen-2 HVAR, GERP++, MutationTaster,Mutation Assessor, FATHMM, LRT, SiPhy, PhyloP) and the maximum frequency observed inthe 1000 genomes populations. Larger value means the SNV is more likely to be damaging.Scores range from 0 to 1.">
+##INFO=<ID=dbNSFP_MetaLR_rankscore,Number=A,Type=String,Description="MetaLR scores were ranked among all MetaLR scores in dbNSFP. The rankscoreis the ratio of the rank of the score over the total number of MetaLR scores in dbNSFP.The scores range from 0 to 1.">
+##INFO=<ID=dbNSFP_MetaLR_pred,Number=A,Type=String,Description="Prediction of our MetaLR based ensemble prediction score,T(olerated) orD(amaging). The score cutoff between D and T is 0.5. The rankscore cutoff betweenD and T is 0.81113.">
+##INFO=<ID=dbNSFP_Reliability_index,Number=A,Type=String,Description="Number of observed component scores (except the maximum frequency inthe 1000 genomes populations) for MetaSVM and MetaLR. Ranges from 1 to 10. As MetaSVMand MetaLR scores are calculated based on imputed data, the less missing componentscores, the higher the reliability of the scores and predictions.">
+##INFO=<ID=dbNSFP_M-CAP_score,Number=A,Type=String,Description="M-CAP score (details in DOI: 10.1038/ng.3703). Scores range from 0 to 1. The largerthe score the more likely the SNP has damaging effect.">
+##INFO=<ID=dbNSFP_M-CAP_rankscore,Number=A,Type=String,Description="M-CAP scores were ranked among all M-CAP scores in dbNSFP. The rankscore isthe ratio of the rank of the score over the total number of M-CAP scores in dbNSFP.">
+##INFO=<ID=dbNSFP_M-CAP_pred,Number=A,Type=String,Description="Prediction of M-CAP score based on the authors' recommendation, T(olerated) orD(amaging). The score cutoff between D and T is 0.025.">
+##INFO=<ID=dbNSFP_REVEL_score,Number=A,Type=String,Description="REVEL is an ensemble score based on 13 individual scores for predicting thepathogenicity of missense variants. Scores range from 0 to 1. The larger the score the morelikely the SNP has damaging effect. REVEL scores are freely available for non-commercial use.For other uses, please contact Weiva Sieh (weiva.sieh@mssm.edu)">
+##INFO=<ID=dbNSFP_REVEL_rankscore,Number=A,Type=String,Description="REVEL scores were ranked among all REVEL scores in dbNSFP. The rankscore isthe ratio of the rank of the score over the total number of REVEL scores in dbNSFP.">
+##INFO=<ID=dbNSFP_MutPred_score,Number=A,Type=String,Description="General MutPred score. Scores range from 0 to 1. The larger the score the morelikely the SNP has damaging effect.">
+##INFO=<ID=dbNSFP_MutPred_rankscore,Number=A,Type=String,Description="MutPred scores were ranked among all MutPred scores in dbNSFP. The rankscore isthe ratio of the rank of the score over the total number of MutPred scores in dbNSFP.">
+##INFO=<ID=dbNSFP_MutPred_protID,Number=A,Type=String,Description="UniProt accession or Ensembl transcript ID used for MutPred_score calculation.">
+##INFO=<ID=dbNSFP_MutPred_AAchange,Number=A,Type=String,Description="Amino acid change used for MutPred_score calculation.">
+##INFO=<ID=dbNSFP_MutPred_Top5features,Number=A,Type=String,Description="Top 5 features (molecular mechanisms of disease) as predicted by MutPred withp values. MutPred_score > 0.5 and p < 0.05 are referred to as actionable hypotheses.MutPred_score > 0.75 and p < 0.05 are referred to as confident hypotheses.MutPred_score > 0.75 and p < 0.01 are referred to as very confident hypotheses.">
+##INFO=<ID=dbNSFP_CADD_raw,Number=A,Type=String,Description="CADD raw score for functional prediction of a SNP. Please refer to Kircher et al.(2014) Nature Genetics 46(3):310-5 for details. The larger the score the more likelythe SNP has damaging effect. Scores range from -7.535037 to 35.788538 in dbNSFP.Please note the following copyright statement for CADD:CADD scores (http://cadd.gs.washington.edu/) are Copyright 2013 University ofWashington and Hudson-Alpha Institute for Biotechnology (all rights reserved) but arefreely available for all academic, non-commercial applications. For commerciallicensing information contact Jennifer McCullar (mccullaj@uw.edu).">
+##INFO=<ID=dbNSFP_CADD_raw_rankscore,Number=A,Type=String,Description="CADD raw scores were ranked among all CADD raw scores in dbNSFP. Therankscore is the ratio of the rank of the score over the total number of CADDraw scores in dbNSFP. Please note the following copyright statement for CADD: CADDscores (http://cadd.gs.washington.edu/) are Copyright 2013 University of Washingtonand Hudson-Alpha Institute for Biotechnology (all rights reserved) but are freelyavailable for all academic, non-commercial applications. For commercial licensinginformation contact Jennifer McCullar (mccullaj@uw.edu).">
+##INFO=<ID=dbNSFP_CADD_phred,Number=A,Type=String,Description="CADD phred-like score. This is phred-like rank score based on whole genomeCADD raw scores. Please refer to Kircher et al. (2014) Nature Genetics 46(3):310-5for details. The larger the score the more likely the SNP has damaging effect.Please note the following copyright statement for CADD: CADD scores(http://cadd.gs.washington.edu/) are Copyright 2013 University of Washington andHudson-Alpha Institute for Biotechnology (all rights reserved) but are freelyavailable for all academic, non-commercial applications. For commercial licensinginformation contact Jennifer McCullar (mccullaj@uw.edu).">
+##INFO=<ID=dbNSFP_DANN_score,Number=A,Type=String,Description="DANN is a functional prediction score retrained based on the training dataof CADD using deep neural network. Scores range from 0 to 1. A larger number indicatea higher probability to be damaging. More information of this score can be found indoi: 10.1093/bioinformatics/btu703. For commercial application of DANN, please contactDaniel Quang (dxquang@uci.edu)">
+##INFO=<ID=dbNSFP_DANN_rankscore,Number=A,Type=String,Description="DANN scores were ranked among all DANN scores in dbNSFP. The rankscore isthe ratio of the rank of the score over the total number of DANN scores in dbNSFP.">
+##INFO=<ID=dbNSFP_fathmm-MKL_coding_score,Number=A,Type=String,Description="fathmm-MKL p-values. Scores range from 0 to 1. SNVs with scores >0.5are predicted to be deleterious, and those <0.5 are predicted to be neutral or benign.Scores close to 0 or 1 are with the highest-confidence. Coding scores are trained using 10groups of features. More details of the score can be found indoi: 10.1093/bioinformatics/btv009.">
+##INFO=<ID=dbNSFP_fathmm-MKL_coding_rankscore,Number=A,Type=String,Description="fathmm-MKL coding scores were ranked among all fathmm-MKL codingscores in dbNSFP. The rankscore is the ratio of the rank of the score over the total numberof fathmm-MKL coding scores in dbNSFP.">
+##INFO=<ID=dbNSFP_fathmm-MKL_coding_pred,Number=A,Type=String,Description="If a fathmm-MKL_coding_score is >0.5 (or rankscore >0.28317)the corresponding nsSNV is predicted as D(AMAGING); otherwise it is predicted as N(EUTRAL).">
+##INFO=<ID=dbNSFP_fathmm-MKL_coding_group,Number=A,Type=String,Description="the groups of features (labeled A-J) used to obtained the score. Moredetails can be found in doi: 10.1093/bioinformatics/btv009.">
+##INFO=<ID=dbNSFP_Eigen_coding_or_noncoding,Number=A,Type=String,Description="Whether Eigen-raw and Eigen-phred scores are based on coding modelor noncoding model.">
+##INFO=<ID=dbNSFP_Eigen-raw,Number=A,Type=String,Description="Eigen score for coding SNVs. A functional prediction score based on conservation,allele frequencies, and deleteriousness prediction using an unsupervised learning method(doi: 10.1038/ng.3477).">
+##INFO=<ID=dbNSFP_Eigen-phred,Number=A,Type=String,Description="Eigen score in phred scale.">
+##INFO=<ID=dbNSFP_Eigen-PC-raw,Number=A,Type=String,Description="Eigen PC score for genome-wide SNVs. A functional prediction score based onconservation, allele frequencies, deleteriousness prediction (for missense SNVs) andepigenomic signals (for synonymous and non-coding SNVs) using an unsupervised learningmethod (doi: 10.1038/ng.3477).">
+##INFO=<ID=dbNSFP_Eigen-PC-phred,Number=A,Type=String,Description="Eigen PC score in phred scale.">
+##INFO=<ID=dbNSFP_Eigen-PC-raw_rankscore,Number=A,Type=String,Description="Eigen-PC-raw scores were ranked among all Eigen-PC-raw scores indbNSFP. The rankscore is the ratio of the rank of the score over the total numberof Eigen-PC-raw scores in dbNSFP.">
+##INFO=<ID=dbNSFP_GenoCanyon_score,Number=A,Type=String,Description="A functional prediction score based on conservation and biochemicalannotations using an unsupervised statistical learning. (doi:10.1038/srep10576)">
+##INFO=<ID=dbNSFP_GenoCanyon_score_rankscore,Number=A,Type=String,Description="GenoCanyon_score scores were ranked among all integrated fitConsscores in dbNSFP. The rankscore is the ratio of the rank of the score over the total numberof GenoCanyon_score scores in dbNSFP.">
+##INFO=<ID=dbNSFP_integrated_fitCons_score,Number=A,Type=String,Description="fitCons score predicts the fraction of genomic positions belonging toa specific function class (defined by epigenomic fingerprint) that are under selectivepressure. Scores range from 0 to 1, with a larger score indicating a higher proportion ofnucleic sites of the functional class the genomic position belong to are under selectivepressure, therefore more likely to be functional important. Integrated (i6) scores areintegrated across three cell types (GM12878, H1-hESC and HUVEC). More details can be foundin doi:10.1038/ng.3196.">
+##INFO=<ID=dbNSFP_integrated_fitCons_rankscore,Number=A,Type=String,Description="integrated fitCons scores were ranked among all integrated fitConsscores in dbNSFP. The rankscore is the ratio of the rank of the score over the total numberof integrated fitCons scores in dbNSFP.">
+##INFO=<ID=dbNSFP_integrated_confidence_value,Number=A,Type=String,Description="0 - highly significant scores (approx. p<.003); 1 - significant scores(approx. p<.05); 2 - informative scores (approx. p<.25); 3 - other scores (approx. p>=.25).">
+##INFO=<ID=dbNSFP_GM12878_fitCons_score,Number=A,Type=String,Description="fitCons score predicts the fraction of genomic positions belonging toa specific function class (defined by epigenomic fingerprint) that are under selectivepressure. Scores range from 0 to 1, with a larger score indicating a higher proportion ofnucleic sites of the functional class the genomic position belong to are under selectivepressure, therefore more likely to be functional important. GM12878 fitCons scores arebased on cell type GM12878. More details can be found in doi:10.1038/ng.3196.">
+##INFO=<ID=dbNSFP_GM12878_fitCons_rankscore,Number=A,Type=String,Description="GM12878 fitCons scores were ranked among all GM12878 fitConsscores in dbNSFP. The rankscore is the ratio of the rank of the score over the total numberof GM12878 fitCons scores in dbNSFP.">
+##INFO=<ID=dbNSFP_GM12878_confidence_value,Number=A,Type=String,Description="0 - highly significant scores (approx. p<.003); 1 - significant scores(approx. p<.05); 2 - informative scores (approx. p<.25); 3 - other scores (approx. p>=.25).">
+##INFO=<ID=dbNSFP_H1-hESC_fitCons_score,Number=A,Type=String,Description="fitCons score predicts the fraction of genomic positions belonging toa specific function class (defined by epigenomic fingerprint) that are under selectivepressure. Scores range from 0 to 1, with a larger score indicating a higher proportion ofnucleic sites of the functional class the genomic position belong to are under selectivepressure, therefore more likely to be functional important. GM12878 fitCons scores arebased on cell type H1-hESC. More details can be found in doi:10.1038/ng.3196.">
+##INFO=<ID=dbNSFP_H1-hESC_fitCons_rankscore,Number=A,Type=String,Description="H1-hESC fitCons scores were ranked among all H1-hESC fitConsscores in dbNSFP. The rankscore is the ratio of the rank of the score over the total numberof H1-hESC fitCons scores in dbNSFP.">
+##INFO=<ID=dbNSFP_H1-hESC_confidence_value,Number=A,Type=String,Description="0 - highly significant scores (approx. p<.003); 1 - significant scores(approx. p<.05); 2 - informative scores (approx. p<.25); 3 - other scores (approx. p>=.25).">
+##INFO=<ID=dbNSFP_HUVEC_fitCons_score,Number=A,Type=String,Description="fitCons score predicts the fraction of genomic positions belonging toa specific function class (defined by epigenomic fingerprint) that are under selectivepressure. Scores range from 0 to 1, with a larger score indicating a higher proportion ofnucleic sites of the functional class the genomic position belong to are under selectivepressure, therefore more likely to be functional important. GM12878 fitCons scores arebased on cell type HUVEC. More details can be found in doi:10.1038/ng.3196.">
+##INFO=<ID=dbNSFP_HUVEC_fitCons_rankscore,Number=A,Type=String,Description="HUVEC fitCons scores were ranked among all HUVEC fitConsscores in dbNSFP. The rankscore is the ratio of the rank of the score over the total numberof HUVEC fitCons scores in dbNSFP.">
+##INFO=<ID=dbNSFP_HUVEC_confidence_value,Number=A,Type=String,Description="0 - highly significant scores (approx. p<.003); 1 - significant scores(approx. p<.05); 2 - informative scores (approx. p<.25); 3 - other scores (approx. p>=.25).">
+##INFO=<ID=dbNSFP_GERP++_NR,Number=A,Type=String,Description="GERP++ neutral rate">
+##INFO=<ID=dbNSFP_GERP++_RS,Number=A,Type=String,Description="GERP++ RS score, the larger the score, the more conserved the site. Scores range from-12.3 to 6.17.">
+##INFO=<ID=dbNSFP_GERP++_RS_rankscore,Number=A,Type=String,Description="GERP++ RS scores were ranked among all GERP++ RS scores in dbNSFP.The rankscore is the ratio of the rank of the score over the total number of GERP++ RSscores in dbNSFP.">
+##INFO=<ID=dbNSFP_phyloP100way_vertebrate,Number=A,Type=String,Description="phyloP (phylogenetic p-values) conservation score based on themultiple alignments of 100 vertebrate genomes (including human). The larger the score,the more conserved the site. Scores range from -20.0 to 10.003 in dbNSFP.">
+##INFO=<ID=dbNSFP_phyloP100way_vertebrate_rankscore,Number=A,Type=String,Description="phyloP100way_vertebrate scores were ranked among allphyloP100way_vertebrate scores in dbNSFP. The rankscore is the ratio of the rank of thescore over the total number of phyloP100way_vertebrate scores in dbNSFP.">
+##INFO=<ID=dbNSFP_phyloP20way_mammalian,Number=A,Type=String,Description="phyloP (phylogenetic p-values) conservation score based on themultiple alignments of 20 mammalian genomes (including human). The larger the score,the more conserved the site. Scores range from -13.282 to 1.199 in dbNSFP.">
+##INFO=<ID=dbNSFP_phyloP20way_mammalian_rankscore,Number=A,Type=String,Description="phyloP20way_mammalian scores were ranked among allphyloP20way_mammalian scores in dbNSFP. The rankscore is the ratio of the rank of thescore over the total number of phyloP20way_mammalian scores in dbNSFP.">
+##INFO=<ID=dbNSFP_phastCons100way_vertebrate,Number=A,Type=String,Description="phastCons conservation score based on the multiple alignmentsof 100 vertebrate genomes (including human). The larger the score, the more conservedthe site. Scores range from 0 to 1.">
+##INFO=<ID=dbNSFP_phastCons100way_vertebrate_rankscore,Number=A,Type=String,Description="phastCons100way_vertebrate scores were ranked amongall phastCons100way_vertebrate scores in dbNSFP. The rankscore is the ratio of the rankof the score over the total number of phastCons100way_vertebrate scores in dbNSFP.">
+##INFO=<ID=dbNSFP_phastCons20way_mammalian,Number=A,Type=String,Description="phastCons conservation score based on the multiple alignmentsof 20 mammalian genomes (including human). The larger the score, the more conservedthe site. Scores range from 0 to 1.">
+##INFO=<ID=dbNSFP_phastCons20way_mammalian_rankscore,Number=A,Type=String,Description="phastCons20way_mammalian scores were ranked amongall phastCons20way_mammalian scores in dbNSFP. The rankscore is the ratio of the rankof the score over the total number of phastCons20way_mammalian scores in dbNSFP.">
+##INFO=<ID=dbNSFP_SiPhy_29way_pi,Number=A,Type=String,Description="The estimated stationary distribution of A, C, G and T at the site,using SiPhy algorithm based on 29 mammals genomes.">
+##INFO=<ID=dbNSFP_SiPhy_29way_logOdds,Number=A,Type=String,Description="SiPhy score based on 29 mammals genomes. The larger the score,the more conserved the site. Scores range from 0 to 37.9718 in dbNSFP.">
+##INFO=<ID=dbNSFP_SiPhy_29way_logOdds_rankscore,Number=A,Type=String,Description="SiPhy_29way_logOdds scores were ranked among allSiPhy_29way_logOdds scores in dbNSFP. The rankscore is the ratio of the rankof the score over the total number of SiPhy_29way_logOdds scores in dbNSFP.">
+##INFO=<ID=dbNSFP_1000Gp3_AC,Number=A,Type=String,Description="Alternative allele counts in the whole 1000 genomes phase 3 (1000Gp3) data.">
+##INFO=<ID=dbNSFP_1000Gp3_AF,Number=A,Type=String,Description="Alternative allele frequency in the whole 1000Gp3 data.">
+##INFO=<ID=dbNSFP_1000Gp3_AFR_AC,Number=A,Type=String,Description="Alternative allele counts in the 1000Gp3 African descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_AFR_AF,Number=A,Type=String,Description="Alternative allele frequency in the 1000Gp3 African descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_EUR_AC,Number=A,Type=String,Description="Alternative allele counts in the 1000Gp3 European descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_EUR_AF,Number=A,Type=String,Description="Alternative allele frequency in the 1000Gp3 European descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_AMR_AC,Number=A,Type=String,Description="Alternative allele counts in the 1000Gp3 American descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_AMR_AF,Number=A,Type=String,Description="Alternative allele frequency in the 1000Gp3 American descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_EAS_AC,Number=A,Type=String,Description="Alternative allele counts in the 1000Gp3 East Asian descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_EAS_AF,Number=A,Type=String,Description="Alternative allele frequency in the 1000Gp3 East Asian descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_SAS_AC,Number=A,Type=String,Description="Alternative allele counts in the 1000Gp3 South Asian descendent samples.">
+##INFO=<ID=dbNSFP_1000Gp3_SAS_AF,Number=A,Type=String,Description="Alternative allele frequency in the 1000Gp3 South Asian descendent samples.">
+##INFO=<ID=dbNSFP_TWINSUK_AC,Number=A,Type=String,Description="Alternative allele count in called genotypes in UK10K TWINSUK cohort.">
+##INFO=<ID=dbNSFP_TWINSUK_AF,Number=A,Type=String,Description="Alternative allele frequency in called genotypes in UK10K TWINSUK cohort.">
+##INFO=<ID=dbNSFP_ALSPAC_AC,Number=A,Type=String,Description="Alternative allele count in called genotypes in UK10K ALSPAC cohort.">
+##INFO=<ID=dbNSFP_ALSPAC_AF,Number=A,Type=String,Description="Alternative allele frequency in called genotypes in UK10K ALSPAC cohort.">
+##INFO=<ID=dbNSFP_ESP6500_AA_AC,Number=A,Type=String,Description="Alternative allele count in the African American samples of theNHLBI GO Exome Sequencing Project (ESP6500 data set).">
+##INFO=<ID=dbNSFP_ESP6500_AA_AF,Number=A,Type=String,Description="Alternative allele frequency in the African American samples of theNHLBI GO Exome Sequencing Project (ESP6500 data set).">
+##INFO=<ID=dbNSFP_ESP6500_EA_AC,Number=A,Type=String,Description="Alternative allele count in the European American samples of theNHLBI GO Exome Sequencing Project (ESP6500 data set).">
+##INFO=<ID=dbNSFP_ESP6500_EA_AF,Number=A,Type=String,Description="Alternative allele frequency in the European American samples of theNHLBI GO Exome Sequencing Project (ESP6500 data set).">
+##INFO=<ID=dbNSFP_ExAC_AC,Number=A,Type=String,Description="Allele count in total ExAC samples (60,706 samples)">
+##INFO=<ID=dbNSFP_ExAC_AF,Number=A,Type=String,Description="Allele frequency in total ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_Adj_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in total ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_Adj_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in total ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_AFR_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in African & African AmericanExAC samples">
+##INFO=<ID=dbNSFP_ExAC_AFR_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in African & African AmericanExAC samples">
+##INFO=<ID=dbNSFP_ExAC_AMR_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in American ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_AMR_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in American ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_EAS_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in East Asian ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_EAS_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in East Asian ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_FIN_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in Finnish ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_FIN_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in Finnish ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_NFE_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in Non-Finnish European ExACsamples">
+##INFO=<ID=dbNSFP_ExAC_NFE_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in Non-Finnish European ExACsamples">
+##INFO=<ID=dbNSFP_ExAC_SAS_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in South Asian ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_SAS_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in South Asian ExAC samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_AC,Number=A,Type=String,Description="Allele count in total ExAC_nonTCGA samples (53,105 samples)">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_AF,Number=A,Type=String,Description="Allele frequency in total ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_Adj_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in total ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_Adj_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in total ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_AFR_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in African & African AmericanExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_AFR_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in African & African AmericanExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_AMR_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in American ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_AMR_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in American ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_EAS_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in East Asian ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_EAS_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in East Asian ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_FIN_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in Finnish ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_FIN_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in Finnish ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_NFE_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in Non-Finnish European ExAC_nonTCGAsamples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_NFE_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in Non-Finnish European ExAC_nonTCGAsamples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_SAS_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in South Asian ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_SAS_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in South Asian ExAC_nonTCGA samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_AC,Number=A,Type=String,Description="Allele count in total ExAC_nonpsych samples (45,376 samples)">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_AF,Number=A,Type=String,Description="Allele frequency in total ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_Adj_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in total ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_Adj_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in total ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_AFR_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in African & African AmericanExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_AFR_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in African & African AmericanExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_AMR_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in American ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_AMR_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in American ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_EAS_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in East Asian ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_EAS_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in East Asian ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_FIN_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in Finnish ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_FIN_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in Finnish ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_NFE_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in Non-Finnish European ExAC_nonpsychsamples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_NFE_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in Non-Finnish European ExAC_nonpsychsamples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_SAS_AC,Number=A,Type=String,Description="Adjusted Alt allele counts (DP >= 10 & GQ >= 20) in South Asian ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_SAS_AF,Number=A,Type=String,Description="Adjusted Alt allele frequency (DP >= 10 & GQ >= 20) in South Asian ExAC_nonpsych samples">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AC,Number=A,Type=String,Description="Alternative allele count in the whole gnomAD exome samples (123,136 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AN,Number=A,Type=String,Description="Total allele count in the whole gnomAD exome samples (123,136 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AF,Number=A,Type=String,Description="Alternative allele frequency in the whole gnomAD exome samples (123,136 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AFR_AC,Number=A,Type=String,Description="Alternative allele count in the African/African American gnomAD exome samples (7,652 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AFR_AN,Number=A,Type=String,Description="Total allele count in the African/African American gnomAD exome samples (7,652 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AFR_AF,Number=A,Type=String,Description="Alternative allele frequency in the African/African American gnomAD exome samples (7,652 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AMR_AC,Number=A,Type=String,Description="Alternative allele count in the Latino gnomAD exome samples (16,791 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AMR_AN,Number=A,Type=String,Description="Total allele count in the Latino gnomAD exome samples (16,791 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_AMR_AF,Number=A,Type=String,Description="Alternative allele frequency in the Latino gnomAD exome samples (16,791 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_ASJ_AC,Number=A,Type=String,Description="Alternative allele count in the Ashkenazi Jewish gnomAD exome samples (4,925 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_ASJ_AN,Number=A,Type=String,Description="Total allele count in the Ashkenazi Jewish gnomAD exome samples (4,925 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_ASJ_AF,Number=A,Type=String,Description="Alternative allele frequency in the Ashkenazi Jewish gnomAD exome samples (4,925 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_EAS_AC,Number=A,Type=String,Description="Alternative allele count in the East Asian gnomAD exome samples (8,624 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_EAS_AN,Number=A,Type=String,Description="Total allele count in the East Asian gnomAD exome samples (8,624 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_EAS_AF,Number=A,Type=String,Description="Alternative allele frequency in the East Asian gnomAD exome samples (8,624 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_FIN_AC,Number=A,Type=String,Description="Alternative allele count in the Finnish gnomAD exome samples (11,150 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_FIN_AN,Number=A,Type=String,Description="Total allele count in the Finnish gnomAD exome samples (11,150 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_FIN_AF,Number=A,Type=String,Description="Alternative allele frequency in the Finnish gnomAD exome samples (11,150 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_NFE_AC,Number=A,Type=String,Description="Alternative allele count in the Non-Finnish European gnomAD exome samples (55,860 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_NFE_AN,Number=A,Type=String,Description="Total allele count in the Non-Finnish European gnomAD exome samples (55,860 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_NFE_AF,Number=A,Type=String,Description="Alternative allele frequency in the Non-Finnish European gnomAD exome samples (55,860 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_SAS_AC,Number=A,Type=String,Description="Alternative allele count in the South Asian gnomAD exome samples (15,391 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_SAS_AN,Number=A,Type=String,Description="Total allele count in the South Asian gnomAD exome samples (15,391 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_SAS_AF,Number=A,Type=String,Description="Alternative allele frequency in the South Asian gnomAD exome samples (15,391 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_OTH_AC,Number=A,Type=String,Description="Alternative allele count in other gnomAD exome samples (2,743 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_OTH_AN,Number=A,Type=String,Description="Total allele count in other gnomAD exome samples (2,743 samples)">
+##INFO=<ID=dbNSFP_gnomAD_exomes_OTH_AF,Number=A,Type=String,Description="Alternative allele frequency in other gnomAD exome samples (2,743 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AC,Number=A,Type=String,Description="Alternative allele count in the whole gnomAD genome samples (15,496 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AN,Number=A,Type=String,Description="Total allele count in the whole gnomAD genome samples (15,496 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AF,Number=A,Type=String,Description="Alternative allele frequency in the whole gnomAD genome samples (15,496 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AFR_AC,Number=A,Type=String,Description="Alternative allele count in the African/African American gnomAD genome samples (4,368 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AFR_AN,Number=A,Type=String,Description="Total allele count in the African/African American gnomAD genome samples (4,368 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AFR_AF,Number=A,Type=String,Description="Alternative allele frequency in the African/African American gnomAD genome samples (4,368 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AMR_AC,Number=A,Type=String,Description="Alternative allele count in the Latino gnomAD genome samples (419 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AMR_AN,Number=A,Type=String,Description="Total allele count in the Latino gnomAD genome samples (419 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_AMR_AF,Number=A,Type=String,Description="Alternative allele frequency in the Latino gnomAD genome samples (419 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_ASJ_AC,Number=A,Type=String,Description="Alternative allele count in the Ashkenazi Jewish gnomAD genome samples (151 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_ASJ_AN,Number=A,Type=String,Description="Total allele count in the Ashkenazi Jewish gnomAD genome samples (151 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_ASJ_AF,Number=A,Type=String,Description="Alternative allele frequency in the Ashkenazi Jewish gnomAD genome samples (151 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_EAS_AC,Number=A,Type=String,Description="Alternative allele count in the East Asian gnomAD genome samples (811 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_EAS_AN,Number=A,Type=String,Description="Total allele count in the East Asian gnomAD genome samples (811 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_EAS_AF,Number=A,Type=String,Description="Alternative allele frequency in the East Asian gnomAD genome samples (811 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_FIN_AC,Number=A,Type=String,Description="Alternative allele count in the Finnish gnomAD genome samples (1,747 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_FIN_AN,Number=A,Type=String,Description="Total allele count in the Finnish gnomAD genome samples (1,747 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_FIN_AF,Number=A,Type=String,Description="Alternative allele frequency in the Finnish gnomAD genome samples (1,747 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_NFE_AC,Number=A,Type=String,Description="Alternative allele count in the Non-Finnish European gnomAD genome samples (7,509 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_NFE_AN,Number=A,Type=String,Description="Total allele count in the Non-Finnish European gnomAD genome samples (7,509 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_NFE_AF,Number=A,Type=String,Description="Alternative allele frequency in the Non-Finnish European gnomAD genome samples (7,509 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_OTH_AC,Number=A,Type=String,Description="Alternative allele count in other gnomAD genome samples (491 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_OTH_AN,Number=A,Type=String,Description="Total allele count in other gnomAD genome samples (491 samples)">
+##INFO=<ID=dbNSFP_gnomAD_genomes_OTH_AF,Number=A,Type=String,Description="Alternative allele frequency in other gnomAD genome samples (491 samples)">
+##INFO=<ID=dbNSFP_clinvar_rs,Number=A,Type=String,Description="rs number from the clinvar data set">
+##INFO=<ID=dbNSFP_clinvar_clnsig,Number=A,Type=String,Description="clinical significance as to the clinvar data set. 0 - unknown, 1 - untested,2 - Benign, 3 - Likely benign, 4 - Likely pathogenic, 5 - Pathogenic, 6 - drug response,7 - histocompatibility. A negative score means the the score is for the ref allele">
+##INFO=<ID=dbNSFP_clinvar_trait,Number=A,Type=String,Description="the trait/disease the clinvar_clnsig referring to">
+##INFO=<ID=dbNSFP_clinvar_golden_stars,Number=A,Type=String,Description="ClinVar Review Status summary.0 - no assertion criteria provided, 1 - criteria provided, single submitter,2 - criteria provided, multiple submitters, no conflicts,3 - reviewed by expert panel, 4 - practice guideline">
+##INFO=<ID=dbNSFP_Interpro_domain,Number=A,Type=String,Description="domain or conserved site on which the variant locates. Domainannotations come from Interpro database. The number in the brackets followinga specific domain is the count of times Interpro assigns the variant position tothat domain, typically coming from different predicting databases. Multiple entriesseparated by ;.">
+##INFO=<ID=dbNSFP_GTEx_V6p_gene,Number=A,Type=String,Description="target gene of the (significant) eQTL SNP">
+##INFO=<ID=dbNSFP_GTEx_V6p_tissue,Number=A,Type=String,Description="tissue type of the expression data with which the eQTL/gene pair is detectedNote 1: Missing data is designated as '.'.Columns of dbNSFP_gene:Gene_name: Gene symbol from HGNCEnsembl_gene: Ensembl gene id (from HGNC)chr: Chromosome number (from HGNC)">
+##INFO=<ID=dbNSFP_Gene_old_names,Number=A,Type=String,Description="Old gene symbol (from HGNC)">
+##INFO=<ID=dbNSFP_Gene_other_names,Number=A,Type=String,Description="Other gene names (from HGNC)">
+##INFO=<ID=dbNSFP_Uniprot_acc(HGNC/Uniprot),Number=A,Type=String,Description="Uniprot acc number (from HGNC and Uniprot)">
+##INFO=<ID=dbNSFP_Uniprot_id(HGNC/Uniprot),Number=A,Type=String,Description="Uniprot id (from HGNC and Uniprot)">
+##INFO=<ID=dbNSFP_Entrez_gene_id,Number=A,Type=String,Description="Entrez gene id (from HGNC)">
+##INFO=<ID=dbNSFP_CCDS_id,Number=A,Type=String,Description="CCDS id (from HGNC)">
+##INFO=<ID=dbNSFP_Refseq_id,Number=A,Type=String,Description="Refseq gene id (from HGNC)">
+##INFO=<ID=dbNSFP_ucsc_id,Number=A,Type=String,Description="UCSC gene id (from HGNC)">
+##INFO=<ID=dbNSFP_MIM_id,Number=A,Type=String,Description="MIM gene id (from HGNC)">
+##INFO=<ID=dbNSFP_Gene_full_name,Number=A,Type=String,Description="Gene full name (from HGNC)">
+##INFO=<ID=dbNSFP_Pathway(Uniprot),Number=A,Type=String,Description="Pathway description from Uniprot">
+##INFO=<ID=dbNSFP_Pathway(BioCarta)_short,Number=A,Type=String,Description="Short name of the Pathway(s) the gene belongs to (from BioCarta)">
+##INFO=<ID=dbNSFP_Pathway(BioCarta)_full,Number=A,Type=String,Description="Full name(s) of the Pathway(s) the gene belongs to (from BioCarta)">
+##INFO=<ID=dbNSFP_Pathway(ConsensusPathDB),Number=A,Type=String,Description="Pathway(s) the gene belongs to (from ConsensusPathDB)">
+##INFO=<ID=dbNSFP_Pathway(KEGG)_id,Number=A,Type=String,Description="ID(s) of the Pathway(s) the gene belongs to (from KEGG)">
+##INFO=<ID=dbNSFP_Pathway(KEGG)_full,Number=A,Type=String,Description="Full name(s) of the Pathway(s) the gene belongs to (from KEGG)">
+##INFO=<ID=dbNSFP_Function_description,Number=A,Type=String,Description="Function description of the gene (from Uniprot)">
+##INFO=<ID=dbNSFP_Disease_description,Number=A,Type=String,Description="Disease(s) the gene caused or associated with (from Uniprot)">
+##INFO=<ID=dbNSFP_MIM_phenotype_id,Number=A,Type=String,Description="MIM id(s) of the phenotype the gene caused or associated with (from Uniprot)">
+##INFO=<ID=dbNSFP_MIM_disease,Number=A,Type=String,Description="MIM disease name(s) with MIM id(s) in [] (from Uniprot)">
+##INFO=<ID=dbNSFP_Trait_association(GWAS),Number=A,Type=String,Description="Trait(s) the gene associated with (from GWAS catalog)">
+##INFO=<ID=dbNSFP_GO_biological_process,Number=A,Type=String,Description="GO terms for biological process">
+##INFO=<ID=dbNSFP_GO_cellular_component,Number=A,Type=String,Description="GO terms for cellular component">
+##INFO=<ID=dbNSFP_GO_molecular_function,Number=A,Type=String,Description="GO terms for molecular function">
+##INFO=<ID=dbNSFP_Tissue_specificity(Uniprot),Number=A,Type=String,Description="Tissue specificity description from Uniprot">
+##INFO=<ID=dbNSFP_Expression(egenetics),Number=A,Type=String,Description="Tissues/organs the gene expressed in (egenetics data from BioMart)">
+##INFO=<ID=dbNSFP_Expression(GNF/Atlas),Number=A,Type=String,Description="Tissues/organs the gene expressed in (GNF/Atlas data from BioMart)">
+##INFO=<ID=dbNSFP_Interactions(IntAct),Number=A,Type=String,Description="Other genes (separated by ;) this gene interacting with (from IntAct).Full information (gene name followed by Pubmed id in []) can be found in the .completetable">
+##INFO=<ID=dbNSFP_Interactions(BioGRID),Number=A,Type=String,Description="Other genes (separated by ;) this gene interacting with (from BioGRID)Full information (gene name followed by Pubmed id in []) can be found in the .completetable">
+##INFO=<ID=dbNSFP_Interactions(ConsensusPathDB),Number=A,Type=String,Description="Other genes (separated by ;) this gene interacting with(from ConsensusPathDB). Full information (gene name followed by Pubmed id in []) can befound in the .complete table">
+##INFO=<ID=dbNSFP_P(HI),Number=A,Type=String,Description="Estimated probability of haploinsufficiency of the gene(from doi:10.1371/journal.pgen.1001154)">
+##INFO=<ID=dbNSFP_P(rec),Number=A,Type=String,Description="Estimated probability that gene is a recessive disease gene(from DOI:10.1126/science.1215040)">
+##INFO=<ID=dbNSFP_Known_rec_info,Number=A,Type=String,Description="Known recessive status of the gene (from DOI:10.1126/science.1215040)lof-tolerant = seen in homozygous state in at least one 1000G individualrecessive = known OMIM recessive disease(original annotations from DOI:10.1126/science.1215040)">
+##INFO=<ID=dbNSFP_RVIS_EVS,Number=A,Type=String,Description="Residual Variation Intolerance Score, a measure of intolerance of mutational burden,the higher the score the more tolerant to mutational burden the gene is. Based on EVS (ESP6500) data.from doi:10.1371/journal.pgen.1003709">
+##INFO=<ID=dbNSFP_RVIS_percentile_EVS,Number=A,Type=String,Description="The percentile rank of the gene based on RVIS, the higher the percentilethe more tolerant to mutational burden the gene is. Based on EVS (ESP6500) data.">
+##INFO=<ID=dbNSFP_LoF-FDR_ExAC,Number=A,Type=String,Description="A gene's corresponding FDR p-value for preferential LoF depletion among the ExAC population.Lower FDR corresponds with genes that are increasingly depleted of LoF variants. cited from RVIS document.">
+##INFO=<ID=dbNSFP_RVIS_ExAC,Number=A,Type=String,Description="ExAC-based RVIS; setting 'common' MAF filter at 0.05% in at least one of the six individualethnic strata from ExAC. cited from RVIS document.">
+##INFO=<ID=dbNSFP_RVIS_percentile_ExAC,Number=A,Type=String,Description="Genome-Wide percentile for the new ExAC-based RVIS; setting 'common' MAF filter at 0.05%in at least one of the six individual ethnic strata from ExAC. cited from RVIS document.">
+##INFO=<ID=dbNSFP_GHIS,Number=A,Type=String,Description="A score predicting the gene haploinsufficiency. The higher the score the more likely the gene ishaploinsufficient. (from doi: 10.1093/nar/gkv474)">
+##INFO=<ID=dbNSFP_ExAC_pLI,Number=A,Type=String,Description="the probability of being loss-of-function intolerant (intolerant of both heterozygous andhomozygous lof variants) based on ExAC r0.3 data">
+##INFO=<ID=dbNSFP_ExAC_pRec,Number=A,Type=String,Description="the probability of being intolerant of homozygous, but not heterozygous lof variantsbased on ExAC r0.3 data">
+##INFO=<ID=dbNSFP_ExAC_pNull,Number=A,Type=String,Description="the probability of being tolerant of both heterozygous and homozygous lof variantsbased on ExAC r0.3 data">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_pLI,Number=A,Type=String,Description="the probability of being loss-of-function intolerant (intolerant of both heterozygous andhomozygous lof variants) based on ExAC r0.3 nonTCGA subset">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_pRec,Number=A,Type=String,Description="the probability of being intolerant of homozygous, but not heterozygous lof variantsbased on ExAC r0.3 nonTCGA subset">
+##INFO=<ID=dbNSFP_ExAC_nonTCGA_pNull,Number=A,Type=String,Description="the probability of being tolerant of both heterozygous and homozygous lof variantsbased on ExAC r0.3 nonTCGA subset">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_pLI,Number=A,Type=String,Description="the probability of being loss-of-function intolerant (intolerant of both heterozygous andhomozygous lof variants) based on ExAC r0.3 nonpsych subset">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_pRec,Number=A,Type=String,Description="the probability of being intolerant of homozygous, but not heterozygous lof variantsbased on ExAC r0.3 nonpsych subset">
+##INFO=<ID=dbNSFP_ExAC_nonpsych_pNull,Number=A,Type=String,Description="the probability of being tolerant of both heterozygous and homozygous lof variantsbased on ExAC r0.3 nonpsych subset">
+##INFO=<ID=dbNSFP_ExAC_del.score,Number=A,Type=String,Description="Winsorised deletion intolerance z-score based on ExAC r0.3.1 CNV data">
+##INFO=<ID=dbNSFP_ExAC_dup.score,Number=A,Type=String,Description="Winsorised duplication intolerance z-score based on ExAC r0.3.1 CNV data">
+##INFO=<ID=dbNSFP_ExAC_cnv.score,Number=A,Type=String,Description="Winsorised cnv intolerance z-score based on ExAC r0.3.1 CNV data">
+##INFO=<ID=dbNSFP_ExAC_cnv_flag,Number=A,Type=String,Description="Gene is in a known region of recurrent CNVs mediated by tandem segmental duplications andintolerance scores are more likely to be biased or noisy. from ExAC r0.3.1 CNV release">
+##INFO=<ID=dbNSFP_GDI,Number=A,Type=String,Description="gene damage index score, a genome-wide, gene-level metric of the mutational damage that hasaccumulated in the general population from doi: 10.1073/pnas.1518646112. The higher the scorethe less likely the gene is to be responsible for monogenic diseases.">
+##INFO=<ID=dbNSFP_GDI-Phred,Number=A,Type=String,Description="Phred-scaled GDI scores">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (all disease-causing genes): gene damage prediction (low/medium/high) by GDIfor all diseases">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (all Mendelian disease-causing genes): gene damage prediction (low/medium/high)by GDI for all Mendelian diseases">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (Mendelian AD disease-causing genes): gene damage prediction (low/medium/high)by GDI for Mendelian autosomal dominant diseases">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (Mendelian AR disease-causing genes): gene damage prediction (low/medium/high)by GDI for Mendelian autosomal recessive diseases">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (all PID disease-causing genes): gene damage prediction (low/medium/high)by GDI for all primary immunodeficiency diseases">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (PID AD disease-causing genes): gene damage prediction (low/medium/high)by GDI for primary immunodeficiency autosomal dominant diseases">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (PID AR disease-causing genes): gene damage prediction (low/medium/high)by GDI for primary immunodeficiency autosomal recessive diseases">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (all cancer disease-causing genes): gene damage prediction (low/medium/high)by GDI for all cancer disease">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (cancer recessive disease-causing genes): gene damage prediction (low/medium/high)by GDI for cancer recessive disease">
+##INFO=<ID=dbNSFP_Gene,Number=A,Type=String,Description="damage prediction (cancer dominant disease-causing genes): gene damage prediction (low/medium/high)by GDI for cancer dominant disease">
+##INFO=<ID=dbNSFP_LoFtool_score,Number=A,Type=String,Description="a percential score for gene intolerance to functional change. The lower the score the highergene intolerance to functional change. For details please contact Dr. Joao Fadista(joao.fadista@med.lu.se)">
+##INFO=<ID=dbNSFP_SORVA_LOF_MAF0.005_HetOrHom,Number=A,Type=String,Description="the fraction of individuals in the 1000 Genomes Project data (N=2504)who are either Heterozygote or Homozygote of LOF SNVs whose MAF<0.005. This fraction is froma method for ranking genes based on mutational burden called SORVA (Significance Of Rare VAriants).Please see doi: 10.1101/103218 for details.">
+##INFO=<ID=dbNSFP_SORVA_LOF_MAF0.005_HomOrCompoundHet,Number=A,Type=String,Description="the fraction of individuals in the 1000 Genomes Project data (N=2504)who are either Compound Heterozygote or Homozygote of LOF SNVs whose MAF<0.005. This fraction is froma method for ranking genes based on mutational burden called SORVA (Significance Of Rare VAriants).Please see doi: 10.1101/103218 for details.">
+##INFO=<ID=dbNSFP_SORVA_LOF_MAF0.001_HetOrHom,Number=A,Type=String,Description="the fraction of individuals in the 1000 Genomes Project data (N=2504)who are either Heterozygote or Homozygote of LOF SNVs whose MAF<0.001. This fraction is froma method for ranking genes based on mutational burden called SORVA (Significance Of Rare VAriants).Please see doi: 10.1101/103218 for details.">
+##INFO=<ID=dbNSFP_SORVA_LOF_MAF0.001_HomOrCompoundHet,Number=A,Type=String,Description="the fraction of individuals in the 1000 Genomes Project data (N=2504)who are either Compound Heterozygote or Homozygote of LOF SNVs whose MAF<0.001. This fraction is froma method for ranking genes based on mutational burden called SORVA (Significance Of Rare VAriants).Please see doi: 10.1101/103218 for details.">
+##INFO=<ID=dbNSFP_SORVA_LOForMissense_MAF0.005_HetOrHom,Number=A,Type=String,Description="the fraction of individuals in the 1000 Genomes Project data (N=2504)who are either Heterozygote or Homozygote of LOF or missense SNVs whose MAF<0.005. This fraction is froma method for ranking genes based on mutational burden called SORVA (Significance Of Rare VAriants).Please see doi: 10.1101/103218 for details.">
+##INFO=<ID=dbNSFP_SORVA_LOForMissense_MAF0.005_HomOrCompoundHet,Number=A,Type=String,Description="the fraction of individuals in the 1000 Genomes Project data (N=2504)who are either Compound Heterozygote or Homozygote of LOF or missense SNVs whose MAF<0.005. This fraction is froma method for ranking genes based on mutational burden called SORVA (Significance Of Rare VAriants).Please see doi: 10.1101/103218 for details.">
+##INFO=<ID=dbNSFP_SORVA_LOForMissense_MAF0.001_HetOrHom,Number=A,Type=String,Description="the fraction of individuals in the 1000 Genomes Project data (N=2504)who are either Heterozygote or Homozygote of LOF or missense SNVs whose MAF<0.001. This fraction is froma method for ranking genes based on mutational burden called SORVA (Significance Of Rare VAriants).Please see doi: 10.1101/103218 for details.">
+##INFO=<ID=dbNSFP_SORVA_LOForMissense_MAF0.001_HomOrCompoundHet,Number=A,Type=String,Description="the fraction of individuals in the 1000 Genomes Project data (N=2504)who are either Compound Heterozygote or Homozygote of LOF or missense SNVs whose MAF<0.001. This fraction is froma method for ranking genes based on mutational burden called SORVA (Significance Of Rare VAriants).Please see doi: 10.1101/103218 for details.">
+##INFO=<ID=dbNSFP_Essential_gene,Number=A,Type=String,Description="Essential (E) or Non-essential phenotype-changing (N) based onMouse Genome Informatics database. from doi:10.1371/journal.pgen.1003484">
+##INFO=<ID=dbNSFP_MGI_mouse_gene,Number=A,Type=String,Description="Homolog mouse gene name from MGI">
+##INFO=<ID=dbNSFP_MGI_mouse_phenotype,Number=A,Type=String,Description="Phenotype description for the homolog mouse gene from MGI">
+##INFO=<ID=dbNSFP_ZFIN_zebrafish_gene,Number=A,Type=String,Description="Homolog zebrafish gene name from ZFIN">
+##INFO=<ID=dbNSFP_ZFIN_zebrafish_structure,Number=A,Type=String,Description="Affected structure of the homolog zebrafish gene from ZFIN">
+##INFO=<ID=dbNSFP_ZFIN_zebrafish_phenotype_quality,Number=A,Type=String,Description="Phenotype description for the homolog zebrafish genefrom ZFIN">
+##INFO=<ID=dbNSFP_ZFIN_zebrafish_phenotype_tag,Number=A,Type=String,Description="Phenotype tag for the homolog zebrafish gene from ZFIN">
