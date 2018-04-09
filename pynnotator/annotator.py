@@ -10,7 +10,7 @@ from datetime import datetime
 from threading import Thread
 
 from . import settings
-from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, func_pred, merge
+from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, dbnsfp, merge
 
 import logging
 
@@ -344,7 +344,7 @@ T       T C       A C       T       T C       A C       T
         # print(tend, 'Finished vcf_annotator, it took %s' % (execution_time))
 
     def dbnsfp(self):
-        """func_pred"""
+        """dbnsfp"""
 
         tstart = datetime.now()
 
@@ -352,7 +352,7 @@ T       T C       A C       T       T C       A C       T
 
         # command = 'python %s/cadd_dann.py -n %s -i sanity_check/checked.vcf 2>log/cadd_dann.log' % (scripts_dir, cadd_vest_cores)
         # self.shell(command)
-        db = func_pred.FUNC_PRED_Annotator(self.vcf_file, settings.dbnsfp_cores)
+        db = dbnsfp.Dbnsfp(self.vcf_file, settings.dbnsfp_cores)
         db.run()
 
         tend = datetime.now()
