@@ -52,6 +52,7 @@ class Annotator(object):
         # or delete and create if the folder already exists
         self.ann_name = "ann_%s" % (self.filename)
 
+        #delete folder
         if os.path.exists(self.ann_name):
             shutil.rmtree(self.ann_name)
 
