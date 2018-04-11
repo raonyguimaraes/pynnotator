@@ -53,17 +53,18 @@ class Decipher(object):
         -c CHROM,FROM,TO,INFO/HI_PREDICTIONS > decipher/hi_predictions.vcf \
         ''' % (self.filename, settings.vcftools_dir_perl, settings.hi_predictions)
 
+        run(command, shell=True)
         # print command
 
-        p = subprocess.call(command,
-                            cwd=os.getcwd(),
-                            env=env,
-                            shell=True)
+        # p = subprocess.call(command,
+        #                     cwd=os.getcwd(),
+        #                     env=env,
+        #                     shell=True)
 
         time_end = datetime.now()
 
         command = 'rm %s/checked.vcf.gz*' % (toolname)
-        run(command, shell=True)
+        # run(command, shell=True)
 
 
         # if p == 0:

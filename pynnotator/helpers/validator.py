@@ -65,7 +65,7 @@ class Validator(object):
         # command = '%s/tabix -p vcf validator/%s.vcf.gz' % (settings.htslib_dir, self.filename)
         # call(command, shell=True)
         
-        command = '%s/vcf_validator -i validator/%s.vcf 2>validator/validation.log' % (
+        command = '%s/vcf_validator -i validator/%s.vcf 1>validator/validation.log 2>&1' % (
             settings.vcf_validator_dir, self.filename)
 
         try:
@@ -75,6 +75,9 @@ class Validator(object):
             
             msg =  "Error {}".format(e.output.decode('utf-8'))
             self.log(msg)
+
+        command = 'tail validator/validation.log'
+        call(command, shell=True)        
                 
         time_end = datetime.now()
         command = 'rm validator/%s.vcf' % (self.filename)
