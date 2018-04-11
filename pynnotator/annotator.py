@@ -333,8 +333,10 @@ T       T C       A C       T       T C       A C       T
             "%s/esp6500/%s" % (settings.data_dir, settings.esp_final_file),
             "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_phenotype_file),
             "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_clinically_file),
-            "%s/hgmd/%s" % (settings.data_dir, settings.hgmd),
         ]
+
+        if os.path.exists(settings.hgmd):
+            annfiles.append("%s/hgmd/%s" % (settings.data_dir, settings.hgmd),)
         #
 
 
