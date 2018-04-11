@@ -72,10 +72,10 @@ class VCF_Annotator(object):
             final_parts.append(final_file)
 
         command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/pynnotator.vcf' % (prefix)
-        std = os.system(command)
+        run(command, shell=True)
 
         command = 'rm %s/header.vcf %s/body.vcf %s/pynnotator.*.vcf %s/part.*' % (prefix, prefix, prefix, prefix)
-        run(command, shell=True)
+        # run(command, shell=True)
 
 
         tend = datetime.now()
@@ -107,7 +107,7 @@ class VCF_Annotator(object):
 
         # this is a hack to split a vcf into n equal parts!
         command = 'split -d -l$((`wc -l < %s/body.vcf`/%s)) %s/body.vcf pynnotator/part.' % (prefix, self.cores, prefix)
-        std = os.system(command)
+        run(command, shell=True)
 
         # vcf_reader = open('%s/body.vcf' % (prefix))
 
@@ -202,6 +202,7 @@ class VCF_Annotator(object):
                             variant[2] = row[2]
 
                 outvcf_file.writelines("\t".join(variant))
+        outvcf_file.close()
 
 
 if __name__ == '__main__':

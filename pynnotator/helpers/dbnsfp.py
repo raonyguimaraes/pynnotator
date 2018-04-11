@@ -50,10 +50,10 @@ class Dbnsfp(object):
             final_parts.append(final_file)
 
         command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/dbnsfp.vcf' % (prefix)
-        std = os.system(command)
+        run(command, shell=True)
 
         command = 'rm %s/header.vcf %s/body.vcf %s/dbnsfp.*.vcf %s/part.*' % (prefix, prefix, prefix, prefix)
-        run(command, shell=True)
+        # run(command, shell=True)
 
         tend = datetime.now()
         annotation_time = tend - tstart
@@ -131,7 +131,7 @@ class Dbnsfp(object):
                 index = '%s-%s' % (variant[0], variant[1])
                 # print index
                 try:
-                    records = dbnsfp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]))
+                    records = dbnsfp_reader.fetch(variant[0], int(variant[1]) - 1, int(variant[1]),multiple_iterators=True)
                 except:
                     records = []
 
@@ -155,6 +155,7 @@ class Dbnsfp(object):
                                 new_ann.append('dbNSFP_%s=%s' % (item, ann[idx].replace(';', '|')))
                         variant[7] = '%s;%s' % (variant[7], ";".join(new_ann))
                 vcf_writer.writelines("\t".join(variant))
+        vcf_writer.close()
 
 
 if __name__ == '__main__':

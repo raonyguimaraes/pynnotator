@@ -10,7 +10,7 @@ from datetime import datetime
 from threading import Thread
 
 from . import settings
-from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, dbnsfp, merge
+from .helpers import validator, sanity_check, snpeff, vep, decipher, snpsift, vcf_annotator, dbnsfp, merge, hgmd
 
 import logging
 
@@ -103,14 +103,17 @@ class Annotator(object):
         decipher = Thread(target=self.decipher)
         threads.append(decipher)
 
+        # hgmd = Thread(target=self.hgmd)
+        # threads.append(hgmd)        
+
         snpsift = Thread(target=self.snpsift)
         threads.append(snpsift)
 
         vcf_annotator = Thread(target=self.vcf_annotator)
         threads.append(vcf_annotator)
 
-        dbnsfp = Thread(target=self.dbnsfp)  # took 0:17:40.699580
-        threads.append(dbnsfp)
+        # dbnsfp = Thread(target=self.dbnsfp)  # took 0:17:40.699580
+        # threads.append(dbnsfp)
 
         # execute all tasks in parallel
         for thread in threads:
@@ -259,8 +262,11 @@ T       T C       A C       T       T C       A C       T
         # logging.info('Starting HI score')
         tstart = datetime.now()
 
-        command = 'python %s/hgmd.py -i sanity_check/checked.vcf' % (scripts_dir)
-        self.shell(command)
+
+        if os.path.isfile(settings.hgmd_file): 
+
+            hgmd_obj = hgmd.HGMD(self.vcf_file)
+            hgmd_obj.run()
 
         tend = datetime.now()
         execution_time = tend - tstart
@@ -318,7 +324,7 @@ T       T C       A C       T       T C       A C       T
         # command = 'python %s/vcf_annotator_parallel.py -n %s -i sanity_check/checked.vcf -r 1000genomes dbsnp clinvar esp6500 -a %s %s %s %s 2>log/pynnotator.log' % (scripts_dir, pynnotator_cores, genomes1k, dbsnp, clinvar, esp)
         # self.shell(command)
 
-        resources = "genomes1k dbsnp clinvar esp6500 ensembl_phen ensembl_clin"  # 
+        resources = "genomes1k dbsnp clinvar esp6500 ensembl_phen ensembl_clin hgmd"  # 
         resources = resources.split(' ')
         annfiles = [
             "%s/1000genomes/%s" % (settings.data_dir, settings.genomes1k_file),
@@ -327,6 +333,7 @@ T       T C       A C       T       T C       A C       T
             "%s/esp6500/%s" % (settings.data_dir, settings.esp_final_file),
             "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_phenotype_file),
             "%s/ensembl/%s" % (settings.data_dir, settings.ensembl_clinically_file),
+            "%s/hgmd/%s" % (settings.data_dir, settings.hgmd),
         ]
         #
 

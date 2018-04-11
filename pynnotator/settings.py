@@ -2,12 +2,21 @@ import os
 
 ###MAIN SETTINGS
 
+<<<<<<< HEAD
 snpEff_memory = "10G"
 snpsift_memory = "10G"
 snpsift_merge_memory = "10G"
 vep_cores = 8
 vcf_annotator_cores = 8
 dbnsfp_cores = 8
+=======
+snpEff_memory = "40G"
+snpsift_memory = "40G"
+snpsift_merge_memory = "40G"
+vep_cores = 12
+vcf_annotator_cores = 12
+dbnsfp_cores = 12
+>>>>>>> d0d64c75d6a9ffaafd7c0253bb002165b5d3c104
 
 # LIBS SETTINGS
 BASE_DIR = os.path.dirname(__file__)
@@ -109,3 +118,7 @@ data_source = "https://mendelmd.org/%s" % (data_file)
 
 libs_file = "pynnotator-libs.latest.tar.gz"
 libs_source = "https://mendelmd.org/%s" % (libs_file)
+
+#hgmd
+hgmd = "HGMD_PRO_2017.3_hg19.vcf.gz"
+hgmd_file = '%s/hgmd/%s' % (data_dir, hgmd)
