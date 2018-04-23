@@ -74,12 +74,12 @@ ops=["first", "first", "first", "first", "first", "first", "first", "first"]
 
 [[annotation]]
 file="{}/dbsnp/All_20170403.vcf.gz"
-fields = ["ID"]
-ops=["first"]
+fields = ["ID", "dbSNPBuildID"]
+ops=["first", "first"]
 
 [[annotation]]
 file="{}/dbsnp/clinvar.vcf.gz"
-fields = ["ID"]
+fields = ["OM"]
 ops=["first"]
             """.format(self.basedir, self.basedir, self.basedir, settings.data_dir, settings.data_dir, settings.data_dir))
         config.close()
