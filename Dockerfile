@@ -20,7 +20,7 @@ RUN apt-get update && \
 	echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections && \
 	apt-get install -y oracle-java8-installer && \
 	apt-get clean
-RUN	cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI
+#RUN	cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI
 
 ################## BEGIN INSTALLATION ######################
 # Create the default software directory
@@ -30,4 +30,5 @@ RUN	cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bi
 COPY . /pynnotator
 WORKDIR /pynnotator
 RUN python3 setup.py develop
+RUN pynnotator install
 ENTRYPOINT ["pynnotator"]
