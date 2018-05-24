@@ -77,22 +77,22 @@ class Annotator(object):
             self.vcf_file = new_name
 
         # run vcftools vcf-validator on this file 
-        validator = Thread(target=self.validator)
-        validator.start()
-        # wait the process to finish before continue to the next steps 
-        validator.join()
+        # validator = Thread(target=self.validator)
+        # validator.start()
+        # # wait the process to finish before continue to the next steps 
+        # validator.join()
 
         # #Check if the vcf file is validated
         # if(self.is_validated):#
 
         threads = []
 
-        sanitycheck = Thread(target=self.sanitycheck)
-        sanitycheck.start()
-        # #wait till finish to continue
-        sanitycheck.join()
+        # sanitycheck = Thread(target=self.sanitycheck)
+        # sanitycheck.start()
+        # # #wait till finish to continue
+        # sanitycheck.join()
 
-        self.vcf_file = 'sanity_check/checked.vcf'
+        # self.vcf_file = 'sanity_check/checked.vcf'
 
         snpeff = Thread(target=self.snpeff)
         threads.append(snpeff)
@@ -100,8 +100,8 @@ class Annotator(object):
         vep = Thread(target=self.vep)
         threads.append(vep)
 
-        decipher = Thread(target=self.decipher)
-        threads.append(decipher)
+        # decipher = Thread(target=self.decipher)
+        # threads.append(decipher)
 
         # hgmd = Thread(target=self.hgmd)
         # threads.append(hgmd)        
@@ -109,8 +109,8 @@ class Annotator(object):
         snpsift = Thread(target=self.snpsift)
         threads.append(snpsift)
 
-        vcf_annotator = Thread(target=self.vcf_annotator)
-        threads.append(vcf_annotator)
+        # vcf_annotator = Thread(target=self.vcf_annotator)
+        # threads.append(vcf_annotator)
 
         # dbnsfp = Thread(target=self.dbnsfp)  # took 0:17:40.699580
         # threads.append(dbnsfp)
@@ -295,8 +295,8 @@ T       T C       A C       T       T C       A C       T
         # os.system(command)
         # print('before merge', os.getcwd())
         # move final file one up and delete folder!
-        command = 'mv annotation.final.vcf ../'
-        os.system(command)
+        # command = 'mv annotation.final.vcf ../'
+        # os.system(command)
 
     def snpsift(self):
         """SnpSift"""
