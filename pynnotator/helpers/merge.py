@@ -68,11 +68,6 @@ fields = ["VARTYPE", "SNP", "MNP", "INS", "DEL", "MIXED", "HOM", "HET"]
 ops=["first", "first", "first", "first", "first", "first", "first", "first"]
 
 [[annotation]]
-file="{}/hgmd/HGMD_PRO_2017.3_hg19.vcf.gz"
-fields = ["CLASS", "MUT", "GENE", "STRAND", "DNA", "PROT", "DB", "PHEN"]
-ops=["first", "first", "first", "first", "first", "first", "first", "first"]
-
-[[annotation]]
 file="{}/dbsnp/All_20170403.vcf.gz"
 fields = ["ID", "dbSNPBuildID"]
 ops=["first", "first"]
@@ -81,7 +76,13 @@ ops=["first", "first"]
 file="{}/dbsnp/clinvar.vcf.gz"
 fields = ["OM"]
 ops=["first"]
-            """.format(self.basedir, self.basedir, self.basedir, settings.data_dir, settings.data_dir, settings.data_dir))
+            """.format(self.basedir, self.basedir, self.basedir, settings.data_dir, settings.data_dir))
+#settings.data_dir,         
+#[[annotation]]
+#file="{}/hgmd/HGMD_PRO_2017.3_hg19.vcf.gz"
+#fields = ["CLASS", "MUT", "GENE", "STRAND", "DNA", "PROT", "DB", "PHEN"]
+#ops=["first", "first", "first", "first", "first", "first", "first", "first"]
+        
         config.close()
         command = '{}/vcfanno/vcfanno_linux64 -p 16 config.toml {} > ../annotation.final.vcf'.format(settings.libs_dir, self.vcffile)
         run(command,shell=True)
