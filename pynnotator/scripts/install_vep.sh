@@ -39,7 +39,7 @@ export CFLAGS="-fPIC"
 export DEPS=$HOME/src
 
 # and run the complilation/install as root
-bash ensembl-vep/travisci/build_c.sh
+sudo bash ensembl-vep/travisci/build_c.sh
 
 # install htslib binaries (need bgzip, tabix)
 cd htslib
