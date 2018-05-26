@@ -17,7 +17,7 @@ data_dir = os.path.join(BASE_DIR, 'data')
 ###LIBS
 
 # htslib (tabix)
-htslib_version = '1.6'
+htslib_version = '1.8'
 htslib_file = 'htslib-%s.tar.bz2' % (htslib_version)
 htslib_source = 'https://github.com/samtools/htslib/releases/download/%s/%s' % (htslib_version, htslib_file)
 htslib_dir = '%s/htslib/htslib-%s' % (libs_dir, htslib_version)
@@ -44,7 +44,7 @@ snpeff_dir = os.path.join(libs_dir, 'snpeff', 'snpEff')
 snpeff_data_dir = os.path.join(data_dir, 'snpeff_data')
 
 # vep
-vep_release = '91.3'
+vep_release = '92.3'
 vep_source = 'https://github.com/Ensembl/ensembl-vep/archive/release/%s.zip' % (vep_release)
 vep_cache_dir = os.path.join(data_dir, 'vep_data')
 vep_dir = '%s/vep/src/ensembl-vep/' % (libs_dir)
@@ -81,11 +81,11 @@ genomes1k_file = '%s.gz' % (genomes1k_vcf)
 genomes1k_source = 'ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/release/20130502/%s' % (genomes1k_file)
 
 # dbsnp
-dbsnp_file = 'All_20170403.vcf.gz'
-dbsnp_source = 'ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b150_GRCh37p13/VCF/%s' % (dbsnp_file)
+dbsnp_file = 'All_20180423.vcf.gz'
+dbsnp_source = 'ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606_b151_GRCh37p13/VCF/%s' % (dbsnp_file)
 dbsnp = '%s/dbsnp/%s' % (data_dir, dbsnp_file)
 
-clinvar_file = 'clinvar.vcf.gz'
+clinvar_file = 'clinvar_20180429.vcf.gz'
 clinvar_source = 'ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/%s' % (clinvar_file)
 
 # ESP

@@ -219,8 +219,9 @@ class Installer(object):
         os.chdir(libs_dir)
         if not os.path.exists('vep'):
             os.makedirs('vep')
-            # vep_dir = 
-        os.chdir('vep')
+            os.chdir('vep')
+            command = 'bash {}/scripts/install_vep.sh'.format(settings.BASE_DIR)
+            call(command, shell=True)
 
         # if not os.path.isfile('%s.zip' % (settings.vep_release)):
         #     command = """
@@ -232,8 +233,8 @@ class Installer(object):
         #     os.chdir(settings.vep_dir)
             # download vep cache
             # command = """perl INSTALL.pl -a a --NO_TEST"""
-        command = 'bash {}/scripts/install_vep.sh'.format(settings.BASE_DIR)
-        call(command, shell=True)
+        
+        
 
         os.chdir(libs_dir)
 
@@ -254,6 +255,12 @@ class Installer(object):
             """ % (settings.vep_cache_dir)
             call(command, shell=True)
 
+        if not os.path.isdir('{}/Plugins'.format(settings.vep_cache_dir)):
+            command = 'mkdir -p {}/Plugins'.format(settings.vep_cache_dir)
+            call(command, shell=True)
+        if not os.path.isfile('{}/Plugins/dbNSFP.pm'.format(settings.vep_cache_dir)):
+            command = 'wget -O {}/Plugins/dbNSFP.pm https://github.com/Ensembl/VEP_plugins/raw/release/92/dbNSFP.pm'.format(settings.vep_cache_dir)
+            call(command, shell=True)
             # test
             #     # os.system('perl variant_effect_predictor.pl -i example_GRCh37.vcf --cache --offline --dir_cache vep_cache --fasta vep_cache/homo_sapiens/77_GRCh37/Homo_sapiens.GRCh37.75.dna.primary_assembly.fa')
 

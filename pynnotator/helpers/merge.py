@@ -68,15 +68,20 @@ fields = ["VARTYPE", "SNP", "MNP", "INS", "DEL", "MIXED", "HOM", "HET"]
 ops=["first", "first", "first", "first", "first", "first", "first", "first"]
 
 [[annotation]]
-file="{}/dbsnp/All_20170403.vcf.gz"
+file="{}/dbsnp/{}"
 fields = ["ID", "dbSNPBuildID"]
 ops=["first", "first"]
 
 [[annotation]]
-file="{}/dbsnp/clinvar.vcf.gz"
+file="{}/dbsnp/{}"
 fields = ["OM"]
 ops=["first"]
-            """.format(self.basedir, self.basedir, self.basedir, settings.data_dir, settings.data_dir))
+
+[[annotation]]
+file="{}/1000genomes/ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf.gz"
+fields = ["CIEND", "CIPOS", "CS", "END", "IMPRECISE", "MC", "MEINFO", "MEND", "MLEN", "MSTART", "SVLEN", "SVTYPE", "TSD", "AC", "AF", "NS", "AN", "EAS_AF", "EUR_AF", "AFR_AF", "AMR_AF", "SAS_AF", "DP", "AA", "VT", "EX_TARGET", "MULTI_ALLELIC", "OLD_VARIANT"]
+ops=["first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first"]
+            """.format(self.basedir, self.basedir, self.basedir, settings.data_dir, settings.dbsnp_file, settings.data_dir, settings.clinvar_file, settings.data_dir))
 #settings.data_dir,         
 #[[annotation]]
 #file="{}/hgmd/HGMD_PRO_2017.3_hg19.vcf.gz"

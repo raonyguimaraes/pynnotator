@@ -19,7 +19,7 @@ export grandparent=`dirname $parent`
 #cd $HOME
 #cd ../libs/vep/
 
-export HOME=$parent/libs/vep
+export HOME=$parent/vep
 
 # clone git repositories
 mkdir -p src
