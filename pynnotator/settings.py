@@ -67,13 +67,14 @@ ddg2p_file = 'DDG2P.csv.gz'
 ddg2p_source = 'http://www.ebi.ac.uk/gene2phenotype/downloads/%s' % (ddg2p_file)
 
 # ensembl #HGMD PUBLIC
-ensembl_phenotype_file = 'Homo_sapiens_phenotype_associated.vcf.gz'
+vep_major_release = '92'
+ensembl_phenotype_file = 'homo_sapiens_phenotype_associated.vcf.gz'
 ensembl_phenotype_source = 'ftp://ftp.ensembl.org/pub/grch37/release-%s/variation/vcf/homo_sapiens/%s' % (
-    vep_release, ensembl_phenotype_file)
+    vep_major_release, ensembl_phenotype_file)
 
-ensembl_clinically_file = 'Homo_sapiens_clinically_associated.vcf.gz'
+ensembl_clinically_file = 'homo_sapiens_clinically_associated.vcf.gz'
 ensembl_clinically_source = 'ftp://ftp.ensembl.org/pub/grch37/release-%s/variation/vcf/homo_sapiens/%s' % (
-    vep_release, ensembl_clinically_file)
+    vep_major_release, ensembl_clinically_file)
 
 # 1000genomes
 genomes1k_vcf = 'ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf'

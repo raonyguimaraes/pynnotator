@@ -48,7 +48,7 @@ class Snpeff(object):
         -no-intron \
         -no-upstream \
         -noNextProt \
-        -no-utr -canon -classic \
+        -no-utr -canon \
         >snpeff/snpeff.output.vcf""" % (
             settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database, self.vcffile)
         # print(command)

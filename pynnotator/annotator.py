@@ -87,12 +87,12 @@ class Annotator(object):
 
         threads = []
 
-        # sanitycheck = Thread(target=self.sanitycheck)
-        # sanitycheck.start()
-        # # #wait till finish to continue
-        # sanitycheck.join()
+        sanitycheck = Thread(target=self.sanitycheck)
+        sanitycheck.start()
+        # #wait till finish to continue
+        sanitycheck.join()
 
-        # self.vcf_file = 'sanity_check/checked.vcf'
+        self.vcf_file = 'sanity_check/sorted.vcf'
 
         snpeff = Thread(target=self.snpeff)
         threads.append(snpeff)
@@ -100,8 +100,8 @@ class Annotator(object):
         vep = Thread(target=self.vep)
         threads.append(vep)
 
-        # decipher = Thread(target=self.decipher)
-        # threads.append(decipher)
+        decipher = Thread(target=self.decipher)
+        threads.append(decipher)
 
         # hgmd = Thread(target=self.hgmd)
         # threads.append(hgmd)        
@@ -127,6 +127,12 @@ class Annotator(object):
         merge.start()
         # #wait till finish to continue
         merge.join()
+
+        vcf2csv = Thread(target=self.vcf2csv)
+        vcf2csv.start()
+        # #wait till finish to continue
+        vcf2csv.join()
+
 
         time_end = datetime.now()
         # print(time_end, "Annotation Completed!")
@@ -287,16 +293,18 @@ T       T C       A C       T       T C       A C       T
         t_merge_end = datetime.now()
         execution_time = t_merge_end - t_merge_start
 
-        # logging.info('Finished Merging VCF, it took %s' % (execution_time))
-        # print(t_merge_end, 'Finished Merging VCF, it took %s' % (execution_time))
+    def vcf2csv(self):
 
-        # compress annotation file to save space
-        # command = '%s/bgzip merge/annotation.final.vcf' % (tabix_path)
-        # os.system(command)
-        # print('before merge', os.getcwd())
-        # move final file one up and delete folder!
-        # command = 'mv annotation.final.vcf ../'
-        # os.system(command)
+        tstart = datetime.now()
+        print(tstart, "Convert VCF to CSV...")
+        t_vcf2csv_start = datetime.now()
+        # # #merge VCF Files
+        command = 'python %s/scripts/vcf2csv.py -v ../annotation.final.vcf' % (settings.BASE_DIR)
+        # command = 'pwd'
+        subprocess.run(command, shell=True)
+        
+        t_vcf2csv_end = datetime.now()
+        execution_time = t_vcf2csv_end - t_vcf2csv_start
 
     def snpsift(self):
         """SnpSift"""

@@ -7,6 +7,7 @@ import subprocess
 from datetime import datetime
 
 from pynnotator import settings
+from subprocess import run
 
 
 class SnpSift(object):
