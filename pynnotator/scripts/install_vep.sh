@@ -5,16 +5,17 @@
 
 # update aptitude and install some required packages
 # a lot of them are required for Bio::DB::BigFile
-sudo apt-get update && sudo apt-get -y install apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev manpages mysql-client openssl perl perl-base unzip vim wget
+# sudo apt-get update && sudo apt-get -y install apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev manpages mysql-client openssl perl perl-base unzip vim wget
 # install ensembl dependencies
-sudo cpanm DBI DBD::mysql Bio::DB::HTS::Faidx
+# sudo cpanm DBI DBD::mysql Bio::DB::HTS::Faidx
 
 # create vep user
 #useradd -r -m -U -d /home/vep -s /bin/bash -c "VEP User" -p '' vep
 #usermod -a -G sudo vep
 #USER vep
 export parent=`dirname $PWD`
-export grandparent=`dirname $parent`
+echo $parent
+# export grandparent=`dirname $parent`
 
 #cd $HOME
 #cd ../libs/vep/
@@ -39,7 +40,7 @@ export CFLAGS="-fPIC"
 export DEPS=$HOME/src
 
 # and run the complilation/install as root
-sudo bash ensembl-vep/travisci/build_c.sh
+bash ensembl-vep/travisci/build_c.sh
 
 # install htslib binaries (need bgzip, tabix)
 cd htslib
@@ -66,11 +67,12 @@ echo PATH=$HOME/src/ensembl-vep:\$PATH >> $HOME/.profile && \
 echo export PATH >> $HOME/.profile
 
 # setup environment
-export PATH=$parent/libs/vep/src/ensembl-vep:$PATH
+export PATH=$parent/vep/src/ensembl-vep:$PATH
 
 # run INSTALL.pl
 cd $HOME/src/ensembl-vep
 chmod u+x *.pl
-# rm -rf Bio
-# \./INSTALL.pl -a a -l --NO_TEST
+# rm -rf Bio 
+#
+./INSTALL.pl -a a -l --NO_TEST
 # ./INSTALL.pl -a acf -s homo_sapiens -c $parent/data/vep_data --ASSEMBLY GRCh37 --NO_TEST
