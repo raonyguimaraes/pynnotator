@@ -4,7 +4,7 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM ubuntu:artful
+FROM ubuntu:xenial
 
 # File Author / Maintainer
 MAINTAINER Raony Guimaraes
@@ -25,9 +25,9 @@ RUN apt-get update && \
 ################## BEGIN INSTALLATION ######################
 # Create the default software directory
 
-#RUN git clone http://github.com/raonyguimaraes/pynnotator
+RUN git clone http://github.com/raonyguimaraes/pynnotator
 
-COPY . /pynnotator
+#COPY . /pynnotator
 WORKDIR /pynnotator
 RUN python3 setup.py develop
 RUN pynnotator install
