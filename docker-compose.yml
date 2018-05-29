@@ -3,6 +3,6 @@ services:
  pynnotator:
    build: .
    volumes:
-     - .:/pynnotator
-     - ./pynnotator/data:/pynnotator/data
-     - ./pynnotator/libs:/pynnotator/libs
+     # - .:/pynnotator
+     - ./pynnotator/data:/pynnotator/pynnotator/data
+     - ./pynnotator/libs:/pynnotator/pynnotator/libs
