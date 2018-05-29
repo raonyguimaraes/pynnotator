@@ -109,7 +109,7 @@ Requires at least 65GB of disk space during installation and 35GB after installe
 
     # Using Ubuntu 16.04 LTS
 
-    sudo apt-get install gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev
+    sudo apt-get install gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev build-essential
     python3 -m venv mendelmdenv
     source mendelmdenv/bin/activate
     pip install pynnotator
