@@ -83,6 +83,7 @@ class Installer(object):
         self.install_snpeff()
         self.install_gemini()
         self.install_vep()
+        self.install_vcf_anno()
 
     def build_datasets(self):
         print("Building Datasets")
@@ -221,6 +222,16 @@ class Installer(object):
             os.makedirs('vep')
             os.chdir('vep')
             command = 'bash {}/scripts/install_vep.sh'.format(settings.BASE_DIR)
+            call(command, shell=True)
+    def install_vcf_anno(self):
+
+        os.chdir(libs_dir)
+        if not os.path.exists('vcfanno'):
+            os.makedirs('vcfanno')
+            os.chdir('vcfanno')
+            command = 'wget https://github.com/brentp/vcfanno/releases/download/v0.2.9/vcfanno_linux64'
+            call(command, shell=True)
+            command = 'chmod +x vcfanno_linux64'
             call(command, shell=True)
 
         # if not os.path.isfile('%s.zip' % (settings.vep_release)):
