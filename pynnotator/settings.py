@@ -8,6 +8,7 @@ snpsift_merge_memory = "4G"
 vep_cores = 4
 vcf_annotator_cores = 4
 dbnsfp_cores = 4
+vcfanno_cores = 4
 
 # LIBS SETTINGS
 BASE_DIR = os.path.dirname(__file__)

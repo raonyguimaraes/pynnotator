@@ -115,7 +115,7 @@ ops=["first"]
 #ops=["first", "first", "first", "first", "first", "first", "first", "first"]
         
         config.close()
-        command = '{}/vcfanno/vcfanno_linux64 -p 16 config.toml ../{} > ../annotation.final.vcf'.format(settings.libs_dir, self.vcffile)
+        command = '{}/vcfanno/vcfanno_linux64 -p {} config.toml ../{} > ../annotation.final.vcf'.format(settings.libs_dir, settings.vcfanno_cores, self.vcffile)
         run(command,shell=True)
 
 if __name__ == '__main__':
