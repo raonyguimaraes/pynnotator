@@ -240,7 +240,7 @@ class Installer(object):
             call(command, shell=True)
             command = 'chmod +x vcfanno_linux64'
             call(command, shell=True)
-
+        
         # if not os.path.isfile('%s.zip' % (settings.vep_release)):
         #     command = """
         #     wget %s -O %s.zip
@@ -263,6 +263,10 @@ class Installer(object):
             call(command, shell=True)
 
     def download_vep_data(self):
+
+        if not os.path.isdir(settings.vep_dir):
+            command = 'mkdir -p {}'.format(settings.vep_dir)
+            call(command, shell=True)
 
         os.chdir(settings.vep_dir)
         # download vep cache
