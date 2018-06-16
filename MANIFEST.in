@@ -1,5 +1,6 @@
 include README.rst
 include docs/*.txt
+include pynnotator/scripts/*
 include pynnotator/tests/sample.1000.vcf.gz
 include pynnotator/tests/annotation.validated.vcf.gz
 include pynnotator/tests/examples/miller.vcf.gz
