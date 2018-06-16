@@ -2,7 +2,7 @@ version: '2'
 services:
  pynnotator:
    build: .
-   volumes:
+   #volumes:
      # - .:/pynnotator
-     - ./pynnotator/data:/pynnotator/pynnotator/data
-     - ./pynnotator/libs:/pynnotator/pynnotator/libs
+     #- ./pynnotator/data:/pynnotator/pynnotator/data
+     #- ./pynnotator/libs:/pynnotator/pynnotator/libs

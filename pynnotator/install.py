@@ -76,7 +76,8 @@ class Installer(object):
         # Perl Requirements
         command = "sudo cpanm DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI Test::utf8 Test::File inc::Module::Install"
         sts = call(command, shell=True)
-
+        command = "cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)"
+        sts = call(command, shell=True)
     def install_libs(self):
 
         if not os.path.exists(libs_dir):
