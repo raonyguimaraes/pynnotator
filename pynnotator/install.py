@@ -49,6 +49,13 @@ class Installer(object):
                        sudo apt-get -y install oracle-java8-installer"""
 
                 sts = call(command, shell=True)
+        elif platform.dist()[0] in ['debian']:
+            
+            command = 'sudo apt-get install -y libmodule-install-perl apache2 bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev default-libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget'  # lamp-server^
+            sts = call(command, shell=True)
+            command = 'sudo apt-get install default-jre default-jdk'
+            sts = call(command, shell=True)
+        
         elif platform.dist()[0] in ['redhat', 'centos']:
 
             command = 'sudo yum install libcurl-devel sed vcftools bcftools tabix zlib-devel postgresql96-libs perl-local-lib perl-App-cpanminus curl unzip wget'
@@ -67,7 +74,7 @@ class Installer(object):
                 sts = call(command, shell=True)
 
         # Perl Requirements
-        command = "sudo cpanm DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI"
+        command = "sudo cpanm DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI Test::utf8 Test::File inc::Module::Install"
         sts = call(command, shell=True)
 
     def install_libs(self):
