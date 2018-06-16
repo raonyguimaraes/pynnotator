@@ -12,7 +12,7 @@ def install():
 
 
 def pack_data():
-    local('cd pynnotator;tar -cvf pynnotator-data.latest.tar data')
+    local('cd pynnotator;tar -cvf pynnotator-data.$(date +"%Y%m%d").tar data')
 
 
 def pack_libs():
