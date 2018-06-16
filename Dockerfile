@@ -4,7 +4,7 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM ubuntu:bionic
+FROM ubuntu:xenial
 
 # File Author / Maintainer
 MAINTAINER Raony Guimaraes
@@ -30,8 +30,8 @@ RUN apt-get update && \
 
 #RUN git clone http://github.com/raonyguimaraes/pynnotator
 
-COPY . /pynnotator
+#COPY . /pynnotator
 WORKDIR /pynnotator
-RUN python3 setup.py install
+RUN pip3 install pynnotator
 RUN pynnotator install
 ENTRYPOINT ["pynnotator"]

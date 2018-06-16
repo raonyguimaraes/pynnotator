@@ -2,12 +2,12 @@ import os
 
 ###MAIN SETTINGS
 
-snpEff_memory = "40G"
-snpsift_memory = "40G"
-snpsift_merge_memory = "40G"
-vep_cores = 16
-vcf_annotator_cores = 16
-dbnsfp_cores = 16
+snpEff_memory = "4G"
+snpsift_memory = "4G"
+snpsift_merge_memory = "4G"
+vep_cores = 4
+vcf_annotator_cores = 4
+dbnsfp_cores = 4
 
 # LIBS SETTINGS
 BASE_DIR = os.path.dirname(__file__)
