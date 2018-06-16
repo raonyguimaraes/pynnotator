@@ -44,7 +44,7 @@ snpeff_dir = os.path.join(libs_dir, 'snpeff', 'snpEff')
 snpeff_data_dir = os.path.join(data_dir, 'snpeff_data')
 
 # vep
-vep_release = '92.3'
+vep_release = '92.4'
 vep_source = 'https://github.com/Ensembl/ensembl-vep/archive/release/%s.zip' % (vep_release)
 vep_cache_dir = os.path.join(data_dir, 'vep_data')
 vep_dir = '%s/vep/src/ensembl-vep/' % (libs_dir)
