@@ -10,3 +10,5 @@ fi
 
 cd pynnotator
 python3 setup.py develop
+pynnotator install
+pynnotator test
