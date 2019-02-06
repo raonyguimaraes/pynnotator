@@ -6,4 +6,4 @@ sudo apt install -y gcc git python3 python3-dev zlib1g-dev make zip libssl-dev l
 
 git clone https://github.com/raonyguimaraes/pynnotator
 cd pynnotator
-python setup.py develop
+python3 setup.py develop
