@@ -83,8 +83,9 @@ def Get_vcfheader(filepath):
         #print line
         if line.startswith("#CHROM"):
             header_tags = line.strip().split('\t')
-        if not line.startswith("#"):
             break
+        #if not line.startswith("#"):
+            
     vcffile.close()
     return header_tags
 
