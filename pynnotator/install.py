@@ -35,7 +35,7 @@ class Installer(object):
         print('Installing Requirements')
         print(platform.dist())
         if platform.dist()[0] in ['Ubuntu', 'LinuxMint']:
-            command = 'sudo apt-get install -y apache2 bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget libgd-dev'  # lamp-server^
+            command = 'sudo apt-get install -y gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev build-essential libxml2-dev apache2 zlib1g-dev bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget libgd-dev'  # lamp-server^
             sts = call(command, shell=True)
 
             try:
@@ -74,7 +74,7 @@ class Installer(object):
                 sts = call(command, shell=True)
 
         # Perl Requirements
-        command = "sudo cpanm DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI Test::utf8 Test::File inc::Module::Install XML::LibXML"
+        command = "sudo cpanm DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI Test::utf8 Test::File inc::Module::Install XML::DOM::XPath XML::LibXML"
         sts = call(command, shell=True)
         command = "sudo cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)"
         sts = call(command, shell=True)
