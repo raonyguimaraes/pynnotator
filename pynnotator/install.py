@@ -53,7 +53,7 @@ class Installer(object):
             
             command = 'sudo apt-get install -y libmodule-install-perl apache2 bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev default-libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget libgd-dev libxml-libxml-perl libgd-dev'  # lamp-server^
             sts = call(command, shell=True)
-            command = 'sudo apt-get install default-jre default-jdk'
+            command = 'sudo apt-get install -y default-jre default-jdk'
             sts = call(command, shell=True)
         
         elif platform.dist()[0] in ['redhat', 'centos']:
