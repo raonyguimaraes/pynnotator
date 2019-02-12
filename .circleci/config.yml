@@ -41,6 +41,7 @@ jobs:
           command: |
             sudo python setup.py develop
             pynnotator install
+            pynnotator test
       # run tests!
       # this example uses Django's built-in test-runner
       # other common Python testing frameworks include pytest and nose
@@ -50,7 +51,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python setup.py test
+            sudo python setup.py test
 
       - store_artifacts:
           path: test-reports
