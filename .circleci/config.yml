@@ -39,7 +39,7 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
       - run:
           command: |
-            python setup.py develop
+            python setup.py install
             pynnotator install
       # run tests!
       # this example uses Django's built-in test-runner
