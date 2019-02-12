@@ -3,3 +3,4 @@ Fabric3
 numpy
 cython
 pysam
+cyvcf2
