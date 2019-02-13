@@ -70,11 +70,8 @@ class Installer(object):
             try:
                 subprocess.call(['java', '-version'])
             except:
-                command = """wget http://javadl.oracle.com/webapps/download/AutoDL?BundleId=225342_090f390dda5b47b9b721c7dfaa008135 -o java.rpm"""
+                command = "sudo yum install -y java-1.8.0-openjdk"
                 sts = call(command, shell=True)
-                command = """sudo rpm -i java.rpm"""
-                sts = call(command, shell=True)
-
         # Perl Requirements
         command = "sudo cpanm DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI Test::utf8 Test::File inc::Module::Install XML::DOM::XPath XML::LibXML"
         sts = call(command, shell=True)
