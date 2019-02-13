@@ -14,7 +14,7 @@ data_dir = os.path.join(BASE_DIR, 'data')
 
 class Installer(object):
     """A class to annotate VCFs
-
+ 
     Attributes:
         vcf_file: a VCF file to be annotated
     """
