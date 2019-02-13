@@ -28,14 +28,11 @@ Installation on Centos 7
 #########################
 
 ```
-
-
     yum -y install gcc python36-devel python36-setuptools python36-pip zlib-devel bzip2-devel xz-devel
     git clone https://github.com/raonyguimaraes/pynnotator/
     cd pynnotator
     python3.6 -m venv venv
     source venv/bin/activate
     python setup.py develop
-    
      
 ```
