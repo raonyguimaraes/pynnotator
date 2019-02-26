@@ -7,6 +7,8 @@ from subprocess import call
 
 from . import settings
 
+from .helpers.gnomad import GnomAD
+
 BASE_DIR = os.path.dirname(__file__)
 libs_dir = os.path.join(BASE_DIR, 'libs')
 data_dir = os.path.join(BASE_DIR, 'data')
@@ -24,11 +26,15 @@ class Installer(object):
 
     def install(self):
 
-        self.install_requirements()        
         #self.download_libs()
-        self.download_data()
-        self.install_libs()
-        self.build_datasets()
+
+        # self.install_requirements()        
+        # self.download_data()
+        
+        GnomAD.install()
+
+        # self.install_libs()
+        # self.build_datasets()
 
     def install_requirements(self):
         """Install Ubuntu Requirements"""
