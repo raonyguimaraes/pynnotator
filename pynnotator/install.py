@@ -28,13 +28,13 @@ class Installer(object):
 
         #self.download_libs()
 
-        # self.install_requirements()        
-        # self.download_data()
+        self.install_requirements()        
+        self.download_data()
         
         GnomAD.install()
 
-        # self.install_libs()
-        # self.build_datasets()
+        self.install_libs()
+        self.build_datasets()
 
     def install_requirements(self):
         """Install Ubuntu Requirements"""
