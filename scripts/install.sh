@@ -1,4 +1,4 @@
-sudo apt -y install python3-venv git
+sudo apt -y install python3-venv git make build-essential
 git clone https://github.com/raonyguimaraes/pynnotator
 cd pynnotator
 python3 -m venv venv
