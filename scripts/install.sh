@@ -1,4 +1,4 @@
-sudo apt -y install python3-venv
+sudo apt -y install python3-venv git
 git clone https://github.com/raonyguimaraes/pynnotator
 cd pynnotator
 python3 -m venv venv
