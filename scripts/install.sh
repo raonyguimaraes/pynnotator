@@ -13,3 +13,4 @@ source venv/bin/activate
 pip install wheel
 pip install -r requirements.txt
 python setup.py develop
+pynnotator install
