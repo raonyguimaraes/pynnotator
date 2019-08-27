@@ -31,7 +31,7 @@ jobs:
           name: install dependencies
           command: |
             apt update
-            apt -y install python3 python3-venv python3-dev make build-essential zlib1g-dev libbz2-dev liblzma-dev libcurl4-openssl-dev libssl-dev sudo python3 python3-dev python python-dev
+            apt -y install python3 python3-venv python3-dev make build-essential zlib1g-dev libbz2-dev liblzma-dev libcurl4-openssl-dev libssl-dev sudo python3 python3-dev python python-dev python-setuptools python3-setuptools
             python3 -m venv venv
             . venv/bin/activate
             pip install wheel
@@ -55,7 +55,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            sudo python setup.py test
+            python setup.py test
 
       - store_artifacts:
           path: test-reports
