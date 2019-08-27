@@ -8,7 +8,7 @@ import multiprocessing as mp
 import os
 import pysam
 from datetime import datetime
-from subprocess import run
+from subprocess import call
 
 class VCF_Annotator(object):
     def __init__(self, vcf_file=None, ann_files=None, resources=None, cores=None):
@@ -72,7 +72,7 @@ class VCF_Annotator(object):
             final_parts.append(final_file)
 
         command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/pynnotator.vcf' % (prefix)
-        run(command, shell=True)
+        call(command, shell=True)
 
         command = 'rm %s/header.vcf %s/body.vcf %s/pynnotator.*.vcf %s/part.*' % (prefix, prefix, prefix, prefix)
         # run(command, shell=True)
@@ -107,7 +107,7 @@ class VCF_Annotator(object):
 
         # this is a hack to split a vcf into n equal parts!
         command = 'split -d -l$((`wc -l < %s/body.vcf`/%s)) %s/body.vcf pynnotator/part.' % (prefix, self.cores, prefix)
-        run(command, shell=True)
+        call(command, shell=True)
 
         # vcf_reader = open('%s/body.vcf' % (prefix))
 

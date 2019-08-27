@@ -5,7 +5,7 @@ import argparse
 import os
 import subprocess
 from datetime import datetime
-from subprocess import call, run
+from subprocess import call
 
 from pynnotator import settings
 
@@ -53,7 +53,7 @@ class Decipher(object):
         -c CHROM,FROM,TO,INFO/HI_PREDICTIONS > decipher/hi_predictions.vcf \
         ''' % (self.filename, settings.vcftools_dir_perl, settings.hi_predictions)
 
-        run(command, shell=True)
+        call(command, shell=True)
         # print command
 
         # p = subprocess.call(command,

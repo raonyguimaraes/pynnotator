@@ -9,7 +9,7 @@ import os
 import pysam
 from datetime import datetime
 from pynnotator import settings
-from subprocess import run
+from subprocess import call
 
 class Dbnsfp(object):
     def __init__(self, vcf_file=None, cores=None):
@@ -50,7 +50,7 @@ class Dbnsfp(object):
             final_parts.append(final_file)
 
         command = 'cat %s/header.vcf ' % (prefix) + " ".join(final_parts) + '> %s/dbnsfp.vcf' % (prefix)
-        run(command, shell=True)
+        call(command, shell=True)
 
         command = 'rm %s/header.vcf %s/body.vcf %s/dbnsfp.*.vcf %s/part.*' % (prefix, prefix, prefix, prefix)
         # run(command, shell=True)

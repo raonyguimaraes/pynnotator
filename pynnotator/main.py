@@ -3,7 +3,7 @@
 import argparse
 import pynnotator
 
-from subprocess import run, check_call
+from subprocess import call, check_call
 
 parser = argparse.ArgumentParser()
 parser.add_argument('options', help='install test', nargs='?')

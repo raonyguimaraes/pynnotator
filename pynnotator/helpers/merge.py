@@ -8,7 +8,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 from pynnotator import settings
-from subprocess import run
+from subprocess import call
 toolname = 'merge'
 
 
@@ -46,9 +46,9 @@ class Merge(object):
         files = ['../snpeff/snpeff.output.vcf', '../vep/vep.output.sorted.vcf', '../snpsift/snpsift.final.vcf']
         for file in files:
             command = 'bgzip {}'.format(file)
-            run(command, shell=True)
+            call(command, shell=True)
             command = 'tabix -p vcf {}.gz'.format(file)
-            run(command, shell=True)
+            call(command, shell=True)
 
 
         config = open('config.toml', 'w')
@@ -117,7 +117,7 @@ ops=["first"]
         
         config.close()
         command = '{}/vcfanno/vcfanno_linux64 -p {} config.toml ../{} > ../annotation.final.vcf'.format(settings.libs_dir, settings.vcfanno_cores, self.vcffile)
-        run(command,shell=True)
+        call(command,shell=True)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='MERGE all VCF Files from previous methods.')

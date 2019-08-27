@@ -4,7 +4,7 @@ import sys
 import argparse
 import os
 import subprocess
-from subprocess import call, run, check_output
+from subprocess import call, check_output
 from datetime import datetime
 import logging
 
@@ -81,7 +81,7 @@ class Validator(object):
                 
         time_end = datetime.now()
         command = 'rm validator/%s.vcf' % (self.filename)
-        run(command, shell=True)
+        call(command, shell=True)
 
 
 if __name__ == '__main__':

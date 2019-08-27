@@ -4,7 +4,7 @@
 import argparse
 import os
 from datetime import datetime
-from subprocess import call, run
+from subprocess import call
 
 from pynnotator import settings
 
@@ -51,7 +51,7 @@ class Sanity_check(object):
     def check(self):
 
         command = 'vcf-sort {} > sanity_check/sorted.vcf'.format(self.vcf_file)
-        run(command, shell=True)
+        call(command, shell=True)
         # file_vcf = open("%s" % (self.vcf_file), 'r')
         # out_vcf = open('sanity_check/onlyvariants.vcf', 'w')
         # for line in file_vcf:
