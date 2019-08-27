@@ -63,7 +63,7 @@ class Snpeff(object):
         tend = datetime.now()
 
         command = 'mv snpEff_genes.txt snpEff_summary.html snpeff/'
-        run(command, shell=True)
+        call(command, shell=True)
         
         # if p == 0:
         #     print(tend, 'This vcf was annotated by snpEff with Success.')

@@ -301,7 +301,7 @@ T       T C       A C       T       T C       A C       T
         # # #merge VCF Files
         command = 'python %s/scripts/vcf2csv.py -v ../annotation.final.vcf' % (settings.BASE_DIR)
         # command = 'pwd'
-        subprocess.run(command, shell=True)
+        subprocess.call(command, shell=True)
         
         t_vcf2csv_end = datetime.now()
         execution_time = t_vcf2csv_end - t_vcf2csv_start
