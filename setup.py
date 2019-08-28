@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
       name='pynnotator',
-      version='1.8',
+      version='1.9',
       description='A Python Annotation Framework for VCFs using multiple tools (Ex. VEP, SnpEff and SnpSift) and databases (Ex. 1000genomes, dbSNP and dbnfsp) .',
       url='http://github.com/raonyguimaraes/pynnotator',
       author='Raony Guimaraes',
@@ -31,7 +31,9 @@ setup(
             'Programming Language :: Python :: 3.3',
             'Programming Language :: Python :: 3.4',
             'Programming Language :: Python :: 3.5',
-            'Topic :: Scientific/Engineering :: Bio-Informatics'
+            'Programming Language :: Python :: 3.6',
+            'Programming Language :: Python :: 3.7',
+            'Topic :: Scientific/Engineering :: Bio-Informatics',
       ],
       keywords='genome exome annotation rare diseases',
       license='BSD-3',
