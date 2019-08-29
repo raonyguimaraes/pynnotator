@@ -42,12 +42,7 @@ class Installer(object):
                 subprocess.call(['java', '-version'])
             except:
 
-                command = """sudo apt install -y software-properties-common
-                       sudo add-apt-repository -y ppa:webupd8team/java
-                       sudo apt-get update
-                       echo "oracle-java8-installer shared/accepted-oracle-license-v1-1 select true" | sudo debconf-set-selections
-                       sudo apt-get -y install oracle-java8-installer"""
-
+                command = """sudo apt install -y openjdk-8-jdk"""
                 sts = call(command, shell=True)
         elif platform.dist()[0] in ['debian']:
             command = 'sudo apt-get update'
