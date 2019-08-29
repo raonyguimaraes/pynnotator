@@ -4,3 +4,4 @@ numpy
 cython
 pysam
 cyvcf2
+wheel
