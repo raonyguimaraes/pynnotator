@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
       name='pynnotator',
-      version='1.9.2',
+      version='1.9.4',
       description='A Python Annotation Framework for VCFs using multiple tools (Ex. VEP, SnpEff and SnpSift) and databases (Ex. 1000genomes, dbSNP and dbnfsp) .',
       url='http://github.com/raonyguimaraes/pynnotator',
       author='Raony Guimaraes',

@@ -6,3 +6,4 @@ pysam
 cyvcf2
 wheel
 distro
+twine
