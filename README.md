@@ -4,6 +4,30 @@ This is a Python Annotation Framework developed with the goal of annotating VCF 
 
 It was built using state-of-the-art tools and databases for human genome annotation.
 
+Installation
+============
+
+Using conda:
+
+```
+conda install pynnotator
+pynnotator install
+```
+
+Using pip:
+
+```
+pip install pynnotator
+pynnotator install
+```
+
+Using docker-compose
+
+```
+cd compose
+bash run-pynnotator-with-docker.sh
+```
+
 Tools
 =====
 
