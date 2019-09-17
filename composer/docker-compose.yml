@@ -1,0 +1,6 @@
+version: '3'
+services:
+  pynnotator:
+    image: raonyguimaraes/pynnotator
+    volumes:
+      - ./data:/pynnotator/pynnotator/data

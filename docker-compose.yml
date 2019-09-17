@@ -1,8 +1,6 @@
-version: '2'
+version: '3'
 services:
  pynnotator:
    build: .
    volumes:
-     # - .:/pynnotator
      - ./pynnotator/data:/pynnotator/pynnotator/data
-     #- ./pynnotator/libs:/pynnotator/pynnotator/libs

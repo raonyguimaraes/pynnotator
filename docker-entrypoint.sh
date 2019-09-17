@@ -1,0 +1,2 @@
+pynnotator install_data
+

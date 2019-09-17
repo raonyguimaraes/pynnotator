@@ -15,6 +15,12 @@ args = parser.parse_args()
 if args.options == 'install':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.install()
+elif args.options == 'install_docker':
+    pynnotator = pynnotator.Pynnotator()
+    pynnotator.install_docker()
+elif args.options == 'install_data':
+        pynnotator = pynnotator.Pynnotator()
+        pynnotator.install_data()
 elif args.options == 'install_libs':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.install_libs()

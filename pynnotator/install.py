@@ -28,7 +28,15 @@ class Installer(object):
         #self.download_libs()
         self.download_data()
         self.install_libs()
-        self.build_datasets()
+        #self.build_datasets()
+
+    def install_docker(self):
+
+        self.install_requirements()        
+        self.install_libs()
+
+    def install_data(self):
+        self.download_data()
 
     def install_requirements(self):
         """Install Ubuntu Requirements"""
@@ -37,7 +45,7 @@ class Installer(object):
         linux_dist = distro.linux_distribution()
 
         if linux_dist[0] in ['Ubuntu', 'LinuxMint']:
-            command = 'sudo apt-get install -y gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev build-essential libxml2-dev apache2 zlib1g-dev bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget libgd-dev'  # lamp-server^
+            command = 'sudo apt-get install -y gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev build-essential libxml2-dev apache2 zlib1g-dev bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget libgd-dev libxml-dom-xpath-perl'  # lamp-server^
             sts = call(command, shell=True)
 
             try:
@@ -110,8 +118,10 @@ class Installer(object):
         print("Downloading Data")
 
         os.chdir(settings.BASE_DIR)
-
         if not os.path.exists(settings.data_dir):
+            os.makedirs(settings.data_dir)
+
+        if len(os.listdir(settings.data_dir) ) == 0:
             command = "wget %s -O %s" % (settings.data_source, settings.data_file)
             call(command, shell=True)
 
