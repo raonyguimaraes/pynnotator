@@ -1,0 +1,6 @@
+version: '3'
+services:
+ pynnotator:
+   build: .
+   volumes:
+     - ./pynnotator/data:/pynnotator/pynnotator/data
