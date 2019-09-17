@@ -15,4 +15,5 @@ pynnotator/data
 pynnotator/libs
 venv/
 composer/data
-
+composer/pynnotator-data.latest.tar
+pynnotator/tests/sample.1000.log
