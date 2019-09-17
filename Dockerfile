@@ -32,5 +32,5 @@ RUN apt-get update && \
 COPY . /pynnotator
 WORKDIR /pynnotator
 RUN python3 setup.py develop
-RUN pynnotator install
-ENTRYPOINT ["pynnotator"]
+#RUN pynnotator install
+#ENTRYPOINT ["pynnotator"]
