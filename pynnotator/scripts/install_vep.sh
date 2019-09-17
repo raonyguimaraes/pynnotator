@@ -75,4 +75,4 @@ chmod u+x *.pl
 # rm -rf Bio 
 #
 ./INSTALL.pl -a a -l --NO_TEST
-# ./INSTALL.pl -a acf -s homo_sapiens -c $parent/data/vep_data --ASSEMBLY GRCh37 --NO_TEST
+#./INSTALL.pl -a acf -s homo_sapiens -c $parent/data/vep_data --ASSEMBLY GRCh37 --NO_TEST
