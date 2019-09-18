@@ -12,6 +12,7 @@ Using conda:
 ```
 conda install pynnotator
 pynnotator install
+pynnotator -i sample.vcf
 ```
 
 Using pip:
@@ -19,6 +20,7 @@ Using pip:
 ```
 pip install pynnotator
 pynnotator install
+pynnotator -i sample.vcf
 ```
 
 Using docker-compose
