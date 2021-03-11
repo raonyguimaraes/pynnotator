@@ -1,7 +1,8 @@
 #!/usr/bin/python
 
 import os
-import platform
+# import platform
+import distro
 import subprocess
 from subprocess import call
 
@@ -39,8 +40,8 @@ class Installer(object):
     def install_requirements(self):
         """Install Ubuntu Requirements"""
         print('Installing Requirements')
-        print(platform.dist())
-        if platform.dist()[0] in ['Ubuntu', 'LinuxMint']:
+        print(distro.id())
+        if distro.id() in ['ubuntu', 'linuxmint']:
             command = 'sudo apt-get install -y gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev build-essential libxml2-dev apache2 zlib1g-dev bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget libgd-dev'  # lamp-server^
             sts = call(command, shell=True)
 
@@ -55,7 +56,7 @@ class Installer(object):
                        sudo apt-get -y install oracle-java8-installer"""
 
                 sts = call(command, shell=True)
-        elif platform.dist()[0] in ['debian']:
+        elif distro.id() in ['debian']:
             command = 'sudo apt-get update'
             sts = call(command, shell=True)
 
@@ -64,7 +65,7 @@ class Installer(object):
             command = 'sudo apt-get install -y default-jre default-jdk'
             sts = call(command, shell=True)
         
-        elif platform.dist()[0] in ['redhat', 'centos']:
+        elif distro.id() in ['redhat', 'centos']:
 
             command = 'sudo yum install libcurl-devel sed vcftools bcftools tabix zlib-devel postgresql96-libs perl-local-lib perl-App-cpanminus curl unzip wget'
             sts = call(command, shell=True)

@@ -4,3 +4,5 @@ numpy
 cython
 pysam
 cyvcf2
+distro
+
