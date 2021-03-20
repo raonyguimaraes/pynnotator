@@ -62,7 +62,6 @@ class Installer(object):
 
                 command = """sudo apt install -y openjdk-8-jdk"""
                 sts = call(command, shell=True)
-
         elif distro.id() in ['debian']:
             command = 'sudo apt-get update'
             sts = call(command, shell=True)
