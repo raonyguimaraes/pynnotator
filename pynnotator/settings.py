@@ -97,9 +97,9 @@ esp_source = 'http://evs.gs.washington.edu/evs_bulk_data/%s' % (esp_file)
 esp_final_file = 'esp6500si.vcf.gz'
 
 # dbnsfp
-dbnsfp_version = '3.5a'
+dbnsfp_version = '4.1a'
 dbnsfp_file = 'dbNSFP%s.txt.gz' % (dbnsfp_version)
-dbnsfp_link = 'ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFPv%s.zip' % (dbnsfp_version)
+dbnsfp_link = 'ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFP%s.zip' % (dbnsfp_version)
 dbnsfp = '%s/dbnsfp/dbNSFP%s.txt.gz' % (data_dir, dbnsfp_version)
 
 # dbscsnv

@@ -30,12 +30,12 @@ class Installer(object):
         #self.download_libs()
 
         self.install_requirements()        
-        self.download_data()
+        #self.download_data()
         
-        GnomAD.install()
+        #GnomAD.install()
 
         self.install_libs()
-        self.build_datasets()
+        #self.build_datasets()
 
     def install_requirements(self):
         """Install Ubuntu Requirements"""
@@ -449,7 +449,7 @@ class Installer(object):
             os.makedirs('dbnsfp')
         os.chdir('dbnsfp')
 
-        if not os.path.isfile(settings.dbnsfp_file):
+        if True: #not os.path.isfile(settings.dbnsfp_file):
             # --user=Anonymous --password=raonyguimaraes@gmail.com
             command = "wget -c %s -O dbNSFPv%s.zip" % (settings.dbnsfp_link, settings.dbnsfp_version)
             call(command, shell=True)
@@ -459,10 +459,10 @@ class Installer(object):
             call(command, shell=True)
 
             # deal with header
-            command = """head -n 1 dbNSFP*_variant.chr1 > header.txt """
+            command = """zcat dbNSFP*_variant.chr1.gz | head -n 1 > header.txt """
             call(command, shell=True)
 
-            command = """cat dbNSFP*_variant.chr* | grep -v "^#" > dbNSFP%s.unordered.txt""" % (settings.dbnsfp_version)
+            command = """zcat dbNSFP*_variant.chr* | grep -v "^#" > dbNSFP%s.unordered.txt""" % (settings.dbnsfp_version)
 
             call(command, shell=True)
             # die()
@@ -490,7 +490,7 @@ class Installer(object):
 
             # clean files
             command = "rm -rf tmp dbNSFP*_variant* dbNSFP*_gene* *ordered.txt *.class *.in *.txt LICENSE.txt try.vcf search_dbNSFP* *.zip"
-            # call(command, shell=True)
+            call(command, shell=True)
 
             # keep original file dbNSFPv3.2a.zip
             # call(command, shell=True)
