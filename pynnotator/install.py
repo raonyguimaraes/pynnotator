@@ -54,7 +54,7 @@ class Installer(object):
         print('Installing Requirements')
         print(distro.id())
         if distro.id() in ['ubuntu', 'linuxmint']:
-            command = 'sudo apt-get install -y gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev build-essential libxml2-dev apache2 zlib1g-dev bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget libgd-dev'  # lamp-server^
+            command = 'sudo apt-get install -y gcc git python3-dev zlib1g-dev make zip libssl-dev libbz2-dev liblzma-dev libcurl4-openssl-dev build-essential libxml2-dev apache2 zlib1g-dev bcftools build-essential cpanminus curl git libbz2-dev libcurl4-openssl-dev liblocal-lib-perl liblzma-dev libmysqlclient-dev libpng-dev libpq-dev libssl-dev manpages mysql-client openssl perl perl-base pkg-config python3-dev python3-pip python3-setuptools sed tabix unzip vcftools vim wget zlib1g-dev apache2 build-essential cpanminus curl git libmysqlclient-dev libpng-dev libssl-dev locales manpages mysql-client openssl perl perl-base unzip vim wget libgd-dev libxml-dom-xpath-perl'  # lamp-server^
             sts = call(command, shell=True)
 
             try:
@@ -214,9 +214,9 @@ class Installer(object):
         # check if file exists
         if not os.path.isfile('%s.zip' % (settings.snpeff_version)):
             command = """
-            wget -c %s
+            wget -O %s.zip -c "%s"
             unzip %s.zip
-            """ % (settings.snpeff_source, settings.snpeff_version)
+            """ % (settings.snpeff_version, settings.snpeff_source, settings.snpeff_version)
             call(command, shell=True)
 
             # change data_dir
@@ -273,9 +273,13 @@ class Installer(object):
     def download_snpeff_data(self):
 
         # download snpeff data
-        if not os.path.isdir(os.path.join(settings.snpeff_data_dir, settings.snpeff_database)):
+        if not os.path.isdir(os.path.join(settings.snpeff_data_dir, settings.snpeff_database_hg19)):
             command = "java -jar %s/snpEff.jar download -c %s/snpEff.config -v %s" % (
-                settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database)
+                settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database_hg19)
+            call(command, shell=True)
+        if not os.path.isdir(os.path.join(settings.snpeff_data_dir, settings.snpeff_database_hg38)):
+            command = "java -jar %s/snpEff.jar download -c %s/snpEff.config -v %s" % (
+                settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database_hg38)
             call(command, shell=True)
 
     def download_vep_data(self):
