@@ -47,7 +47,7 @@ class Pynnotator(object):
     def test(self):
         print('Testing Annotation...')
         path = '%s/tests' % (os.path.dirname(__file__))
-        vcf_file = 'sample.1000.vcf.gz'
+        vcf_file = 'sample.100.vcf.gz'
         os.chdir(path)
         pynnotator = Annotator(vcf_file)
         pynnotator.run()
@@ -67,5 +67,5 @@ class Pynnotator(object):
         #     print('Congratulations, The Python Annotation Framework is working as expected, Happy Annotation!!!\n\n')
 
         #delete files after test
-        command = 'rm -rf ann_sample.1000'
+        command = 'rm -rf ann_sample.10*'
         call(command, shell=True)

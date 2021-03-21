@@ -1,8 +1,22 @@
 # Pynnotator
 
-This is a Python Annotation Framework developed with the goal of annotating VCF files (Exomes or Genomes) from patients with Mendelian Disorders.
+This is a Python library developed with the goal of helping annotate VCF files from Exome or Genomes of individuals with Mendelian Disorders.
 
 It was built using state-of-the-art tools and databases for human genome annotation.
+
+Development
+===========
+
+```
+git clone https://github.com/raonyguimaraes/pynnotator
+cd pynnotator
+python3 -m venv venv
+source venv/bin/activate
+python setup.py develop
+pynnotator install
+pynnotator test
+```
+
 
 Installation
 ============
@@ -33,10 +47,10 @@ bash run-pynnotator-with-docker.sh
 Tools
 =====
 
+- vep (version 91.1)
+- snpeff (SnpEff 4.3r)
 - htslib (1.5)
 - vcftools (0.1.15)
-- snpeff (SnpEff 4.3r)
-- vep (version 91.1)
 
 Databases
 =========

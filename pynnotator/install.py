@@ -28,9 +28,9 @@ class Installer(object):
     def install(self):
 
         # self.download_libs()
-        self.download_data()
+        # self.download_data()
         self.install_libs()
-        #self.build_datasets()
+        self.build_datasets()
 
     def install_docker(self):
 
@@ -113,14 +113,14 @@ class Installer(object):
         os.chdir(data_dir)
 
         self.download_snpeff_data()
-        self.download_vep_data()
+        # self.download_vep_data()
 
-        self.download_decipher()
-        self.download_ensembl()
-        self.download_1000genomes()
-        self.download_dbsnp()
-        self.download_esp()
-        self.download_dbnsfp()
+        # self.download_decipher()
+        # self.download_ensembl()
+        # self.download_1000genomes()
+        # self.download_dbsnp()
+        # self.download_esp()
+        # self.download_dbnsfp()
 
     def download_data(self):
         print("Downloading Data")
@@ -251,7 +251,7 @@ class Installer(object):
         if not os.path.exists('vcfanno'):
             os.makedirs('vcfanno')
             os.chdir('vcfanno')
-            command = 'wget https://github.com/brentp/vcfanno/releases/download/v0.2.9/vcfanno_linux64'
+            command = 'wget https://github.com/brentp/vcfanno/releases/download/{}/vcfanno_linux64'.format(settings.vcfanno_version)
             call(command, shell=True)
             command = 'chmod +x vcfanno_linux64'
             call(command, shell=True)
@@ -295,7 +295,7 @@ class Installer(object):
             command = 'mkdir -p {}/Plugins'.format(settings.vep_cache_dir)
             call(command, shell=True)
         if not os.path.isfile('{}/Plugins/dbNSFP.pm'.format(settings.vep_cache_dir)):
-            command = 'wget -O {}/Plugins/dbNSFP.pm https://github.com/Ensembl/VEP_plugins/raw/release/92/dbNSFP.pm'.format(settings.vep_cache_dir)
+            command = 'wget -O {}/Plugins/dbNSFP.pm https://github.com/Ensembl/VEP_plugins/raw/release/103/dbNSFP.pm'.format(settings.vep_cache_dir)
             call(command, shell=True)
             # test
             #     # os.system('perl variant_effect_predictor.pl -i example_GRCh37.vcf --cache --offline --dir_cache vep_cache --fasta vep_cache/homo_sapiens/77_GRCh37/Homo_sapiens.GRCh37.75.dna.primary_assembly.fa')

@@ -100,8 +100,8 @@ class Annotator(object):
         vep = Thread(target=self.vep)
         threads.append(vep)
 
-        decipher = Thread(target=self.decipher)
-        threads.append(decipher)
+        # decipher = Thread(target=self.decipher)
+        # threads.append(decipher)
 
         # hgmd = Thread(target=self.hgmd)
         # threads.append(hgmd)        

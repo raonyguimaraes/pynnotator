@@ -58,39 +58,6 @@ fields = ["VARTYPE", "SNP", "MNP", "INS", "DEL", "MIXED", "HOM", "HET"]
 ops=["first", "first", "first", "first", "first", "first", "first", "first"]
 
 [[annotation]]
-file="{}/dbsnp/{}"
-fields = ["ID", "RS", "RSPOS", "RV", "VP", "GENEINFO", "dbSNPBuildID", "SAO", "SSR", "WGT", "VC", "PM", "TPA", "PMC", "S3D", "SLO", "NSF", "NSM", "NSN", "REF", "SYN", "U3", "U5", "ASS", "DSS", "INT", "R3", "R5", "OTH", "CFL", "ASP", "MUT", "VLD", "G5A", "G5", "HD", "GNO", "KGPhase1", "KGPhase3", "CDA", "LSD", "MTP", "OM", "NOC", "WTD", "NOV", "NC", "CAF", "COMMON", "TOPMED"]
-ops=["first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first"]
-
-[[annotation]]
-file="{}/dbsnp/{}"
-fields = ["AF_ESP", "AF_EXAC", "AF_TGP", "ALLELEID", "CLNDN", "CLNDNINCL", "CLNDISDB", "CLNDISDBINCL", "CLNHGVS", "CLNREVSTAT", "CLNSIG", "CLNSIGCONF", "CLNSIGINCL", "CLNVC", "CLNVCSO", "CLNVI", "DBVARID", "GENEINFO", "MC", "ORIGIN", "RS", "SSR", ]
-ops=["first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first"]
-
-[[annotation]]
-file="{}/1000genomes/ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf.gz"
-fields = ["CIEND", "CIPOS", "CS", "END", "IMPRECISE", "MC", "MEINFO", "MEND", "MLEN", "MSTART", "SVLEN", "SVTYPE", "TSD", "AC", "AF", "NS", "AN", "EAS_AF", "EUR_AF", "AFR_AF", "AMR_AF", "SAS_AF", "DP", "AA", "VT", "EX_TARGET", "MULTI_ALLELIC", "OLD_VARIANT"]
-ops=["first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first"]
-
-[[annotation]]
-file="{}/decipher/HI_Predictions_Version3.bed.gz"
-names=["HI_PREDICTION"]
-columns=[4]
-ops=["uniq"]
-
-[[annotation]]
-file="{}/ensembl/homo_sapiens_clinically_associated.vcf.gz"
-names = ["ensembl_clin_ClinVar_201706", "ensembl_clin_dbSNP_150", "ensembl_clin_HGMD", "ensembl_clin_PhenCode", "ensembl_clin_COSMIC_81", "ensembl_clin_ESP_20141103", "ensembl_clin_TSA", "ensembl_clin_E_Cited", "ensembl_clin_E_Multiple_observations", "ensembl_clin_E_Freq", "ensembl_clin_E_Hapmap", "ensembl_clin_E_Phenotype_or_Disease", "ensembl_clin_E_ESP", "ensembl_clin_E_1000G", "ensembl_clin_E_ExAC", "ensembl_clin_CLIN_risk_factor", "ensembl_clin_CLIN_protective", "ensembl_clin_CLIN_confers_sensitivity", "ensembl_clin_CLIN_other", "ensembl_clin_CLIN_drug_response", "ensembl_clin_CLIN_uncertain_significance", "ensembl_clin_CLIN_benign", "ensembl_clin_CLIN_likely_pathogenic", "ensembl_clin_CLIN_pathogenic", "ensembl_clin_CLIN_likely_benign", "ensembl_clin_CLIN_histocompatibility", "ensembl_clin_CLIN_not_provided", "ensembl_clin_CLIN_association", "ensembl_clin_MA", "ensembl_clin_MAF", "ensembl_clin_MAC", "ensembl_clin_AA"]
-fields = ["ClinVar_201706", "dbSNP_150", "HGMD", "PhenCode", "COSMIC_81", "ESP_20141103", "TSA", "E_Cited", "E_Multiple_observations", "E_Freq", "E_Hapmap", "E_Phenotype_or_Disease", "E_ESP", "E_1000G", "E_ExAC", "CLIN_risk_factor", "CLIN_protective", "CLIN_confers_sensitivity", "CLIN_other", "CLIN_drug_response", "CLIN_uncertain_significance", "CLIN_benign", "CLIN_likely_pathogenic", "CLIN_pathogenic", "CLIN_likely_benign", "CLIN_histocompatibility", "CLIN_not_provided", "CLIN_association", "MA", "MAF", "MAC", "AA"]
-ops=["first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first"]
-
-[[annotation]]
-file="{}/ensembl/homo_sapiens_phenotype_associated.vcf.gz"
-names = ["ensembl_phen_ClinVar_201706","ensembl_phen_dbSNP_150","ensembl_phen_HGMD","ensembl_phen_PhenCode","ensembl_phen_COSMIC_81","ensembl_phen_ESP_20141103","ensembl_phen_TSA","ensembl_phen_E_Cited","ensembl_phen_E_Multiple_observations","ensembl_phen_E_Freq","ensembl_phen_E_Hapmap","ensembl_phen_E_Phenotype_or_Disease","ensembl_phen_E_ESP","ensembl_phen_E_1000G","ensembl_phen_E_ExAC","ensembl_phen_CLIN_risk_factor","ensembl_phen_CLIN_protective","ensembl_phen_CLIN_confers_sensitivity","ensembl_phen_CLIN_other","ensembl_phen_CLIN_drug_response","ensembl_phen_CLIN_uncertain_significance","ensembl_phen_CLIN_benign","ensembl_phen_CLIN_likely_pathogenic","ensembl_phen_CLIN_pathogenic","ensembl_phen_CLIN_likely_benign","ensembl_phen_CLIN_histocompatibility","ensembl_phen_CLIN_not_provided","ensembl_phen_CLIN_association","ensembl_phen_MA","ensembl_phen_MAF","ensembl_phen_MAC","ensembl_phen_AA"]
-fields = ["ClinVar_201706", "dbSNP_150", "HGMD", "PhenCode", "COSMIC_81", "ESP_20141103", "TSA", "E_Cited", "E_Multiple_observations", "E_Freq", "E_Hapmap", "E_Phenotype_or_Disease", "E_ESP", "E_1000G", "E_ExAC", "CLIN_risk_factor", "CLIN_protective", "CLIN_confers_sensitivity", "CLIN_other", "CLIN_drug_response", "CLIN_uncertain_significance", "CLIN_benign", "CLIN_likely_pathogenic", "CLIN_pathogenic", "CLIN_likely_benign", "CLIN_histocompatibility", "CLIN_not_provided", "CLIN_association", "MA", "MAF", "MAC", "AA"]
-ops=["first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first"]
-
-[[annotation]]
 file="{}/snpeff/snpeff.output.vcf.gz"
 fields = ["ANN"]
 names = ["snpeff_eff"]
@@ -104,15 +71,19 @@ ops=["first"]
 
 
         """.format(self.basedir, 
-            settings.data_dir, settings.dbsnp_file, 
-            settings.data_dir, settings.clinvar_file, 
-            settings.data_dir, 
-            settings.data_dir,
-            settings.data_dir,
-            settings.data_dir,
             self.basedir, 
-            self.basedir,
-            settings.data_dir, settings.data_dir))
+            self.basedir))
+
+        # self.basedir, 
+        #     settings.data_dir, settings.dbsnp_file, 
+        #     settings.data_dir, settings.clinvar_file, 
+        #     settings.data_dir, 
+        #     settings.data_dir,
+        #     settings.data_dir,
+        #     settings.data_dir,
+        #     self.basedir, 
+        #     self.basedir,
+        #     settings.data_dir, settings.data_dir
 
         config.close()
         command = '{}/vcfanno/vcfanno_linux64 -p {} config.toml ../{} > ../annotation.final.vcf'.format(settings.libs_dir, settings.vcfanno_cores, self.vcffile)
@@ -126,6 +97,40 @@ if __name__ == '__main__':
 
     merge = Merge(args.vcffile)
     merge.run()
+
+#remove data dependency
+# [[annotation]]
+# file="{}/dbsnp/{}"
+# fields = ["ID", "RS", "RSPOS", "RV", "VP", "GENEINFO", "dbSNPBuildID", "SAO", "SSR", "WGT", "VC", "PM", "TPA", "PMC", "S3D", "SLO", "NSF", "NSM", "NSN", "REF", "SYN", "U3", "U5", "ASS", "DSS", "INT", "R3", "R5", "OTH", "CFL", "ASP", "MUT", "VLD", "G5A", "G5", "HD", "GNO", "KGPhase1", "KGPhase3", "CDA", "LSD", "MTP", "OM", "NOC", "WTD", "NOV", "NC", "CAF", "COMMON", "TOPMED"]
+# ops=["first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first"]
+
+# [[annotation]]
+# file="{}/dbsnp/{}"
+# fields = ["AF_ESP", "AF_EXAC", "AF_TGP", "ALLELEID", "CLNDN", "CLNDNINCL", "CLNDISDB", "CLNDISDBINCL", "CLNHGVS", "CLNREVSTAT", "CLNSIG", "CLNSIGCONF", "CLNSIGINCL", "CLNVC", "CLNVCSO", "CLNVI", "DBVARID", "GENEINFO", "MC", "ORIGIN", "RS", "SSR", ]
+# ops=["first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first"]
+
+# [[annotation]]
+# file="{}/1000genomes/ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf.gz"
+# fields = ["CIEND", "CIPOS", "CS", "END", "IMPRECISE", "MC", "MEINFO", "MEND", "MLEN", "MSTART", "SVLEN", "SVTYPE", "TSD", "AC", "AF", "NS", "AN", "EAS_AF", "EUR_AF", "AFR_AF", "AMR_AF", "SAS_AF", "DP", "AA", "VT", "EX_TARGET", "MULTI_ALLELIC", "OLD_VARIANT"]
+# ops=["first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first", "first"]
+
+# [[annotation]]
+# file="{}/decipher/HI_Predictions_Version3.bed.gz"
+# names=["HI_PREDICTION"]
+# columns=[4]
+# ops=["uniq"]
+
+# [[annotation]]
+# file="{}/ensembl/homo_sapiens_clinically_associated.vcf.gz"
+# names = ["ensembl_clin_ClinVar_201706", "ensembl_clin_dbSNP_150", "ensembl_clin_HGMD", "ensembl_clin_PhenCode", "ensembl_clin_COSMIC_81", "ensembl_clin_ESP_20141103", "ensembl_clin_TSA", "ensembl_clin_E_Cited", "ensembl_clin_E_Multiple_observations", "ensembl_clin_E_Freq", "ensembl_clin_E_Hapmap", "ensembl_clin_E_Phenotype_or_Disease", "ensembl_clin_E_ESP", "ensembl_clin_E_1000G", "ensembl_clin_E_ExAC", "ensembl_clin_CLIN_risk_factor", "ensembl_clin_CLIN_protective", "ensembl_clin_CLIN_confers_sensitivity", "ensembl_clin_CLIN_other", "ensembl_clin_CLIN_drug_response", "ensembl_clin_CLIN_uncertain_significance", "ensembl_clin_CLIN_benign", "ensembl_clin_CLIN_likely_pathogenic", "ensembl_clin_CLIN_pathogenic", "ensembl_clin_CLIN_likely_benign", "ensembl_clin_CLIN_histocompatibility", "ensembl_clin_CLIN_not_provided", "ensembl_clin_CLIN_association", "ensembl_clin_MA", "ensembl_clin_MAF", "ensembl_clin_MAC", "ensembl_clin_AA"]
+# fields = ["ClinVar_201706", "dbSNP_150", "HGMD", "PhenCode", "COSMIC_81", "ESP_20141103", "TSA", "E_Cited", "E_Multiple_observations", "E_Freq", "E_Hapmap", "E_Phenotype_or_Disease", "E_ESP", "E_1000G", "E_ExAC", "CLIN_risk_factor", "CLIN_protective", "CLIN_confers_sensitivity", "CLIN_other", "CLIN_drug_response", "CLIN_uncertain_significance", "CLIN_benign", "CLIN_likely_pathogenic", "CLIN_pathogenic", "CLIN_likely_benign", "CLIN_histocompatibility", "CLIN_not_provided", "CLIN_association", "MA", "MAF", "MAC", "AA"]
+# ops=["first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first"]
+
+# [[annotation]]
+# file="{}/ensembl/homo_sapiens_phenotype_associated.vcf.gz"
+# names = ["ensembl_phen_ClinVar_201706","ensembl_phen_dbSNP_150","ensembl_phen_HGMD","ensembl_phen_PhenCode","ensembl_phen_COSMIC_81","ensembl_phen_ESP_20141103","ensembl_phen_TSA","ensembl_phen_E_Cited","ensembl_phen_E_Multiple_observations","ensembl_phen_E_Freq","ensembl_phen_E_Hapmap","ensembl_phen_E_Phenotype_or_Disease","ensembl_phen_E_ESP","ensembl_phen_E_1000G","ensembl_phen_E_ExAC","ensembl_phen_CLIN_risk_factor","ensembl_phen_CLIN_protective","ensembl_phen_CLIN_confers_sensitivity","ensembl_phen_CLIN_other","ensembl_phen_CLIN_drug_response","ensembl_phen_CLIN_uncertain_significance","ensembl_phen_CLIN_benign","ensembl_phen_CLIN_likely_pathogenic","ensembl_phen_CLIN_pathogenic","ensembl_phen_CLIN_likely_benign","ensembl_phen_CLIN_histocompatibility","ensembl_phen_CLIN_not_provided","ensembl_phen_CLIN_association","ensembl_phen_MA","ensembl_phen_MAF","ensembl_phen_MAC","ensembl_phen_AA"]
+# fields = ["ClinVar_201706", "dbSNP_150", "HGMD", "PhenCode", "COSMIC_81", "ESP_20141103", "TSA", "E_Cited", "E_Multiple_observations", "E_Freq", "E_Hapmap", "E_Phenotype_or_Disease", "E_ESP", "E_1000G", "E_ExAC", "CLIN_risk_factor", "CLIN_protective", "CLIN_confers_sensitivity", "CLIN_other", "CLIN_drug_response", "CLIN_uncertain_significance", "CLIN_benign", "CLIN_likely_pathogenic", "CLIN_pathogenic", "CLIN_likely_benign", "CLIN_histocompatibility", "CLIN_not_provided", "CLIN_association", "MA", "MAF", "MAC", "AA"]
+# ops=["first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first","first"]
 
 
 
