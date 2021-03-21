@@ -17,6 +17,47 @@ pynnotator install
 pynnotator test
 ```
 
+This is what you should get:
+
+```
+pynnotator test
+Testing Annotation...                             
+Running Command gunzip -c -d /home/raony/dev/pynnotator/pynnotator/tests/sample.100.vcf.gz > /home/raony/dev/pynnotator/pynnotator/tests/ann_sample.100/sample.100.vcf
+2021-03-21 03:18:20.152735 Starting sanity_check:  /home/raony/dev/pynnotator/pynnotator/tests/ann_s
+ample.100/sample.100.vcf                                                                            
+sort -k1,1d -k2,2n                                
+2021-03-21 03:18:20.169532 Finished sanity_check, it took:  0:00:00.016797
+2021-03-21 03:18:20.170173 Starting snpEff annotation:  sanity_check/sorted.vcf
+2021-03-21 03:18:20.170460 Starting vep annotation:  sanity_check/sorted.vcf
+2021-03-21 03:18:20.171451 Starting snpsift annotation:  sanity_check/sorted.vcf
+2021-03-21 03:18:20.389561 Finished snpsift annotation, it took:  0:00:00.218110
+2021-03-21 03:18:54.005021 Finished snpEff annotation, it took:  0:00:33.834848
+2021-03-21 03:20:26.368233 Finished vep annotation, it took:  0:02:06.197773
+2021-03-21 03:20:26.368687 Merging all VCF Files...
+2021-03-21 03:20:26.368969 Starting merge:  sanity_check/sorted.vcf
+
+=============================================
+vcfanno version 0.3.2 [built with go1.12.1]
+
+see: https://github.com/brentp/vcfanno
+=============================================
+vcfanno.go:115: found 10 sources from 3 files
+vcfanno.go:156: falling back to non-bgzip
+vcfanno.go:194: Info Error: CSQ not found in INFO >> this error/warning may occur many times. reporting once here...
+vcfanno.go:248: annotated 45 variants in 0.00 seconds (10489.1 / second)
+2021-03-21 03:20:26.416464 Finished merge, it took:  0:00:00.047495
+2021-03-21 03:20:26.416888 Convert VCF to CSV...
+2021-03-21 03:20:26.448489 Finished Annotation, it took 0:02:06.299032
+
+A       A G       T G       A       A G       T G       A
+| C   C | | C   C | | A   C | C   C | | C   C | | A   C |
+| | T | | | | A | | | | G | | | T | | | | A | | | | G | |
+| G   G | | G   G | | T   G | G   G | | G   G | | T   G |
+T       T C       A C       T       T C       A C       T
+
+```
+
+
 
 Installation
 ============
@@ -44,6 +85,14 @@ cd compose
 bash run-pynnotator-with-docker.sh
 ```
 
+Languages
+=========
+
+- Perl
+- Python
+- Java
+- Go
+
 Tools
 =====
 
@@ -51,6 +100,7 @@ Tools
 - snpeff (SnpEff 4.3r)
 - htslib (1.5)
 - vcftools (0.1.15)
+- vcfanno (v0.3.2)
 
 Databases
 =========
