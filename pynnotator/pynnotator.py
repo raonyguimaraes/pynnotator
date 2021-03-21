@@ -66,5 +66,6 @@ class Pynnotator(object):
         # if diff == b'':
         #     print('Congratulations, The Python Annotation Framework is working as expected, Happy Annotation!!!\n\n')
 
+        #delete files after test
         command = 'rm -rf ann_sample.1000'
         call(command, shell=True)

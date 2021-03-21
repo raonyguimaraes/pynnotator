@@ -43,7 +43,7 @@ class Installer(object):
         self.install_requirements()        
         #self.download_data()
         
-        #GnomAD.install()
+        GnomAD.install()
 
         self.install_libs()
         #self.build_datasets()
@@ -278,6 +278,7 @@ class Installer(object):
             call(command, shell=True)
 
     def download_vep_data(self):
+        print('Install VEP DATA')
 
         if not os.path.isdir(settings.vep_dir):
             command = 'mkdir -p {}'.format(settings.vep_dir)
@@ -457,7 +458,7 @@ class Installer(object):
             os.makedirs('dbnsfp')
         os.chdir('dbnsfp')
 
-        if True: #not os.path.isfile(settings.dbnsfp_file):
+        if not os.path.isfile(settings.dbnsfp_file):
             # --user=Anonymous --password=raonyguimaraes@gmail.com
             command = "wget -c %s -O dbNSFPv%s.zip" % (settings.dbnsfp_link, settings.dbnsfp_version)
             call(command, shell=True)
