@@ -11,9 +11,9 @@ from subprocess import call
 
 
 class SnpSift(object):
-    def __init__(self, vcffile=None):
-        self.vcffile = vcffile
-        self.filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
+    def __init__(self, args=None):
+        self.vcffile = args.vcf_file
+        self.filename = os.path.splitext(os.path.basename(str(self.vcffile)))[0]
 
         # create folder snpeff if it doesn't exists
         if not os.path.exists('snpsift'):

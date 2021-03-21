@@ -37,11 +37,18 @@ if sys.version_info[0] < 3:
 class Annotator(object):
     is_validated = False
 
-    def __init__(self, vcf_file=None):
+    def __init__(self, args=None):
 
-        self.filename = os.path.splitext(os.path.basename(str(vcf_file)))[0]
+        self.args = args
+        self.build = args.build
 
-        self.vcf_file = os.path.abspath(vcf_file)
+        self.vcf_file = str(args.vcf_file)
+        # print('Hello World',args)
+
+        self.filename = os.path.splitext(os.path.basename(str(self.vcf_file)))[0]
+
+
+        self.vcf_file = os.path.abspath(self.vcf_file)
 
         # this is used to create the folder with the right name
         self.filename = self.filename.replace('.vcf.gz', '').replace('.vcf', '')
@@ -92,7 +99,8 @@ class Annotator(object):
         # #wait till finish to continue
         sanitycheck.join()
 
-        self.vcf_file = 'sanity_check/sorted.vcf'
+        self.args.vcf_file = 'sanity_check/sorted.vcf' 
+        # self.vcf_file = 'sanity_check/sorted.vcf'
 
         snpeff = Thread(target=self.snpeff)
         threads.append(snpeff)
@@ -211,8 +219,8 @@ T       T C       A C       T       T C       A C       T
         # calculate time thread took to finish
         # logging.info('Starting snpEff')
         tstart = datetime.now()
-
-        se = snpeff.Snpeff(self.vcf_file)
+        
+        se = snpeff.Snpeff(self.args)
         std = se.run()
 
         tend = datetime.now()
@@ -229,7 +237,7 @@ T       T C       A C       T       T C       A C       T
         # logging.info('Starting VEP ')
         tstart = datetime.now()
 
-        vep_obj = vep.Vep(self.vcf_file)
+        vep_obj = vep.Vep(self.args)
         std = vep_obj.run()
 
         # command = 'python %s/vep.py -i sanity_check/checked.vcf' % (scripts_dir)
@@ -287,7 +295,7 @@ T       T C       A C       T       T C       A C       T
         # # #merge VCF Files
         # command = 'python %s/merge.py -i sanity_check/checked.vcf' % (scripts_dir)
         # self.shell(command)
-        mg = merge.Merge(self.vcf_file)
+        mg = merge.Merge(self.args)
         mg.run()
 
         t_merge_end = datetime.now()
@@ -314,7 +322,7 @@ T       T C       A C       T       T C       A C       T
         # command = 'python %s/snpsift.py -i sanity_check/checked.vcf 2>log/snpsift.log' % (scripts_dir)
         # self.shell(command)
 
-        ss = snpsift.SnpSift(self.vcf_file)
+        ss = snpsift.SnpSift(self.args)
         ss.run()
 
         tend = datetime.now()

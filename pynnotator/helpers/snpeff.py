@@ -10,10 +10,12 @@ from pynnotator import settings
 from subprocess import call
 
 class Snpeff(object):
-    def __init__(self, vcffile=None):
+    def __init__(self, args=None):
 
-        self.vcffile = vcffile
-        self.filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
+        self.build = args.build
+        self.vcffile = args.vcf_file
+
+        self.filename = os.path.splitext(os.path.basename(str(self.vcffile)))[0]
 
         # create folder snpeff if it doesn't exists
         if not os.path.exists('snpeff'):
@@ -21,7 +23,7 @@ class Snpeff(object):
 
     def run(self):
         tstart = datetime.now()
-        print(tstart, 'Starting snpEff annotation: ', self.vcffile)
+        print(tstart, 'Starting snpEff annotation: ', self.build, self.vcffile)
 
         self.annotate()
 
@@ -38,19 +40,36 @@ class Snpeff(object):
         # -canon to report only canonical transcript, -o gatk to report only one #GRCh37.64
         # true
         # snpeff 4.0
-        command = """java -Xmx%s -jar %s/snpEff.jar \
-        -c %s/snpEff.config \
-        %s %s \
-        -no-downstream \
-        -no-intergenic \
-        -no intragenic \
-        -onlyProtein \
-        -no-intron \
-        -no-upstream \
-        -noNextProt \
-        -no-utr -canon \
-        >snpeff/snpeff.output.vcf""" % (
-            settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database, self.vcffile)
+        # print('BUILD IS',self.build)
+        if self.build == 'hg38':
+            command = """java -Xmx%s -jar %s/snpEff.jar \
+            -c %s/snpEff.config \
+            %s %s \
+            -no-downstream \
+            -no-intergenic \
+            -no intragenic \
+            -onlyProtein \
+            -no-intron \
+            -no-upstream \
+            -noNextProt \
+            -no-utr -canon \
+            >snpeff/snpeff.output.vcf""" % (
+                settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database_hg38, self.vcffile)
+        else:
+            command = """java -Xmx%s -jar %s/snpEff.jar \
+            -c %s/snpEff.config \
+            %s %s \
+            -no-downstream \
+            -no-intergenic \
+            -no intragenic \
+            -onlyProtein \
+            -no-intron \
+            -no-upstream \
+            -noNextProt \
+            -no-utr -canon \
+            >snpeff/snpeff.output.vcf""" % (
+                settings.snpEff_memory, settings.snpeff_dir, settings.snpeff_dir, settings.snpeff_database_hg19, self.vcffile)
+
         # print(command)
 
 
@@ -79,5 +98,5 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    snpeff = Snpeff(args.vcffile)
+    snpeff = Snpeff(args)
     snpeff.run()

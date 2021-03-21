@@ -13,11 +13,11 @@ toolname = 'merge'
 
 
 class Merge(object):
-    def __init__(self, vcffile=None):
+    def __init__(self, args=None):
 
-        self.vcffile = vcffile
+        self.vcffile = args.vcf_file
 
-        self.filename = os.path.splitext(os.path.basename(str(vcffile)))[0]
+        self.filename = os.path.splitext(os.path.basename(str(self.vcffile)))[0]
 
         self.basedir = os.getcwd()
 

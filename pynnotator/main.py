@@ -33,10 +33,10 @@ def main():
         obj.build()
     elif args.vcf_file:
         obj = pynnotator.Pynnotator()
-        obj.annotate(args.vcf_file)
+        obj.annotate(args)
     elif args.options == 'test':
         obj = pynnotator.Pynnotator()
-        obj.test()
+        obj.test(args)
     elif args.options == 'vep':
         obj = pynnotator.Pynnotator()
         obj.vep()
