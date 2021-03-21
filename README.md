@@ -1,5 +1,7 @@
 # Pynnotator
 
+[![Github](https://circleci.com/gh/raonyguimaraes/pynnotator.svg?style=svg)]([<LINK>)](https://circleci.com/gh/raonyguimaraes/pynnotator)
+
 This is a Python library developed with the goal of helping annotate VCF files from Exome or Genomes of individuals with Mendelian Disorders.
 
 It was built using state-of-the-art tools and databases for human genome annotation.
