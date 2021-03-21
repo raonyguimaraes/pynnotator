@@ -9,6 +9,9 @@ jobs:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
+        auth:
+          username: raonyguimaraes
+          password: $DOCKERHUB_PASSWORD  
       # - image: ubuntu:18.04
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
