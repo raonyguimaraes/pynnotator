@@ -29,6 +29,7 @@ class Installer(object):
 
         # self.download_libs()
         # self.download_data()
+        self.install_requirements()        
         self.install_libs()
         self.build_datasets()
 
@@ -86,7 +87,7 @@ class Installer(object):
                 command = "sudo yum install -y java-1.8.0-openjdk"
                 sts = call(command, shell=True)
         # Perl Requirements
-        command = "sudo cpanm DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI Test::utf8 Test::File inc::Module::Install XML::DOM::XPath XML::LibXML"
+        command = "sudo cpanm Module::Build DBI DBD::mysql File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI Test::utf8 Test::File inc::Module::Install XML::DOM::XPath XML::LibXML"
         sts = call(command, shell=True)
         command = "sudo cpanm --local-lib=~/perl5 local::lib && eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)"
         sts = call(command, shell=True)
