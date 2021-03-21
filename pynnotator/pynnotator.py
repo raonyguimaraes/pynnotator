@@ -45,21 +45,23 @@ class Pynnotator(object):
         pynnotator.run()
 
     def test(self,args):
-        print('Testing Annotation...')
         path = '%s/tests' % (os.path.dirname(__file__))
         args.vcf_file = 'sample.70.vcf.gz'
         args.build = 'hg19'
+        print('Testing Annotation... ',args.build,args.vcf_file)
 
         os.chdir(path)
         pynnotator = Annotator(args)
         pynnotator.run()
         os.chdir(path)
 
-        # args.vcf_file = 'sample.100.hg38.vcf.gz'
-        # args.build = 'hg38'
-        # pynnotator = Annotator(args)
-        # pynnotator.run()
-        # os.chdir(path)
+
+        args.vcf_file = 'sample.70.hg38.vcf.gz'
+        args.build = 'hg38'
+        print('Testing Annotation... ',args.build,args.vcf_file)
+        pynnotator = Annotator(args)
+        pynnotator.run()
+        os.chdir(path)
 
 
         # command = 'grep -v "^#" ann_sample.1000/annotation.final.vcf > result.vcf'
