@@ -8,7 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
-      - image: circleci/python:latest  
+      - image: circleci/ubuntu:latest  
       # - image: ubuntu:18.04
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -32,7 +32,7 @@ jobs:
           name: install dependencies
           command: |
             sudo apt update
-            sudo apt -y install python3 python3-venv python3-dev make build-essential zlib1g-dev libbz2-dev liblzma-dev libcurl4-openssl-dev libssl-dev sudo python3 python3-dev python python-dev python-setuptools python3-setuptools
+            sudo apt -y install python3 python3-venv python3-dev make build-essential zlib1g-dev libbz2-dev liblzma-dev libcurl4-openssl-dev libssl-dev sudo python3 python3-dev python python-dev python-setuptools python3-setuptools cpanminus
             python3 -m venv venv
             . venv/bin/activate
             pip install wheel
