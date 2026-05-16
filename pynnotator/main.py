@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 
 import argparse
+
 import pynnotator
 
-from subprocess import call, check_call
+from subprocess import check_call
 
 parser = argparse.ArgumentParser()
 parser.add_argument('options', help='install test', nargs='?')
@@ -12,19 +13,16 @@ parser.add_argument('-b', dest='build', required=False, metavar='hg19 or hg38', 
 
 args = parser.parse_args()
 
+
 def main():
 
     if args.options == 'update':
         print('Updating Pynnotator to latest version...')
-        output = check_call('pip install -U pynnotator', shell=True)
-        if output == 0:
-            print('Pynnotator was updated!')
-    if args.options == 'install':
+        check_call('pip install -U pynnotator', shell=True)
+        print('Pynnotator was updated!')
+    elif args.options == 'install':
         obj = pynnotator.Pynnotator()
         obj.install()
-    elif args.options == 'install_libs':
-        obj = pynnotator.Pynnotator()
-        obj.install_libs()
     elif args.options == 'install_requirements':
         obj = pynnotator.Pynnotator()
         obj.install_requirements()

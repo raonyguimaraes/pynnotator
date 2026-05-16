@@ -1,26 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import argparse
 import os
+import shlex
 from datetime import datetime
 from subprocess import call
 
-from pynnotator import settings
-
-"""
-- Search and Remove genotypes with [0/0, ./.]
-- Search and Replace chr from the beggining of the chromossome names
-- Sort VCF by 1...22, X, Y, MT
-- Remove previous snpeff annotations from VCF
-- Remove annotation sumGLbyD from VCF that causes imcompatibility with snpeff
-"""
 
 toolname = 'sanity_check'
-
-# enable perl5_lib
-env = os.environ.copy()
-env['PERL5LIB'] = settings.vcftools_dir_perl
 
 
 class Sanity_check(object):
@@ -29,129 +14,25 @@ class Sanity_check(object):
         self.vcf_file = vcf_file
         self.filename = os.path.splitext(os.path.basename(str(vcf_file)))[0]
 
-        # create folder sanity_check if it doesn't exists
         if not os.path.exists('sanity_check'):
             os.makedirs('sanity_check')
-            # enter inside folder
-            # os.chdir('sanity_check')
 
     def run(self):
 
         tstart = datetime.now()
         print(tstart, 'Starting sanity_check: ', self.vcf_file)
-
         self.check()
-
         tend = datetime.now()
-        annotation_time = tend - tstart
-        print(tend, 'Finished sanity_check, it took: ', annotation_time)
-
-        # sanity vcf file with Vcftools
+        print(tend, 'Finished sanity_check, it took: ', tend - tstart)
 
     def check(self):
-
-        command = 'vcf-sort {} > sanity_check/sorted.vcf'.format(self.vcf_file)
-        call(command, shell=True)
-        # file_vcf = open("%s" % (self.vcf_file), 'r')
-        # out_vcf = open('sanity_check/onlyvariants.vcf', 'w')
-        # for line in file_vcf:
-        #     if line.startswith('#'):
-        #         # fix varscan vcfs            
-        #         line = line.replace(')>', '>')
-        #         if not line.startswith('##INFO=<ID=EFF'):
-        #             if not line.startswith('##INFO=<ID=sumGLbyD'):
-        #                 if not line.startswith('##INFO=<ID=CSQ'):
-        #                     out_vcf.writelines(line)
-        #     else:
-        #         row = line.split('\t')
-
-        #         # removing EFF INFO from VCF
-        #         INFO = row[7]
-        #         NEWINFO = []
-        #         for info in INFO.split(";"):
-        #             # removing snpeff from annotations
-        #             if "EFF=" in info:
-        #                 pass
-        #             # ugly hack to remove this field, because of some bugs in GATK/snpeff that require tyou to have a description about all fields
-        #             elif "sumGLbyD=" in info:
-        #                 pass
-        #             elif "CSQ=" in info:
-        #                 pass
-        #             else:
-        #                 NEWINFO.append(info)
-        #         row[7] = ";".join(NEWINFO)
-        #         row[2] = '.'
-        #         # remove info field from vcf
-        #         # row[7] = ''
-        #         genotype = row[-1].strip().split(':')[0]
-        #         # remove chr from the beggining of chromossome name
-        #         row[0] = row[0].replace('chr', '')
-        #         # remove genotypes with 0/0
-        #         forbidden = ['0/0', './.']
-        #         allowed_chr = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16',
-        #                        '17', '18', '19', '20', '21', '22', 'X', 'Y', 'M', 'MT']
-        #         if genotype not in forbidden:
-        #             if row[0] in allowed_chr:
-        #                 out_vcf.writelines('\t'.join(row))
-
-        # out_vcf.close()
-        # file_vcf.close()
-
-        # remove EFF Field
-        # vcf_tools_dir = '/lgc/programs/vcftools_0.1.10/bin'
-        # os.environ["PERL5LIB"] = "/lgc/programs/vcftools_0.1.10/lib/perl5/site_perl/"
-
-        # command = '%s/vcf-annotate onlyvariants.vcf -r INFO/EFF > withouteff.vcf' % (vcf_tools_dir)
-        # os.system(command)
-
-        # sort VCF
-        # logging.info('Starting Sort VCF')
-        # get header
-
-        # command = "grep '^#' sanity_check/onlyvariants.vcf > sanity_check/checked.vcf"
-        # call(command, shell=True)
-
-        # # only chromossome numbers first
-
-        # command = "grep -E -v '^X|^Y|^M|^#|^GL' sanity_check/onlyvariants.vcf | sort -n -k1 -k2 >> sanity_check/checked.vcf"
-        # call(command, shell=True)
-
-        # # only X
-        # command = "grep -E '^X' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf"
-        # call(command, shell=True)
-
-        # # only Y
-        # command = "grep -E '^Y' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf"
-        # call(command, shell=True)
-
-        # # only MT
-        # command = "grep -E '^M' sanity_check/onlyvariants.vcf | sort -k1,1d -k2,2n >> sanity_check/checked.vcf"
-        # call(command, shell=True)
-
-        # command = 'rm sanity_check/onlyvariants.vcf'
-        # run(command, shell=True)
-
-
-        # p = subprocess.call(command, 
-        #     cwd=os.getcwd(), 
-        #     env=env, 
-        #     shell=True)
-
-        time_end = datetime.now()
-        # print(time_end, 'This vcf was sucessfully checked with sanity_check')
-
-        # if p == 0:
-        #     print 'This vcf was validated by vcf-sanity_check'
-        # else:
-        #     print 'Sorry this vcf could not be annotated by %s' % (toolname)
+        out = 'sanity_check/sorted.vcf'
+        call('vcf-sort %s > %s' % (shlex.quote(self.vcf_file), out), shell=True)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Sanity Check a VCf File')
-
     parser.add_argument('-i', dest='vcf_file', required=True, metavar='example.vcf', help='a VCF file to be annotated')
-
     args = parser.parse_args()
-
     sanity_check = Sanity_check(args.vcf_file)
     sanity_check.run()

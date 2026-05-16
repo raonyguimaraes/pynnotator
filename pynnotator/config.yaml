@@ -1,0 +1,22 @@
+build: hg38
+
+vep:
+  release: 115
+  cache_dir: null
+  cores: 2
+  plugins: []
+  custom_annotations: []
+
+output:
+  formats:
+    - vcf.gz
+    - csv
+    - parquet
+
+databases:
+  gnomad: null
+  clinvar: null
+
+resources:
+  java_memory: 8G
+  temp_dir: null

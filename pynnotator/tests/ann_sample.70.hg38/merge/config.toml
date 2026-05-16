@@ -1,0 +1,19 @@
+[[annotation]]
+file="/home/raony/dev/pynnotator/pynnotator/tests/ann_sample.70.hg38/snpsift/snpsift.final.vcf.gz"
+fields = ["VARTYPE", "SNP", "MNP", "INS", "DEL", "MIXED", "HOM", "HET"]
+ops=["first", "first", "first", "first", "first", "first", "first", "first"]
+
+[[annotation]]
+file="/home/raony/dev/pynnotator/pynnotator/tests/ann_sample.70.hg38/snpeff/snpeff.output.vcf.gz"
+fields = ["ANN"]
+names = ["snpeff_eff"]
+ops=["first"]
+
+[[annotation]]
+file="/home/raony/dev/pynnotator/pynnotator/tests/ann_sample.70.hg38/vep/vep.output.sorted.vcf.gz"
+fields = ["CSQ"]
+names = ["vep_csq"]
+ops=["first"]
+
+
+        

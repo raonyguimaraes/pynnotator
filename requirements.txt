@@ -1,9 +1,7 @@
-Sphinx
-Fabric3
-numpy
-cython
-pysam
 cyvcf2
-wheel
+pysam
+pyyaml
 distro
-twine
+pandas
+pyarrow
+pytest

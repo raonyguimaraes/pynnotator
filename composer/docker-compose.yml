@@ -1,6 +1,8 @@
-version: '3'
+version: '3.8'
 services:
   pynnotator:
-    image: raonyguimaraes/pynnotator
+    build: ..
+    image: raonyguimaraes/pynnotator:3.0
     volumes:
       - ./data:/pynnotator/pynnotator/data
+      - ./libs:/pynnotator/pynnotator/libs

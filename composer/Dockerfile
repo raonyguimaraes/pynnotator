@@ -1,40 +1,28 @@
-############################################################
-# Dockerfile to build Pynnotator
-# Based on Ubuntu LTS
-############################################################
+FROM ubuntu:jammy
 
-# Set the base image to Ubuntu
-FROM ubuntu:bionic
-
-# File Author / Maintainer
-MAINTAINER Raony Guimaraes
-
-# Update the repository sources list
+LABEL maintainer="Raony Guimaraes"
 
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=C.UTF-8
 
 RUN apt-get update && \
-	apt-get install -y apt-utils && \
     apt-get upgrade -y && \
-    apt-get install -y make software-properties-common python3 python3-dev python3-pip libcurl4-openssl-dev sed python3-setuptools vcftools bcftools tabix zlib1g-dev liblzma-dev libpq-dev libbz2-dev build-essential zlib1g-dev liblocal-lib-perl cpanminus curl unzip wget pkg-config cython3 python-pysam sudo && \
-    apt-get install -y libclass-dbi-mysql-perl libfile-copy-recursive-perl libarchive-extract-perl libarchive-zip-perl libwww-perl libcrypt-ssleay-perl libbio-perl-perl libcgi-pm-perl && \
-	add-apt-repository ppa:webupd8team/java -y && \
-	apt-get update && \
-	sudo apt install -y openjdk-8-jdk && \
-	apt-get clean
-#RUN	cpanm DBI File::Copy::Recursive Archive::Extract Archive::Zip LWP::Simple Bio::Root::Version LWP::Protocol::https Bio::DB::Fasta CGI
-
-################## BEGIN INSTALLATION ######################
-# Create the default software directory
-
-#RUN git clone http://github.com/raonyguimaraes/pynnotator
+    apt-get install -y \
+        python3 python3-dev python3-pip python3-venv \
+        build-essential gcc git make \
+        zlib1g-dev libbz2-dev liblzma-dev libssl-dev libcurl4-openssl-dev \
+        bcftools tabix htslib \
+        curl wget unzip \
+        perl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY . /pynnotator
 WORKDIR /pynnotator
-#VOLUME ./pynnotator/data /pynnotator/pynnotator/data
 
-RUN python3 setup.py develop
-VOLUME ./pynnotator/data /pynnotator/pynnotator/data
+RUN python3 -m pip install --upgrade pip && \
+    python3 -m pip install -e .[export]
 
-RUN pynnotator install
-#ENTRYPOINT ["pynnotator"]
+VOLUME ["/pynnotator/pynnotator/data", "/pynnotator/pynnotator/libs"]
+
+ENTRYPOINT ["pynnotator"]

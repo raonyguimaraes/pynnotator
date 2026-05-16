@@ -5,9 +5,7 @@ import argparse
 import pynnotator
 
 parser = argparse.ArgumentParser()
-parser.add_argument('options', help='install test', nargs='?')  # nargs='?', , action='store_true', default=False
-# parser.add_argument('update', help='update libraries', required=False)
-
+parser.add_argument('options', help='install test', nargs='?')
 parser.add_argument('-i', dest='vcf_file', required=False, metavar='example.vcf', help='a VCF file to be annotated')
 
 args = parser.parse_args()
@@ -15,15 +13,9 @@ args = parser.parse_args()
 if args.options == 'install':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.install()
-elif args.options == 'install_docker':
-    pynnotator = pynnotator.Pynnotator()
-    pynnotator.install_docker()
 elif args.options == 'install_data':
-        pynnotator = pynnotator.Pynnotator()
-        pynnotator.install_data()
-elif args.options == 'install_libs':
     pynnotator = pynnotator.Pynnotator()
-    pynnotator.install_libs()
+    pynnotator.install_data()
 elif args.options == 'install_requirements':
     pynnotator = pynnotator.Pynnotator()
     pynnotator.install_requirements()
@@ -32,7 +24,7 @@ elif args.options == 'build':
     pynnotator.build()
 elif args.vcf_file:
     pynnotator = pynnotator.Pynnotator()
-    pynnotator.annotate(args.vcf_file)
+    pynnotator.annotate(args)
 elif args.options == 'test':
     pynnotator = pynnotator.Pynnotator()
-    pynnotator.test()
+    pynnotator.test(args)

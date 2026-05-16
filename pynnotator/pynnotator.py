@@ -1,6 +1,6 @@
 import os
 import subprocess
-from subprocess import call, check_output
+from subprocess import call
 
 from .annotator import Annotator
 from .install import Installer
@@ -21,7 +21,6 @@ class Pynnotator(object):
         print('Starting Installation...')
         installer = Installer()
         installer.install()
-
         print("Installation Finished with success!! \nNow try testing with the command: pynnotator test")
 
     def build(self):
@@ -29,13 +28,8 @@ class Pynnotator(object):
         installer = Installer()
         installer.build_datasets()
 
-    def install_libs(self):
-        print('Installing Libs...')
-        installer = Installer()
-        installer.install_libs()
-
     def install_requirements(self):
-        print('Installing Libs...')
+        print('Installing Dependencies...')
         installer = Installer()
         installer.install_requirements()
 
@@ -44,39 +38,23 @@ class Pynnotator(object):
         pynnotator = Annotator(args)
         pynnotator.run()
 
-    def test(self,args):
+    def test(self, args):
         path = '%s/tests' % (os.path.dirname(__file__))
         args.vcf_file = 'sample.70.vcf.gz'
         args.build = 'hg19'
-        print('Testing Annotation... ',args.build,args.vcf_file)
+        print('Testing Annotation... ', args.build, args.vcf_file)
 
         os.chdir(path)
         pynnotator = Annotator(args)
         pynnotator.run()
         os.chdir(path)
-
 
         args.vcf_file = 'sample.70.hg38.vcf.gz'
         args.build = 'hg38'
-        print('Testing Annotation... ',args.build,args.vcf_file)
+        print('Testing Annotation... ', args.build, args.vcf_file)
         pynnotator = Annotator(args)
         pynnotator.run()
         os.chdir(path)
 
-
-        # command = 'grep -v "^#" ann_sample.1000/annotation.final.vcf > result.vcf'
-        # call(command, shell=True)
-
-        # compare result with reference
-        # try:
-        #     command = "zdiff annotation.validated.vcf.gz ann_sample.1000/annotation.final.vcf"
-        #     diff = check_output(command, shell=True)
-        # except subprocess.CalledProcessError as e:
-        #     diff = '1'
-
-        # if diff == b'':
-        #     print('Congratulations, The Python Annotation Framework is working as expected, Happy Annotation!!!\n\n')
-
-        #delete files after test
-        command = 'rm -rf ann_sample.10*'
-        call(command, shell=True)
+        # Clean up
+        call('rm -rf ann_sample.10*', shell=True)
