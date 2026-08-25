@@ -11,6 +11,8 @@ VEP_FIELDS = [
     'EXON', 'INTRON', 'HGVSc', 'HGVSp', 'cDNA_position', 'CDS_position',
     'Protein_position', 'Amino_acids', 'Codons', 'Existing_variation',
     'SIFT', 'PolyPhen', 'HGNC_ID',
+    'CANONICAL', 'gnomADg_AF', 'gnomADe_AF',
+    'clinvar_CLNSIG', 'clinvar_CLNDN', 'clinvar_CLNREVSTAT',
 ]
 
 

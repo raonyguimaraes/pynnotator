@@ -40,16 +40,46 @@ class Vep(object):
             '--format', 'vcf',
             '-o', 'vep/vep.output.vcf', '--vcf', '--force_overwrite',
             '--assembly', self.build,
-            '--sift', 'b', '--polyphen', 'b',
             '--no_progress',
             '--numbers',
             '--biotype',
             '--total_length',
-            '--coding_only',
             '--pick',
+            '--canonical',
+            '--check_existing',
+            '--af_gnomade',
+            '--af_gnomadg',
             '--symbol',
             '--fork', str(settings.vep_cores),
         ]
+
+        # SIFT/PolyPhen only when the cache advertises support (info.txt).
+        cache_has_sift = False
+        cache_has_polyphen = False
+        if settings.vep_cache_dir and os.path.exists(settings.vep_cache_dir):
+            try:
+                info_paths = []
+                base = settings.vep_cache_dir
+                for sub in os.listdir(base):
+                    sp = os.path.join(base, sub)
+                    if os.path.isdir(sp):
+                        for v in os.listdir(sp):
+                            ip = os.path.join(sp, v, 'info.txt')
+                            if os.path.exists(ip):
+                                info_paths.append(ip)
+                for ip in info_paths:
+                    with open(ip) as fh:
+                        for line in fh:
+                            if line.startswith('sift\t') and 'b' in line.lower():
+                                cache_has_sift = True
+                            if line.startswith('polyphen\t') and 'b' in line.lower():
+                                cache_has_polyphen = True
+            except OSError:
+                pass
+        if cache_has_sift:
+            cmd += ['--sift', 'b']
+        if cache_has_polyphen:
+            cmd += ['--polyphen', 'b']
 
         if settings.vep_cache_dir and os.path.exists(settings.vep_cache_dir):
             cmd += ['--cache', '--dir', settings.vep_cache_dir, '--offline']
@@ -64,6 +94,11 @@ class Vep(object):
 
         if settings.clinvar_file and os.path.exists(settings.clinvar_file):
             cmd += ['--custom', '%s,clinvar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN' % settings.clinvar_file]
+
+        # chr-prefix synonyms so UCSC-style chrN matches Ensembl numeric cache
+        _syn = os.path.join(settings.vep_cache_dir, 'chr_synonyms.txt') if settings.vep_cache_dir else None
+        if _syn and os.path.exists(_syn):
+            cmd += ['--synonyms', _syn]
 
         print('Running VEP:', ' '.join(shlex.quote(str(c)) for c in cmd))
         vep_base = os.path.join(settings.libs_dir, 'vep')

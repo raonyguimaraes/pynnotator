@@ -14,10 +14,18 @@ import logging
 
 class Annotator(object):
 
-    def __init__(self, args=None):
+    def __init__(self, args=None, build=None):
+
+        # Backward-compat: accept a plain string path as well as a Namespace.
+        if isinstance(args, str):
+            import argparse as _argparse
+            args = _argparse.Namespace(vcf_file=args, build=build)
+        elif args is None:
+            import argparse as _argparse
+            args = _argparse.Namespace(vcf_file=None, build=build)
 
         self.args = args
-        self.build = getattr(args, 'build', None) or settings.BUILD
+        self.build = getattr(args, 'build', None) or build or settings.BUILD
 
         self.vcf_file = os.path.abspath(str(args.vcf_file))
 
