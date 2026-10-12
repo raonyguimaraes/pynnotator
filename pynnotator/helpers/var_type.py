@@ -31,6 +31,10 @@ def annotate(in_vcf, out_vcf=None):
     writer = cyvcf2.Writer(out_vcf, reader)
 
     for variant in reader:
+        if not variant.ALT:
+            # Skip ref-only / no-alt records (cyvcf2 returns empty ALT list)
+            writer.write_record(variant)
+            continue
         variant.INFO['VARTYPE'] = classify(variant.REF, variant.ALT[0])
         gt_types = variant.gt_types
         if 1 in gt_types:
