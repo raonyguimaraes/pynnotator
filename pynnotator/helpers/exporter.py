@@ -88,42 +88,74 @@ def to_csv(vcf_path, csv_path=None):
     return csv_path
 
 
-def to_parquet(vcf_path, parquet_path=None):
-    import pandas as pd
+def to_parquet(vcf_path, parquet_path=None, batch_size=50000):
+    """Write a Parquet file in row batches with a fixed schema.
+
+    Columns: CHROM, POS (int64), ID, REF, ALT, QUAL, FILTER, the VEP fields
+    present in the CSQ header, then every INFO field declared in the header.
+    All columns except POS are strings. Building one DataFrame from per-row
+    dicts used several GB for array-sized VCFs (600k+ records).
+    """
+    import pyarrow as pa
+    import pyarrow.parquet as pq
 
     if parquet_path is None:
         parquet_path = vcf_path.rsplit('.', 1)[0] + '.parquet'
 
     reader = cyvcf2.VCF(vcf_path)
     csq_format = _parse_csq_format(reader)
-    records = []
-    for variant in reader:
-        d = {
-            'CHROM': variant.CHROM,
-            'POS': variant.POS,
-            'ID': variant.ID or '.',
-            'REF': variant.REF,
-            'ALT': ','.join(variant.ALT),
-            'QUAL': variant.QUAL,
-            'FILTER': variant.FILTER or 'PASS',
-        }
-        csq_raw = variant.INFO.get('CSQ')
-        if csq_raw is not None:
-            d.update(_csq_to_dict(csq_raw, csq_format))
-        for key, val in dict(variant.INFO).items():
-            if key == 'CSQ':
-                continue
-            if isinstance(val, (list, tuple)):
-                d[key] = ','.join(str(v) for v in val)
-            elif val is None:
-                d[key] = None
-            else:
-                d[key] = str(val)
-        records.append(d)
-    reader.close()
+    info_ids = []
+    for h in reader.header_iter():
+        try:
+            d = h.info()
+            if d and 'ID' in d and d['ID'] != 'CSQ' and d['ID'] not in info_ids:
+                info_ids.append(d['ID'])
+        except Exception:
+            pass
+    vep_cols = [f for f in VEP_FIELDS if f in csq_format]
+    base = ['CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER']
+    columns = base + vep_cols + [c for c in info_ids if c not in base and c not in vep_cols]
+    schema = pa.schema([(c, pa.int64() if c == 'POS' else pa.string()) for c in columns])
 
-    df = pd.DataFrame(records)
-    df.to_parquet(parquet_path, index=False)
+    def _text(val):
+        if val is None:
+            return None
+        if isinstance(val, (list, tuple)):
+            return ','.join(str(v) for v in val)
+        return str(val)
+
+    writer = pq.ParquetWriter(parquet_path, schema)
+    buffer = {c: [] for c in columns}
+    rows = 0
+    try:
+        for variant in reader:
+            row = {
+                'CHROM': variant.CHROM,
+                'POS': variant.POS,
+                'ID': variant.ID or '.',
+                'REF': variant.REF,
+                'ALT': ','.join(variant.ALT),
+                'QUAL': _text(variant.QUAL),
+                'FILTER': variant.FILTER or 'PASS',
+            }
+            csq_raw = variant.INFO.get('CSQ')
+            if csq_raw is not None:
+                row.update(_csq_to_dict(csq_raw, csq_format))
+            for key in info_ids:
+                if key not in row:
+                    row[key] = _text(variant.INFO.get(key))
+            for c in columns:
+                value = row.get(c)
+                buffer[c].append(value if c == 'POS' or value is None else str(value))
+            rows += 1
+            if rows % batch_size == 0:
+                writer.write_table(pa.table(buffer, schema=schema))
+                buffer = {c: [] for c in columns}
+        if buffer['CHROM']:
+            writer.write_table(pa.table(buffer, schema=schema))
+    finally:
+        writer.close()
+        reader.close()
     return parquet_path
 
 
