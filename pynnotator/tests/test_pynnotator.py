@@ -94,3 +94,81 @@ def test_parquet_export(mini_vcf):
     df = pd.read_parquet(parquet_path)
     assert len(df) > 0
     os.remove(parquet_path)
+
+
+# --- VEP mode: local and offline unless REST is chosen explicitly ----------
+
+def _vep_args(tmp_path):
+    import argparse
+    vcf = tmp_path / 'in.vcf'
+    vcf.write_text('##fileformat=VCFv4.2\n#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO\n')
+    return argparse.Namespace(vcf_file=str(vcf), build='hg38')
+
+
+def test_default_vep_mode_is_local():
+    from pynnotator import settings
+    assert settings.vep_mode == 'local'
+
+
+def test_local_vep_never_falls_back_to_ensembl_database(tmp_path, monkeypatch):
+    from pynnotator import settings
+    from pynnotator.helpers import vep
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(settings, 'vep_cache_dir', str(tmp_path / 'missing-cache'))
+    calls = []
+    monkeypatch.setattr(vep.subprocess, 'call', lambda *a, **k: calls.append(a) or 0)
+    with pytest.raises(RuntimeError, match='VEP cache not found'):
+        vep.Vep(_vep_args(tmp_path)).run()
+    assert calls == []
+
+
+def test_local_vep_runs_offline_and_fails_loudly(tmp_path, monkeypatch):
+    from pynnotator import settings
+    from pynnotator.helpers import vep
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / 'cache').mkdir()
+    monkeypatch.setattr(settings, 'vep_cache_dir', str(tmp_path / 'cache'))
+    seen = {}
+
+    def fake_call(cmd, **kwargs):
+        seen['cmd'] = cmd
+        return 2
+    monkeypatch.setattr(vep.subprocess, 'call', fake_call)
+    with pytest.raises(RuntimeError, match='VEP exited with code 2'):
+        vep.Vep(_vep_args(tmp_path)).run()
+    assert '--offline' in seen['cmd'] and '--database' not in seen['cmd']
+
+
+@pytest.mark.parametrize('mode, expected', [('local', 'pynnotator.helpers.vep'),
+                                            ('rest', 'pynnotator.helpers.vep_rest')])
+def test_annotator_picks_vep_by_mode(tmp_path, monkeypatch, mode, expected):
+    from pynnotator import annotator, settings
+    from pynnotator.helpers import vep, vep_rest
+    monkeypatch.setattr(settings, 'vep_mode', mode)
+    used = []
+
+    class Stop(Exception):
+        pass
+
+    def fake_init(self, args):
+        used.append(type(self).__module__)
+        raise Stop()
+    monkeypatch.setattr(vep.Vep, '__init__', fake_init)
+    monkeypatch.setattr(vep_rest.Vep, '__init__', fake_init)
+    monkeypatch.setattr(annotator.sanity_check.Sanity_check, 'run', lambda self: None)
+    monkeypatch.chdir(tmp_path)
+    src = tmp_path / 'sample.vcf'
+    src.write_text('##fileformat=VCFv4.2\n')
+    import argparse
+    with pytest.raises(Stop):
+        annotator.Annotator(argparse.Namespace(vcf_file=str(src), build='hg38')).run()
+    assert used == [expected]
+
+
+def test_config_local_overrides(tmp_path):
+    from pynnotator import settings
+    base = {'vep': {'mode': 'local', 'cores': 2}, 'databases': {'clinvar': None}}
+    over = {'vep': {'cache_dir': '/data/vep'}, 'databases': {'clinvar': '/data/clinvar.vcf.gz'}}
+    merged = settings._merge(base, over)
+    assert merged['vep'] == {'mode': 'local', 'cores': 2, 'cache_dir': '/data/vep'}
+    assert merged['databases']['clinvar'] == '/data/clinvar.vcf.gz'

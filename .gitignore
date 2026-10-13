@@ -20,3 +20,7 @@ pynnotator/tests/sample.1000.log
 pynnotator/pynnotator-data.latest.tar
 pynnotator/tests/sample.100.log
 ann_hg002/
+
+# machine-specific settings
+pynnotator/config.local.yaml
+pynnotator/config.yaml.bak*

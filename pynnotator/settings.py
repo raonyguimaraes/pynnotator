@@ -6,12 +6,27 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 libs_dir = os.path.join(BASE_DIR, 'libs')
 data_dir = os.path.join(BASE_DIR, 'data')
 
+def _load(path):
+    if os.path.exists(path):
+        with open(path) as f:
+            return yaml.safe_load(f) or {}
+    return {}
+
+
+def _merge(base, override):
+    for key, value in override.items():
+        if isinstance(value, dict) and isinstance(base.get(key), dict):
+            _merge(base[key], value)
+        else:
+            base[key] = value
+    return base
+
+
 config_path = os.path.join(BASE_DIR, 'config.yaml')
-if os.path.exists(config_path):
-    with open(config_path) as f:
-        _cfg = yaml.safe_load(f)
-else:
-    _cfg = {}
+# Machine-specific paths (cache, databases) go in config.local.yaml, which is
+# gitignored, so a server can follow master without a local commit.
+local_config_path = os.path.join(BASE_DIR, 'config.local.yaml')
+_cfg = _merge(_load(config_path), _load(local_config_path))
 
 BUILD = _cfg.get('build', 'hg38')
 
@@ -22,6 +37,11 @@ _vep_in_path = next((os.path.dirname(os.path.realpath(p)) for p in os.environ.ge
 vep_dir = _vep_in_path or os.path.join(libs_dir, 'vep', 'src', 'ensembl-vep')
 vep_source = 'https://github.com/Ensembl/ensembl-vep/archive/release/%s.zip' % vep_release
 vep_plugins = _cfg.get('vep', {}).get('plugins', [])
+# 'local' (default): local vep binary with an offline cache, nothing leaves the machine.
+# 'rest': Ensembl REST API; sends variants to rest.ensembl.org, so it must be chosen explicitly.
+vep_mode = str(_cfg.get('vep', {}).get('mode') or 'local').lower()
+if vep_mode not in ('local', 'rest'):
+    raise ValueError("vep.mode must be 'local' or 'rest', not %r" % vep_mode)
 
 OUTPUT_FORMATS = _cfg.get('output', {}).get('formats', ['vcf.gz', 'csv', 'parquet'])
 
