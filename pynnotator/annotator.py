@@ -5,7 +5,7 @@ import subprocess
 from datetime import datetime
 
 from . import settings
-from .helpers import sanity_check, vep
+from .helpers import sanity_check, vep, vep_rest
 from .helpers import var_type as var_type_mod
 from .helpers import exporter
 
@@ -62,7 +62,8 @@ class Annotator(object):
         sanitycheck.run()
         self.args.vcf_file = 'sanity_check/sorted.vcf'
 
-        vep_obj = vep.Vep(self.args)
+        # Local offline VEP unless config.yaml explicitly asks for Ensembl REST.
+        vep_obj = vep_rest.Vep(self.args) if settings.vep_mode == 'rest' else vep.Vep(self.args)
         vep_out = vep_obj.run()
 
         merged_vcf = vep_out if vep_out and os.path.exists(vep_out) and os.path.getsize(vep_out) > 0 else 'sanity_check/sorted.vcf'

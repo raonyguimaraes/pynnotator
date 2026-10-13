@@ -1,270 +1,145 @@
-"""VEP annotation via the Ensembl REST API.
+"""VEP annotation with the local ``vep`` binary and an offline cache.
 
-Drop-in replacement for the original ``vep.py`` helper that shelled out to the
-local ``vep`` binary. The REST shim is slower than a local install but works
-without VEP + the multi-GB cache.
-
-Input  : VCF path  (self.vcffile)
-Output : vep/vep.output.vcf  (same place the original produced)
+This is the default. Nothing leaves the machine: VEP runs with ``--offline``
+and there is no fallback to Ensembl's public database. The Ensembl REST
+annotator (``helpers/vep_rest.py``) is only used when ``vep: mode: rest`` is
+set in config.yaml.
 """
 import argparse
-import json
 import os
-import time
+import shlex
+import subprocess
 from datetime import datetime
 
-import requests
+from pynnotator import settings
 
-ENSEMBL_REST = {
-    'GRCh38': 'https://rest.ensembl.org',
-    'GRCh37': 'https://grch37.rest.ensembl.org',
-}
-BATCH_SIZE = 200          # Ensembl REST max per request
-PARALLEL_WORKERS = 8       # parallel in-flight VEP REST requests
-RETRY = 3
-TIMEOUT = 120
-# Claude: 1-second pause between batches to respect Ensembl REST rate limits
-INTER_BATCH_SLEEP = 0.0
-
-CSQ_FIELDS = [
-    'Allele', 'Consequence', 'IMPACT', 'SYMBOL', 'Gene', 'Feature_type',
-    'Feature', 'BIOTYPE', 'EXON', 'INTRON', 'HGVSc', 'HGVSp',
-    'cDNA_position', 'CDS_position', 'Protein_position', 'Amino_acids',
-    'Codons', 'Existing_variation', 'DISTANCE', 'STRAND', 'FLAGS',
-    'SYMBOL_SOURCE', 'HGNC_ID', 'SIFT', 'PolyPhen',
-]
+toolname = 'vep'
 
 
 class Vep(object):
-    """REST-API powered VEP annotator (compatible with the local Vep helper)."""
-
     def __init__(self, args=None):
+
         self.args = args
         self.build = 'GRCh38' if getattr(args, 'build', 'hg38') == 'hg38' else 'GRCh37'
+
         self.vcffile = args.vcf_file
         self.filename = os.path.splitext(os.path.basename(str(self.vcffile)))[0]
-        os.makedirs('vep', exist_ok=True)
 
-    # ------------------------------------------------------------------ run
+        vep_bin = os.path.join(settings.vep_dir, 'vep')
+        self.vep_cmd = 'vep' if os.path.exists(os.path.join('/usr/bin', 'vep')) or os.path.exists(
+            os.path.join('/usr/local/bin', 'vep')) or not os.path.exists(vep_bin) else vep_bin
+
+        if not os.path.exists('vep'):
+            os.makedirs('vep')
+
     def run(self):
         tstart = datetime.now()
-        print(tstart, 'Starting VEP REST annotation:', self.build, self.vcffile)
+        print(tstart, 'Starting VEP annotation: ', self.build, self.vcffile)
         result = self.annotate()
         tend = datetime.now()
-        print(tend, 'Finished VEP REST annotation, it took:', tend - tstart)
+        print(tend, 'Finished VEP annotation, it took: ', tend - tstart)
         return result
 
-    # -------------------------------------------------------------- annotate
     def annotate(self):
-        out_path = 'vep/vep.output.vcf'
-        endpoint = ENSEMBL_REST[self.build] + '/vep/human/region'
+        cmd = [
+            self.vep_cmd,
+            '-i', self.vcffile,
+            '--format', 'vcf',
+            '-o', 'vep/vep.output.vcf', '--vcf', '--force_overwrite',
+            '--assembly', self.build,
+            '--no_progress',
+            '--numbers',
+            '--biotype',
+            '--total_length',
+            '--pick',
+            '--canonical',
+            '--check_existing',
+            '--af_gnomade',
+            '--af_gnomadg',
+            '--symbol',
+            '--fork', str(settings.vep_cores),
+        ]
 
-        header_lines, variant_lines = self._read_vcf(self.vcffile)
-
-        # Convert each VCF row into Ensembl region notation
-        # "chr start . ref alt . . ." → "chr start end ref/alt strand"
-        regions = []
-        for line in variant_lines:
-            cols = line.split('\t')
-            if len(cols) < 5:
-                regions.append(None)
-                continue
-            chrom = cols[0].lstrip('chr')
-            pos = cols[1]
-            ref = cols[3]
-            alt = cols[4]
+        # SIFT/PolyPhen only when the cache advertises support (info.txt).
+        cache_has_sift = False
+        cache_has_polyphen = False
+        if settings.vep_cache_dir and os.path.exists(settings.vep_cache_dir):
             try:
-                end = str(int(pos) + len(ref) - 1)
-            except Exception:
-                end = pos
-            regions.append('%s %s %s %s/%s 1' % (chrom, pos, end, ref, alt))
+                info_paths = []
+                base = settings.vep_cache_dir
+                for sub in os.listdir(base):
+                    sp = os.path.join(base, sub)
+                    if os.path.isdir(sp):
+                        for v in os.listdir(sp):
+                            ip = os.path.join(sp, v, 'info.txt')
+                            if os.path.exists(ip):
+                                info_paths.append(ip)
+                for ip in info_paths:
+                    with open(ip) as fh:
+                        for line in fh:
+                            if line.startswith('sift\t') and 'b' in line.lower():
+                                cache_has_sift = True
+                            if line.startswith('polyphen\t') and 'b' in line.lower():
+                                cache_has_polyphen = True
+            except OSError:
+                pass
+        if cache_has_sift:
+            cmd += ['--sift', 'b']
+        if cache_has_polyphen:
+            cmd += ['--polyphen', 'b']
 
-        # Batched POST
-        annotations = [None] * len(regions)
-        index_map = [i for i, r in enumerate(regions) if r is not None]
-        clean_regions = [regions[i] for i in index_map]
+        if not (settings.vep_cache_dir and os.path.exists(settings.vep_cache_dir)):
+            # No silent '--database' fallback: that would query Ensembl's public servers.
+            raise RuntimeError('VEP cache not found (vep.cache_dir = %r). Install the cache, '
+                               'or set vep.mode: rest in config.yaml to use Ensembl REST '
+                               'explicitly.' % settings.vep_cache_dir)
+        cmd += ['--cache', '--dir', settings.vep_cache_dir, '--offline']
 
-        total_batches = (len(clean_regions) + BATCH_SIZE - 1) // BATCH_SIZE
-        # Parallel VEP REST submission with bounded in-flight futures to avoid
-        # building all 20k+ futures up front (was crashing the worker).
-        from concurrent.futures import ThreadPoolExecutor, as_completed
+        for plugin in settings.vep_plugins:
+            cmd += ['--plugin', plugin]
 
-        WINDOW = PARALLEL_WORKERS * 4   # cap in-flight futures
-        completed = 0
-        with ThreadPoolExecutor(max_workers=PARALLEL_WORKERS) as ex:
-            inflight = {}
-            iterator = iter(range(0, len(clean_regions), BATCH_SIZE))
-            # prime the pump
-            for _ in range(WINDOW):
-                try:
-                    start = next(iterator)
-                except StopIteration:
-                    break
-                chunk = clean_regions[start:start + BATCH_SIZE]
-                fut = ex.submit(self._post_with_retry, endpoint, chunk)
-                inflight[fut] = start
+        if settings.gnomad_file and os.path.exists(settings.gnomad_file):
+            cmd += ['--custom', '%s,gnomad,vcf,exact,0,AF,AF_popmax,AF_male,AF_female' % settings.gnomad_file]
 
-            while inflight:
-                for fut in as_completed(list(inflight.keys()), timeout=None):
-                    start = inflight.pop(fut)
-                    data = fut.result()
-                    for offset, item in enumerate(data or []):
-                        annotations[index_map[start + offset]] = item
-                    completed += 1
-                    if completed % 10 == 0 or completed == total_batches:
-                        pct = int(100 * completed / total_batches)
-                        print('[VEP] batch %d/%d (%d%%) parallel=%d'
-                              % (completed, total_batches, pct, PARALLEL_WORKERS))
-                    try:
-                        nxt = next(iterator)
-                        chunk = clean_regions[nxt:nxt + BATCH_SIZE]
-                        nfut = ex.submit(self._post_with_retry, endpoint, chunk)
-                        inflight[nfut] = nxt
-                    except StopIteration:
-                        pass
-                    break  # re-enter as_completed with refreshed inflight set
+        if settings.clinvar_file and os.path.exists(settings.clinvar_file):
+            cmd += ['--custom', '%s,clinvar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN' % settings.clinvar_file]
 
-        # Write annotated VCF
-        csq_hdr = ('##INFO=<ID=CSQ,Number=.,Type=String,Description="Consequence '
-                   'annotations from Ensembl VEP REST. Format: '
-                   + '|'.join(CSQ_FIELDS) + '">')
-        with open(out_path, 'w') as out:
-            # Inject CSQ header BEFORE the #CHROM line (must be a ## meta line)
-            for h in header_lines:
-                if h.startswith('#CHROM'):
-                    out.write(csq_hdr + '\n')
-                out.write(h + '\n')
-            for vcf_line, ann in zip(variant_lines, annotations):
-                out.write(self._inject_csq(vcf_line, ann) + '\n')
+        # chr-prefix synonyms so UCSC-style chrN matches Ensembl numeric cache
+        _syn = os.path.join(settings.vep_cache_dir, 'chr_synonyms.txt') if settings.vep_cache_dir else None
+        if _syn and os.path.exists(_syn):
+            cmd += ['--synonyms', _syn]
 
-        print('Wrote', out_path)
-        return out_path
+        print('Running VEP:', ' '.join(shlex.quote(str(c)) for c in cmd))
+        vep_base = os.path.join(settings.libs_dir, 'vep')
+        perl5_paths = [
+            os.path.join(vep_base, 'perl5'),
+            os.path.join(settings.vep_dir, 'modules'),
+        ]
+        env = os.environ.copy()
+        existing = env.get('PERL5LIB', '')
+        env['PERL5LIB'] = ':'.join(perl5_paths + ([existing] if existing else []))
+        with open('vep/vep.log', 'w') as log:
+            p = subprocess.call(cmd, stdout=log, stderr=subprocess.STDOUT, env=env)
 
-    # --------------------------------------------------------------- helpers
-    def _read_vcf(self, path):
-        headers, variants = [], []
-        opener = open
-        if path.endswith('.gz'):
-            import gzip
-            opener = gzip.open
-        with opener(path, 'rt') as fh:
-            for line in fh:
-                line = line.rstrip('\n')
-                if line.startswith('#'):
-                    headers.append(line)
-                elif line.strip():
-                    variants.append(line)
-        return headers, variants
+        if p != 0:
+            # Fail loudly: continuing would produce an "annotated" file without CSQ.
+            raise RuntimeError('VEP exited with code %s; see vep/vep.log' % p)
 
-    def _post_with_retry(self, url, regions):
-        body = {'variants': regions}
-        for attempt in range(RETRY):
-            try:
-                r = requests.post(
-                    url, json=body, timeout=TIMEOUT,
-                    headers={'Content-Type': 'application/json',
-                             'Accept': 'application/json'},
-                )
-                if r.status_code == 200:
-                    return r.json()
-                if r.status_code == 429:
-                    time.sleep(2 ** attempt)
-                    continue
-                print('VEP REST', r.status_code, r.text[:200])
-                return []
-            except Exception as e:
-                print('VEP REST attempt %d failed: %s' % (attempt + 1, e))
-                time.sleep(2 ** attempt)
-        return []
+        result = 'vep/vep.output.vcf'
+        try:
+            subprocess.check_call(['bcftools', 'sort', '-o', 'vep/vep.output.sorted.vcf', result])
+            os.remove(result)
+            result = 'vep/vep.output.sorted.vcf'
+        except (subprocess.CalledProcessError, OSError):
+            print('bcftools sort not available, using unsorted VEP output')
 
-    def _inject_csq(self, vcf_line, annotation):
-        cols = vcf_line.split('\t')
-        if len(cols) < 8 or not annotation:
-            return vcf_line
-        csq_value = self._encode_csq(annotation)
-        if not csq_value:
-            return vcf_line
-        info = cols[7]
-        sep = ';' if info and info != '.' else ''
-        cols[7] = ('' if info == '.' else info) + sep + 'CSQ=' + csq_value
-        return '\t'.join(cols)
-
-    def _encode_csq(self, ann):
-        # Collect consequence records from all categories. Take the first.
-        tcs = (ann.get('transcript_consequences')
-               or ann.get('regulatory_feature_consequences')
-               or ann.get('motif_feature_consequences')
-               or ann.get('intergenic_consequences')
-               or [])
-        tc = tcs[0] if tcs else {}
-
-        # Mapping from CSQ_FIELDS → keys in the REST JSON response
-        rest_key = {
-            'Allele': 'variant_allele',
-            'Consequence': 'consequence_terms',
-            'IMPACT': 'impact',
-            'SYMBOL': 'gene_symbol',
-            'Gene': 'gene_id',
-            'Feature_type': None,            # derived below
-            'Feature': 'transcript_id',
-            'BIOTYPE': 'biotype',
-            'EXON': 'exon',
-            'INTRON': 'intron',
-            'HGVSc': 'hgvsc',
-            'HGVSp': 'hgvsp',
-            'cDNA_position': 'cdna_start',
-            'CDS_position': 'cds_start',
-            'Protein_position': 'protein_start',
-            'Amino_acids': 'amino_acids',
-            'Codons': 'codons',
-            'Existing_variation': None,      # filled from colocated_variants
-            'DISTANCE': 'distance',
-            'STRAND': 'strand',
-            'FLAGS': 'flags',
-            'SYMBOL_SOURCE': 'gene_symbol_source',
-            'HGNC_ID': 'hgnc_id',
-            'SIFT': 'sift_prediction',
-            'PolyPhen': 'polyphen_prediction',
-        }
-
-        # Feature_type: transcript / regulatory / motif / intergenic
-        if tc.get('transcript_id'):
-            feature_type = 'Transcript'
-        elif tc.get('regulatory_feature_id'):
-            feature_type = 'RegulatoryFeature'
-        elif tc.get('motif_feature_id'):
-            feature_type = 'MotifFeature'
-        else:
-            feature_type = ''
-
-        # Existing variation from colocated_variants list at top level
-        existing = ''
-        colo = ann.get('colocated_variants') or []
-        if colo:
-            existing = '&'.join(str(c.get('id', '')) for c in colo if c.get('id'))
-
-        def _clean(v):
-            if isinstance(v, list):
-                return '&'.join(str(x) for x in v)
-            return str(v) if v not in (None, '') else ''
-
-        vals = []
-        for k in CSQ_FIELDS:
-            if k == 'Feature_type':
-                v = feature_type
-            elif k == 'Existing_variation':
-                v = existing
-            else:
-                rk = rest_key.get(k)
-                v = _clean(tc.get(rk)) if rk else ''
-            vals.append(v.replace(',', '_').replace(';', '_').replace('|', '_'))
-        if not any(vals):
-            return ''
-        return '|'.join(vals)
+        return result
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Annotate VCF via Ensembl VEP REST API.')
-    parser.add_argument('-i', dest='vcf_file', required=True)
-    parser.add_argument('-b', dest='build', default='hg38')
-    Vep(parser.parse_args()).run()
+    parser = argparse.ArgumentParser(description='Annotate a VCF File with VEP.')
+    parser.add_argument('-i', dest='vcffile', required=True, metavar='example.vcf', help='a VCF file to be annotated')
+    parser.add_argument('-b', dest='build', default='hg38', help='Genome build (hg19 or hg38)')
+    args = parser.parse_args()
+    vep = Vep(args)
+    vep.run()

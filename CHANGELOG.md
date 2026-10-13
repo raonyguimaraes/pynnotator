@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+
+- VEP runs locally with an offline cache by default (`vep.mode: local`). Nothing is sent
+  to external services, and there is no silent fallback to Ensembl's public database:
+  a missing cache or a VEP error now raises instead of producing an unannotated file.
+- The Ensembl REST annotator moved to `helpers/vep_rest.py` and is used only with
+  `vep.mode: rest`. It sends every variant to rest.ensembl.org.
+- Machine-specific settings can go in `pynnotator/config.local.yaml` (gitignored), which
+  is merged over `config.yaml`.
+
 ## 3.0 — Modern VEP-Centric Architecture
 
 ### Architecture Rewrite

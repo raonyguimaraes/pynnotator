@@ -1,6 +1,11 @@
 build: hg38
 
+# Override machine-specific values in config.local.yaml (gitignored).
+
 vep:
+  # local: offline VEP cache, nothing leaves the machine (default).
+  # rest:  Ensembl REST API; sends every variant to rest.ensembl.org.
+  mode: local
   release: 115
   cache_dir: null
   cores: 2
