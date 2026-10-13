@@ -2,6 +2,7 @@ cyvcf2
 pysam
 pyyaml
 distro
+requests
 pandas
 pyarrow
 pytest

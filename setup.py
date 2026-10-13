@@ -29,6 +29,7 @@ setup(
           'pysam',
           'pyyaml',
           'distro',
+          'requests',  # helpers/vep.py (VEP REST mode)
       ],
       extras_require={
           'export': ['pandas', 'pyarrow'],

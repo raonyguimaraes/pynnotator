@@ -8,7 +8,16 @@ jobs:
     working_directory: ~/repo
 
     steps:
-      - checkout
+      # The repository is public, so clone over HTTPS: the built-in `checkout`
+      # needs a GitHub deploy key, and the project no longer has one.
+      - run:
+          name: Checkout code (HTTPS)
+          command: |
+            git init -q .
+            git remote add origin "https://github.com/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}.git"
+            git fetch -q --depth 1 origin "${CIRCLE_SHA1}"
+            git checkout -q FETCH_HEAD
+            git log --oneline -1
 
       - restore_cache:
           keys:
@@ -19,7 +28,7 @@ jobs:
           name: Install system dependencies
           command: |
             sudo apt-get update
-            sudo apt-get install -y bcftools tabix htslib
+            sudo apt-get install -y bcftools tabix  # libhts comes with these; there is no "htslib" package
 
       - run:
           name: Install Python dependencies
